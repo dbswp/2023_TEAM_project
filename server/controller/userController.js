@@ -1,7 +1,9 @@
 const mongooseConnect = require('./mongooseConnect');
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
 
-const { KAKAO_API_KEY, KAKAO_REDIRECT_URI } = process.env;
+const { ACCESS_SECRET, REFRESH_SECRET, KAKAO_API_KEY, KAKAO_REDIRECT_URI } =
+  process.env;
 
 mongooseConnect();
 
@@ -20,8 +22,9 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
+  const { id, password } = req.body;
   try {
-    const duplicatedUser = await User.findOne({ id: req.body.id });
+    const duplicatedUser = await User.findOne({ id });
     if (duplicatedUser) {
       console.log('db에서 아이디 대조까지는 성공');
     }
@@ -31,14 +34,45 @@ const loginUser = async (req, res) => {
     if (duplicatedUser.password !== req.body.password) {
       return res.status(400).json({ text: '비밀번호 틀림!' });
     }
-    // req.session.login = true;
-    // req.session.userId = req.body.id;
+    console.log(duplicatedUser);
 
-    // res.cookie('user', req.body.id, {
-    //   maxAge: 1000 * 30,
-    //   httpOnly: true,
-    //   signed: true,
-    // });
+    // accesstoken 발급
+    const accessToken = jwt.sign(
+      {
+        id: duplicatedUser.id,
+      },
+      ACCESS_SECRET,
+      {
+        expiresIn: 1000 * 60,
+        issuer: 'About Tech',
+      }
+    );
+
+    // refreshtoken 발급
+    const refreshToken = jwt.sign(
+      {
+        id: duplicatedUser.id,
+      },
+      REFRESH_SECRET,
+      {
+        expiresIn: '24h',
+        issuer: 'About Tech',
+      }
+    );
+
+    // 쿠키에 담아서 전송
+    res.cookie('accessToken', accessToken, {
+      secure: false,
+      httpOnly: false,
+    });
+    res.cookie('refreshToken', refreshToken, {
+      secure: false,
+      httpOnly: false,
+    });
+    console.log(accessToken);
+
+    // console.log(accessToken);
+    // console.log(refreshToken);
 
     //로그인 성공시 프론트단에서 화면이 변화되는 처리를 해줘야할듯!!!
 
@@ -73,8 +107,65 @@ const kakaoLoginUser = (req, res) => {
   }
 };
 
+const accesstoken = async (req, res) => {
+  const { id } = req.body;
+  const duplicatedUser = await User.findOne({ id });
+  try {
+    const token = req.cookies.accessToken;
+    const data = jwt.verify(token, ACCESS_SECRET);
+
+    const userData = duplicatedUser.filter((el) => {
+      return el.id === data.id;
+    });
+
+    const { password, ...others } = userData;
+    res.status(200).json(others);
+    console.log(userData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+const refreshtoken = async (req, res) => {
+  const { id } = req.body;
+  const duplicatedUser = await User.findOne({ id });
+  try {
+    const token = req.cookies.accessToken;
+    const data = jwt.verify(token, ACCESS_SECRET);
+
+    const userData = duplicatedUser.filter((el) => {
+      return el.id === data.id;
+    });
+
+    const accessToken = jwt.sign(
+      {
+        id: userData.id,
+      },
+      ACCESS_SECRET,
+      {
+        expiresIn: '1m',
+        issuer: 'About Tech',
+      }
+    );
+
+    res.cookie('accessToken', accessToken, {
+      secure: false,
+      httpOnly: true,
+    });
+    res.status(200).json('Access Token Recreated');
+    console.log(userData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+const loginSuccess = (req, res) => {};
+
 module.exports = {
-  registerUser,
   loginUser,
+  accesstoken,
+  refreshtoken,
+  loginSuccess,
+  registerUser,
   kakaoLoginUser,
 };

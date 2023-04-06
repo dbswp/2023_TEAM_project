@@ -5,7 +5,7 @@
 /server/node_modules
 /server/.env
 /client/node_modules
-client/src/kakaoLoginData
+/client/src/kakaoLoginData
 /.pnp
 .pnp.js
 /.vscode
