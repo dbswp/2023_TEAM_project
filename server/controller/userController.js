@@ -1,6 +1,7 @@
 const mongooseConnect = require('./mongooseConnect');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const { json } = require('body-parser');
 
 const { ACCESS_SECRET, REFRESH_SECRET, KAKAO_API_KEY, KAKAO_REDIRECT_URI } =
   process.env;
@@ -85,7 +86,7 @@ const loginUser = async (req, res) => {
 
 const kakaoLoginUser = (req, res) => {
   const KAKAO_CODE = req.body.code;
-  console.log(KAKAO_CODE);
+  // console.log(KAKAO_CODE);
   try {
     fetch(
       `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${KAKAO_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&code=${KAKAO_CODE}`,
@@ -98,9 +99,12 @@ const kakaoLoginUser = (req, res) => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.access_token);
+        console.log(
+          '카카오 엑세스 토큰 발급 성공!!   토큰:',
+          data.access_token
+        );
       });
-    res.status(200).json('엑세스 토큰 발급');
+    res.status(200).json('엑세스 토큰 받기 성공!');
   } catch (err) {
     console.error(err);
     res.status(500).json('엑세스 토큰 받기 실패!!');
