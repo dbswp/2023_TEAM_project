@@ -70,7 +70,7 @@ export default function Login() {
       <img
         src={kakaoImg}
         alt="카카오 로그인"
-        onClick={async () => {
+        onClick={() => {
           window.location.href = kakaoAuthUrl;
         }}
         style={{
