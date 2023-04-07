@@ -1,9 +1,18 @@
 import React from 'react';
+import NaverMaps from './NaverMaps';
+import { Container as MapDiv } from 'react-naver-maps';
 
 export default function Blog() {
   return (
-    <div>
-      <h1>블로그 글 작성페이지</h1>
-    </div>
+    <>
+      <MapDiv
+        style={{
+          width: '100%',
+          height: '90vh',
+        }}
+      >
+        <NaverMaps />
+      </MapDiv>
+    </>
   );
 }
