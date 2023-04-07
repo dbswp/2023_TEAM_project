@@ -9,6 +9,7 @@ function App() {
       <header className="App-header">
         <Header />
         <GoogleMap />
+        
         <Router />
       </header>
     </div>
