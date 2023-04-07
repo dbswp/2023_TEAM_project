@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom/client';
 import App from '../src/App';
 import reportWebVitals from '../src/reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { NavermapsProvider } from 'react-naver-maps';
+import { NAVER_MAP_API } from './kakaoLoginData';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <App />
+    <NavermapsProvider ncpClientId={NAVER_MAP_API}>
+      <App />
+    </NavermapsProvider>
   </BrowserRouter>
 );
 
