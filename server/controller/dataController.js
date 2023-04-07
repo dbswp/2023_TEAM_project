@@ -7,10 +7,12 @@ mongooseConnect();
 const datarefreshing = async () => {
   try {
     const data = await fetchData();
+
     //지역 엔드포인트가 바뀔때마다 DB데이터 전체 삭제후 재색인
     await PopulationData.deleteMany({});
     await PopulationData.create(data);
-    console.log('데이터 갱신 완료');
+
+    console.log('from server:  데이터 갱신 완료');
   } catch (err) {
     console.error(err);
   }
