@@ -16,6 +16,7 @@ const dataRouter = require('./routes/data');
 
 app.use(
   cors({
+
     origin: CLIENT_URL,
     methods: ['GET', 'POST'],
     credentials: true,
