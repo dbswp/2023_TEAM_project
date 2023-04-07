@@ -15,6 +15,7 @@ const refreshToken = require('./routes/refreshtoken');
 
 app.use(
   cors({
+
     origin: CLIENT_URL,
     methods: ['GET', 'POST'],
     credentials: true,
