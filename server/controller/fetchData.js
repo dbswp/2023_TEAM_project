@@ -1,9 +1,10 @@
 const { parseString } = require("xml2js");
 
 const { DATA_API_KEY } = process.env;
-const AREA_END_POINT = `http://openapi.seoul.go.kr:8088/${DATA_API_KEY}/xml/citydata/1/5/신촌·이대역`;
 
-async function fetchData() {
+async function fetchData(END_POINT) {
+  const AREA_END_POINT = `http://openapi.seoul.go.kr:8088/${DATA_API_KEY}/xml/citydata/1/5/${END_POINT}`;
+
   let model = {
     area_name: "",
     live_data: {},
