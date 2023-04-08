@@ -12,9 +12,11 @@ const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
 const accessToken = require('./routes/accesstoken');
 const refreshToken = require('./routes/refreshtoken');
+const dataRouter = require('./routes/data');
 
 app.use(
   cors({
+
     origin: CLIENT_URL,
     methods: ['GET', 'POST'],
     credentials: true,
@@ -29,6 +31,7 @@ app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 app.get('/accesstoken', accessToken);
 app.get('/refreshtoken', refreshToken);
+app.use('/data', dataRouter);
 // app.get("/login/success", loginSuccess);
 
 app.get('/', (req, res) => {
