@@ -1,15 +1,16 @@
-import './App.css';
-import Router from './Router';
-import Header from './routes/Header';
+import "./App.css";
+import Router from "./Router";
+import GlobalStyle from "./routes/GlobalStyle";
+import Header from "./routes/Header";
+import styled from "styled-components";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Header />
-        <Router />
-      </header>
-    </div>
+    <>
+      <GlobalStyle />
+      <Header />
+      <Router />
+    </>
   );
 }
 
