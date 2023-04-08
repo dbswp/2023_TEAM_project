@@ -1,0 +1,23 @@
+.main-card.col{
+  text-align: left;
+  margin-top: 50px;
+  .img{
+    width: 200px;
+    max-width: 200px;
+    height: 200px;
+    border-radius:20px;
+    background-color: #f7f7f7;
+  }
+  .seoul_end_point{
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 2px;
+  }
+  span{
+    margin-top: 2px;
+    font-size: 15px;
+    color: #777;
+    font-weight: 300;
+  }
+}
