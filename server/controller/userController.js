@@ -75,8 +75,6 @@ const loginUser = async (req, res) => {
     // console.log(accessToken);
     // console.log(refreshToken);
 
-    //로그인 성공시 프론트단에서 화면이 변화되는 처리를 해줘야할듯!!!
-
     res.status(200).json({ text: '로그인 성공' });
   } catch (err) {
     console.error(err);
@@ -84,9 +82,11 @@ const loginUser = async (req, res) => {
   }
 };
 
+export let kakao_access_token = '';
+
 const kakaoLoginUser = (req, res) => {
   const KAKAO_CODE = req.body.code;
-  // console.log(KAKAO_CODE);
+
   try {
     fetch(
       `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${KAKAO_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&code=${KAKAO_CODE}`,
@@ -99,6 +99,7 @@ const kakaoLoginUser = (req, res) => {
     )
       .then((res) => res.json())
       .then((data) => {
+        kakao_access_token = data.access_token;
         console.log(
           '카카오 엑세스 토큰 발급 성공!!   토큰:',
           data.access_token
