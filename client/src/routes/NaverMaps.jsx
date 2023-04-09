@@ -1,11 +1,6 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import {
-  Container as MapDiv,
-  NaverMap,
-  Marker,
-  useNavermaps,
-} from 'react-naver-maps';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Container as MapDiv, NaverMap, Marker, useNavermaps } from "react-naver-maps";
 
 export default function NaverMaps() {
   // const navermaps = useNavermaps();
@@ -31,7 +26,7 @@ export default function NaverMaps() {
     //10분마다 데이터 갱신 시키기
     const reNew = setInterval(() => {
       getData();
-      console.log('데이터 갱신 완료');
+      console.log("데이터 갱신 완료");
     }, 600000);
 
     // return clearInterval(reNew);
