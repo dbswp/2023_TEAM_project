@@ -1,0 +1,23 @@
+.main-banner.container {
+  background-color: #fdf6eb;
+  border-radius: 45px;
+  padding: 100px 90px;
+  .row {
+    display: flex;
+    align-items: center;
+    .col-md-6 {
+      h2 {
+        font-size: 40px;
+        font-weight: 700;
+        text-align: left;
+        background:-webkit-linear-gradient(45deg, #EF5D49, #FD9337);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 1.22;
+      }
+      img {
+        width: 380px;
+      }
+    }
+  }
+}
