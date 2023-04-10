@@ -4,9 +4,10 @@
   .tab-list{
     text-align: left;
     .tab-item{
-      display: inline-block;
       margin-right: 8px;
+      display: inline-block;
       .nav-link{
+        display: inline-block;
         font-size: 14px;
         padding: 10px 14px;
         color: #555;
@@ -17,6 +18,11 @@
         background-color: black;
         color: #fff;
       }
+    }
+  }
+  .tab-contents{
+    .tab-content{
+      display: none;
     }
   }
 }
