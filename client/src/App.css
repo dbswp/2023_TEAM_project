@@ -1,13 +1,4 @@
-.App {
-  text-align: center;
-}
-a {
-  text-decoration: none;
-  color: blueviolet;
-  font-size: 1.5rem;
-  margin: 10px;
-}
-.container{
+.container {
   width: 1200px !important;
   max-width: 100%;
 }

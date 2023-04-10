@@ -37,7 +37,7 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <>
       <h1>로그인 페이지</h1>
       <form method="post" onSubmit={sendData}>
         <div className="mt-3 id">
@@ -86,6 +86,6 @@ export default function Login() {
           margin: "10px",
         }}
       />
-    </div>
+    </>
   );
 }
