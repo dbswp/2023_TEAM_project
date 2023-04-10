@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-size: 10px;
-    height: 2100px;
+    height: auto;
   }
 
   ul, ol {
