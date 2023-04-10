@@ -1,0 +1,10 @@
+.detail .container-top {
+    position: absolute;
+    display: flex;
+    height: 100vh;
+    width: 300px;
+    top: calc(100vh - 670px);
+    bottom: 80px;
+    left: 60px;
+    background-color: rgb(237, 237, 237);
+}

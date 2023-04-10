@@ -1,9 +1,8 @@
 import React from "react";
 import { BiMenu } from "react-icons/bi";
-import styled from "styled-components";
 import { useGlobalContext } from "./Context";
 
-const Sidebar = () => {
+export default function Modal() {
   const { isModalOpen, closeModal } = useGlobalContext();
 
   return (
@@ -21,6 +20,4 @@ const Sidebar = () => {
       </div>
     </div>
   );
-};
-
-export default Sidebar;
+}

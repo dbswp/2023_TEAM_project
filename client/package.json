@@ -13,8 +13,11 @@
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     "react-google-login": "^5.2.2",
+=======
+>>>>>>> 53a4999 (feature#19 sidebar 모달 및 scss 진행 중)
     "react-icons": "^4.8.0",
 >>>>>>> 2dde894 (feature#19 sidebar 진행 중)
     "react-naver-maps": "^0.1.2",
