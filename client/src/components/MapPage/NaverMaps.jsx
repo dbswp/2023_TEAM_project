@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Container as MapDiv, NaverMap, Marker, useNavermaps } from "react-naver-maps";
+import {
+  Container as MapDiv,
+  NaverMap,
+  Marker,
+  useNavermaps,
+} from "react-naver-maps";
 
 export default function NaverMaps() {
   // const navermaps = useNavermaps();
   const [area, setArea] = useState();
   const [data, setData] = useState();
   const [weather, setWeather] = useState();
-  const [END_POINT, setEND_POINT] = useState('종로·청계 관광특구');
+  const [END_POINT, setEND_POINT] = useState("종로·청계 관광특구");
 
   const getData = async () => {
-    const res = await axios.post('http://localhost:4000/data/getdata', {
+    const res = await axios.post("http://localhost:4000/data/getdata", {
       END_POINT,
     });
     res.status === 200 ? console.log(res.status) : console.log(res.json());

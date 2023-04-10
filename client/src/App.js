@@ -1,19 +1,18 @@
-import './App.css';
-import Router from './Router';
-import Header from './routes/Header';
-import GlobalStyle from "./routes/GlobalStyle";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Main from './components/home/Main';
-import styled from 'styled-components';
+import "./App.css";
+import Router from "./Router";
+import Header from "./components/common/Header/Header";
+import GlobalStyle from "./components/common/GlobalStyle";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <div className="App">
-    <GlobalStyle />
+      <GlobalStyle />
       <header className="App-header">
         <Header />
         <Router />
-        <Main/>
+        <Home />
       </header>
     </div>
   );

@@ -35,7 +35,7 @@ const loginUser = async (req, res) => {
     if (duplicatedUser.password !== req.body.password) {
       return res.status(400).json({ text: '비밀번호 틀림!' });
     }
-    console.log(duplicatedUser);
+    // console.log(duplicatedUser);
 
     // accesstoken 발급
     const accessToken = jwt.sign(
@@ -82,8 +82,6 @@ const loginUser = async (req, res) => {
   }
 };
 
-export let kakao_access_token = '';
-
 const kakaoLoginUser = (req, res) => {
   const KAKAO_CODE = req.body.code;
 
@@ -99,11 +97,21 @@ const kakaoLoginUser = (req, res) => {
     )
       .then((res) => res.json())
       .then((data) => {
-        kakao_access_token = data.access_token;
         console.log(
           '카카오 엑세스 토큰 발급 성공!!   토큰:',
           data.access_token
         );
+        // accesstoken 발급
+        // const accessToken = jwt.sign(
+        //   {
+        //     id: data.id,
+        //   },
+        //   ACCESS_SECRET,
+        //   {
+        //     expiresIn: 1000 * 60,
+        //     issuer: "About Tech",
+        //   }
+        // );
       });
     res.status(200).json('엑세스 토큰 받기 성공!');
   } catch (err) {
@@ -166,6 +174,15 @@ const refreshtoken = async (req, res) => {
 
 const loginSuccess = (req, res) => {};
 
+const logout = (req, res) => {
+  try {
+    res.cookie('accessToken', '');
+    res.status(200).json('Logout Success');
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 module.exports = {
   loginUser,
   accesstoken,
@@ -173,4 +190,5 @@ module.exports = {
   loginSuccess,
   registerUser,
   kakaoLoginUser,
+  logout,
 };

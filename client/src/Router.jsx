@@ -1,9 +1,8 @@
-import { Route, Routes } from 'react-router-dom';
-import Login from './routes/Login';
-import Register from './routes/Register';
-import Blog from './routes/Blog';
-import PageDetail from './routes/PageDetail';
-import KakaoLogin from './routes/KakaoLogin';
+import { Route, Routes } from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Blog from "./pages/Blog";
+import KakaoLogin from "./pages/KakaoLogin";
 
 export default function Router() {
   return (
@@ -12,7 +11,6 @@ export default function Router() {
       <Route path="kakaologin" element={<KakaoLogin />} />
       <Route path="/register" element={<Register />} />
       <Route path="/blog" element={<Blog />} />
-      <Route path="/page_detail" element={<PageDetail />} />
     </Routes>
   );
 }
