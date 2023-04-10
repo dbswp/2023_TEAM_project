@@ -1,7 +1,7 @@
 const mongooseConnect = require('./mongooseConnect');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-const { json } = require('body-parser');
+const request = require('request');
 
 const { ACCESS_SECRET, REFRESH_SECRET, KAKAO_API_KEY, KAKAO_REDIRECT_URI } =
   process.env;
@@ -112,29 +112,33 @@ const kakaoLoginUser = (req, res) => {
         //     issuer: "About Tech",
         //   }
         // );
-
         let testObj = {
           object_type: 'text',
-          text: '텍스트 영역입니다. 최대 200자 표시 가능합니다.',
+          text: '현재 인구밀도 혼잡 지역에 있습니다! 다른 지역으로의 이동은 어떨까요?',
           link: {
-            web_url: 'https://developers.kakao.com',
-            mobile_web_url: 'https://developers.kakao.com',
+            web_url: 'https://localhost:3000/login',
+            mobile_web_url: 'https://localhost:3000/login',
           },
           button_title: '바로 확인',
         };
-
-        fetch('http://kapi.kakao.com/v2/api/talk/memo/default/send', {
+        let testObjStr = JSON.stringify(testObj);
+        let options = {
+          url: 'https://kapi.kakao.com/v2/api/talk/memo/default/send',
           method: 'POST',
           headers: {
             Authorization: `Bearer ${data.access_token}`,
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           form: {
-            template_object: testObj,
+            template_object: testObjStr,
           },
-        })
-          .then((res) => res.status)
-          .then((status) => console.log(status));
+        };
+        function callback(error, response, body) {
+          if (response) {
+            console.log(body);
+          }
+        }
+        request(options, callback);
       });
     res.status(200).json('엑세스 토큰 받기 성공!');
   } catch (err) {
