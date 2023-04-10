@@ -1,0 +1,51 @@
+.login__box {
+  position: relative;
+  padding: 5rem 0;
+  margin-top: 5rem;
+
+  h1 {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-55px);
+  }
+
+  p {
+    width: 130px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-10rem, 9rem);
+    font-size: 1.1rem;
+    color: #111;
+  }
+  form {
+    input {
+      width: 20rem;
+      height: 3.5rem;
+      padding-left: 0.8rem;
+      border: 1px solid #000;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    .btn-primary {
+      width: 20rem;
+      height: 3.5rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      background-color: #333;
+      border-color: #333;
+    }
+  }
+  .Kakao_symbol {
+    position: absolute;
+    left: 50%;
+    transform: translateX(7rem);
+    display: block;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+}
