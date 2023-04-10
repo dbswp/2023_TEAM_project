@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { kakaoAuthUrl } from "../kakaoLoginData";
 import kakaoImg from "../kakao_login_medium_narrow.png";
+import Logo from "../assets/Logo.gif";
 
 export default function Login() {
   const [id, setId] = useState("");
@@ -38,7 +39,7 @@ export default function Login() {
 
   return (
     <>
-      <h1>로그인 페이지</h1>
+      <img src={Logo}></img>
       <form method="post" onSubmit={sendData}>
         <div className="mt-3 id">
           <label className="mb-2" htmlFor="input-email">

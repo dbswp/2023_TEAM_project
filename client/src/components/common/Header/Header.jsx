@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import BlackButton from "./BlackButton";
+import Logo from "../../../assets/Logo.gif";
 
 const HeaderIntro = styled.div`
   position: sticky;
@@ -30,7 +31,7 @@ export default function Header() {
       <HeaderIntro>
         <MyHeader>
           <Link to="/">
-            <LoGo src="/Logo.gif" alt="로고 이미지" />
+            <img src={Logo} />
           </Link>
           <Link to="./Login">
             <BlackButton text="로그인"></BlackButton>
