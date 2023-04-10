@@ -1,9 +1,14 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
 const weatherDataSchema = new Schema(
   {
+    area_index: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
     temperature: {
       type: String,
       required: true,
@@ -33,7 +38,7 @@ const weatherDataSchema = new Schema(
       required: true,
     },
   },
-  { collection: 'weather' }
+  { collection: "weather" }
 );
 
-module.exports = mongoose.model('weatherData', weatherDataSchema);
+module.exports = mongoose.model("weatherData", weatherDataSchema);

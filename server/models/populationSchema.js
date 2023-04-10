@@ -1,9 +1,14 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
 const populationDataSchema = new Schema(
   {
+    area_index: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
     area_name: {
       type: String,
       required: true,
@@ -14,7 +19,7 @@ const populationDataSchema = new Schema(
       required: true,
     },
   },
-  { collection: 'data' }
+  { collection: "data" }
 );
 
-module.exports = mongoose.model('PopulationData', populationDataSchema);
+module.exports = mongoose.model("PopulationData", populationDataSchema);
