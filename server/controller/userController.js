@@ -82,11 +82,11 @@ const loginUser = async (req, res) => {
   }
 };
 
-const kakaoLoginUser = (req, res) => {
+const kakaoLoginUser = async (req, res) => {
   const KAKAO_CODE = req.body.code;
 
   try {
-    fetch(
+    const getKakaoAccessToken = await fetch(
       `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${KAKAO_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&code=${KAKAO_CODE}`,
       {
         method: 'POST',
@@ -94,52 +94,49 @@ const kakaoLoginUser = (req, res) => {
           'Content-Type': 'x-www-form-urlencoded;charset=utf-8',
         },
       }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(
-          '카카오 엑세스 토큰 발급 성공!!   토큰:',
-          data.access_token
-        );
-        // accesstoken 발급
-        // const accessToken = jwt.sign(
-        //   {
-        //     id: data.id,
-        //   },
-        //   ACCESS_SECRET,
-        //   {
-        //     expiresIn: 1000 * 60,
-        //     issuer: "About Tech",
-        //   }
-        // );
-        let testObj = {
-          object_type: 'text',
-          text: '현재 인구밀도 혼잡 지역에 있습니다! 다른 지역으로의 이동은 어떨까요?',
-          link: {
-            web_url: 'https://localhost:3000/login',
-            mobile_web_url: 'https://localhost:3000/login',
-          },
-          button_title: '바로 확인',
-        };
-        let testObjStr = JSON.stringify(testObj);
-        let options = {
-          url: 'https://kapi.kakao.com/v2/api/talk/memo/default/send',
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${data.access_token}`,
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          form: {
-            template_object: testObjStr,
-          },
-        };
-        function callback(error, response, body) {
-          if (response) {
-            console.log(body);
-          }
-        }
-        request(options, callback);
-      });
+    );
+    const data = await getKakaoAccessToken.json();
+    console.log('카카오 엑세스 토큰 발급 성공!!   토큰:', data.access_token);
+
+    let testObj = {
+      object_type: 'text',
+      text: '현재 인구밀도 혼잡 지역에 있습니다! 다른 지역으로의 이동은 어떨까요?',
+      link: {
+        web_url: 'https://localhost:3000/login',
+        mobile_web_url: 'https://localhost:3000/login',
+      },
+      button_title: '바로 확인',
+    };
+    let testObjStr = JSON.stringify(testObj);
+    let options = {
+      url: 'https://kapi.kakao.com/v2/api/talk/memo/default/send',
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${data.access_token}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      form: {
+        template_object: testObjStr,
+      },
+    };
+    function callback(error, response, body) {
+      if (response) {
+        console.log(body);
+      }
+    }
+    request(options, callback);
+
+    const userResponese = await fetch(`https://kapi.kakao.com/v2/user/me`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${data.access_token}`,
+        'Content-type': 'application/x-www-form-urlencoded',
+      },
+    });
+    if (userResponese.status === 200) {
+      const userKaKaoInfo = await userResponese.json();
+      console.log(userKaKaoInfo);
+    }
     res.status(200).json('엑세스 토큰 받기 성공!');
   } catch (err) {
     console.error(err);
