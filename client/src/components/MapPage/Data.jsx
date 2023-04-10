@@ -1,41 +1,25 @@
 import React from "react";
-import {
-  FaHome,
-  FaUserFriends,
-  FaFolderOpen,
-  FaCalendarAlt,
-  FaWpforms,
-} from "react-icons/fa";
+import { BiMap } from "react-icons/bi";
+import { TiWeatherSunny } from "react-icons/ti";
+import { IoIosPeople } from "react-icons/io";
 
 export const links = [
   {
     id: 1,
     url: "/",
-    text: "home",
-    icon: <FaHome />,
+    text: "실시간",
+    icon: <BiMap />,
   },
   {
     id: 2,
-    url: "/team",
-    text: "team",
-    icon: <FaUserFriends />,
+    url: "/projects",
+    text: "XXX 날씨 정보",
+    icon: <TiWeatherSunny />,
   },
   {
     id: 3,
-    url: "/projects",
-    text: "projects",
-    icon: <FaFolderOpen />,
-  },
-  {
-    id: 4,
     url: "/calendar",
-    text: "calendar",
-    icon: <FaCalendarAlt />,
-  },
-  {
-    id: 5,
-    url: "/documents",
-    text: "documents",
-    icon: <FaWpforms />,
+    text: "실시간 인구혼잡도",
+    icon: <IoIosPeople />,
   },
 ];

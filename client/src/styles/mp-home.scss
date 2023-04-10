@@ -2,11 +2,11 @@ main {
     min-height: 100vh;
     display: flex;
     // justify-content: center;
-    // align-items: center;
+    align-items: center;
   }
   
   .wrap-container {
-    // position: sticky;
+    position: sticky;
     border-right: 1px solid rgb(212, 212, 212);
     left: 0;
     width: 50px;
@@ -21,7 +21,19 @@ main {
     background: transparent;
     border-color: transparent;
     // color: var(--clr-primary-5);
-    // transition: var(--transition);
+    transition: all 0.3s linear;
     cursor: pointer;
     animation: bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
   }

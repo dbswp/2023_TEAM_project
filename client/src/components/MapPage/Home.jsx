@@ -4,7 +4,7 @@ import { useGlobalContext } from "./Context";
 import styles from "../../styles/mp-home.scss";
 
 const Home = () => {
-  const { openSidebar, openModal } = useGlobalContext();
+  const { openSidebar } = useGlobalContext();
 
   return (
     <main>
@@ -12,7 +12,6 @@ const Home = () => {
         <button className="sidebar-toggle" onClick={openSidebar}>
           <BiMenu />
         </button>
-        <button className="btn" onClick={openModal}></button>
       </div>
     </main>
   );

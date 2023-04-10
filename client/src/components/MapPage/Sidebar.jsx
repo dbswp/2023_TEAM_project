@@ -1,25 +1,33 @@
 import React from "react";
-import { BiMenu } from "react-icons/bi";
-import styled from "styled-components";
 import { useGlobalContext } from "./Context";
+import { links } from "./Data";
+import styles from "../../styles/mp-sidebar.scss";
+import { FaTimes } from "react-icons/fa";
 
 const Sidebar = () => {
-  const { isModalOpen, closeModal } = useGlobalContext();
+  const { isSidebarOpen, closeSidebar } = useGlobalContext();
 
   return (
-    <div
-      className={`${
-        isModalOpen ? "modal-overlay show-modal" : "modal-overlay"
-      }`}
-    >
-      <div className="modal-container">
-        <h3>modal content</h3>
-        {/* 나기기 버튼 */}
-        <button className="close-modal-btn" onClick={closeModal}>
-          <BiMenu />
+    <aside className={`${isSidebarOpen ? "sidebar show-sidebar" : "sidebar"}`}>
+      <div className="sidebar-header">
+        <button className="close-btn" onClick={closeSidebar}>
+          <FaTimes />
         </button>
       </div>
-    </div>
+
+      <div className="links">
+        {links.map((link) => {
+          const { id, url, icon, text } = link;
+          return (
+            <div className="live-data" key={id}>
+              <p href={url}>
+                {icon} {text}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    </aside>
   );
 };
 
