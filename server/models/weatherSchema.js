@@ -4,11 +4,6 @@ const { Schema } = mongoose;
 
 const weatherDataSchema = new Schema(
   {
-    area_index: {
-      type: Number,
-      required: true,
-      unique: true,
-    },
     temperature: {
       type: String,
       required: true,
