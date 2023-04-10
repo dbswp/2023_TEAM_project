@@ -28,3 +28,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+### Sass ###
+.sass-cache/
+/src/styles/*.css.map
+/src/styles/*.sass.map
+/src/styles/*.scss.map
+
+*.css.map
+*.sass.map
+*.scss.map
