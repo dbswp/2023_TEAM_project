@@ -112,6 +112,29 @@ const kakaoLoginUser = (req, res) => {
         //     issuer: "About Tech",
         //   }
         // );
+
+        let testObj = {
+          object_type: 'text',
+          text: '텍스트 영역입니다. 최대 200자 표시 가능합니다.',
+          link: {
+            web_url: 'https://developers.kakao.com',
+            mobile_web_url: 'https://developers.kakao.com',
+          },
+          button_title: '바로 확인',
+        };
+
+        fetch('http://kapi.kakao.com/v2/api/talk/memo/default/send', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${data.access_token}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          form: {
+            template_object: testObj,
+          },
+        })
+          .then((res) => res.status)
+          .then((status) => console.log(status));
       });
     res.status(200).json('엑세스 토큰 받기 성공!');
   } catch (err) {
