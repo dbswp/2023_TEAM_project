@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { kakaoAuthUrl } from "../kakaoLoginData";
-import kakaoImg from "../kakao_login_medium_narrow.png";
-import Logo from "../assets/Logo.gif";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { kakaoAuthUrl } from '../kakaoLoginData';
+import kakaoImg from '../kakao_login_medium_narrow.png';
+import Logo from '../assets/Logo.gif';
 
 export default function Login() {
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const idHandler = (e) => {
@@ -23,8 +23,8 @@ export default function Login() {
     e.preventDefault();
 
     axios({
-      url: "http://localhost:4000/login",
-      method: "POST",
+      url: 'http://localhost:4000/login',
+      method: 'POST',
       withCredentials: true,
       data: {
         id: id,
@@ -32,7 +32,7 @@ export default function Login() {
       },
     }).then((result) => {
       if (result.status === 200) {
-        navigate("/blog");
+        navigate('/blog');
       }
     });
   };
@@ -81,10 +81,10 @@ export default function Login() {
           window.location.href = kakaoAuthUrl;
         }}
         style={{
-          boxShadow: "0 3px 5px 0 black",
-          borderRadius: "0.7rem",
-          cursor: "pointer",
-          margin: "10px",
+          boxShadow: '0 3px 5px 0 black',
+          borderRadius: '0.7rem',
+          cursor: 'pointer',
+          margin: '10px',
         }}
       />
     </>
