@@ -3,8 +3,21 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import style from "../../styles/main-tabs-wrap.scss";
 import MainCard from "../home/MainCard";
+import { useEffect, useState } from "react";
+// import { useSelector } from "react-redux";
+import axios from "axios";
 
 export default function MainTabsBtn() {
+  const getData = async () => {
+    const res = await axios.get("http://localhost:4000/nameData");
+    if (res.status !== 200) alert("데이터 수신 실패");
+    const allData = res.data;
+    console.log(allData);
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <div className="container main-tabs-wrap">
       <div className="row">

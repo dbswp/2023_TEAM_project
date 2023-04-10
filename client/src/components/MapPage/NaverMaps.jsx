@@ -17,7 +17,6 @@ export default function NaverMaps() {
   const [END_POINT, setEND_POINT] = useState();
 
   const getData = async () => {
-    console.log(END_POINT);
     const res = await axios.post("http://localhost:4000/data/getdata", {
       END_POINT,
     });
