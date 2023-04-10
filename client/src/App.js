@@ -3,6 +3,8 @@ import Router from "./Router";
 import Header from "./components/common/Header/Header";
 import GlobalStyle from "./components/common/GlobalStyle";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import Home from "./pages/Home";
+import Sidebar from "./components/MapPage/Sidebar";
 
 function App() {
   return (
