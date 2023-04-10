@@ -14,6 +14,7 @@ const accessToken = require("./routes/accesstoken");
 const refreshToken = require("./routes/refreshtoken");
 const logoutRouter = require("./routes/logout");
 const dataRouter = require("./routes/data");
+const seoulDataRouter = require("./routes/seoulDataName");
 
 app.use(
   cors({
@@ -33,6 +34,7 @@ app.get("/accesstoken", accessToken);
 app.get("/refreshtoken", refreshToken);
 app.get("/logout", logoutRouter);
 app.use("/data", dataRouter);
+app.use("/nameData", seoulDataRouter);
 // app.get("/login/success", loginSuccess);
 
 app.get("/", (req, res) => {

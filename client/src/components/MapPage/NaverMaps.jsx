@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+// import { useSelector } from "react-redux";
 import axios from "axios";
 import {
   Container as MapDiv,
@@ -6,13 +7,14 @@ import {
   Marker,
   useNavermaps,
 } from "react-naver-maps";
+// import { readXlsxFile } from "./excelFileRead";
 
 export default function NaverMaps() {
   // const navermaps = useNavermaps();
   const [area, setArea] = useState();
   const [data, setData] = useState();
   const [weather, setWeather] = useState();
-  const [END_POINT, setEND_POINT] = useState("종로·청계 관광특구");
+  const [END_POINT, setEND_POINT] = useState();
 
   const getData = async () => {
     const res = await axios.post("http://localhost:4000/data/getdata", {

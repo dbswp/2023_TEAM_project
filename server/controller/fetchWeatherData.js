@@ -1,25 +1,25 @@
-const { parseString } = require('xml2js');
+const { parseString } = require("xml2js");
 
 const { DATA_API_KEY } = process.env;
-// const AREA_END_POINT = `http://openapi.seoul.go.kr:8088/${DATA_API_KEY}/xml/citydata/1/5/신촌·이대역`;
+// const AREA_END_POINT = `http://openapi.seoul.go.kr:8088/${DATA_API_KEY}/xml/citydata/1/5/동대문 관광특구`;
 
 async function fetchWeatherData(END_POINT) {
   const AREA_END_POINT = `http://openapi.seoul.go.kr:8088/${DATA_API_KEY}/xml/citydata/1/5/${END_POINT}`;
 
   let weatherModel = {
-    temperature: '',
-    sen_temperature: '',
-    min_temperature: '',
-    max_temperature: '',
-    pcp_msg: '',
-    air_idx: '',
+    temperature: "",
+    sen_temperature: "",
+    min_temperature: "",
+    max_temperature: "",
+    pcp_msg: "",
+    air_idx: "",
     fcst_24hours: {},
   };
 
   const resolve = await fetch(AREA_END_POINT, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/xml',
+      "Content-Type": "application/xml",
     },
   });
 
@@ -31,11 +31,11 @@ async function fetchWeatherData(END_POINT) {
     } else {
       //당일 전체적인 날씨
       let dayWeather =
-        result['SeoulRtd.citydata']['CITYDATA'][0].WEATHER_STTS[0]
+        result["SeoulRtd.citydata"]["CITYDATA"][0].WEATHER_STTS[0]
           .WEATHER_STTS[0];
       //당일 시간별 날씨
       let timeWeather =
-        result['SeoulRtd.citydata']['CITYDATA'][0].WEATHER_STTS[0]
+        result["SeoulRtd.citydata"]["CITYDATA"][0].WEATHER_STTS[0]
           .WEATHER_STTS[0].FCST24HOURS[0];
 
       weatherModel = {
