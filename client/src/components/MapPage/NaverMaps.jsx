@@ -10,7 +10,7 @@ import {
 // import { readXlsxFile } from "./excelFileRead";
 
 export default function NaverMaps() {
-  // const navermaps = useNavermaps();
+  const navermaps = useNavermaps();
   const [area, setArea] = useState();
   const [data, setData] = useState();
   const [weather, setWeather] = useState();
@@ -42,6 +42,16 @@ export default function NaverMaps() {
 
   return (
     <>
+      {
+        <NaverMap
+          defaultCenter={new navermaps.LatLng(37.3595704, 127.105399)}
+          defaultZoom={15}
+        >
+          <Marker
+            defaultPosition={new navermaps.LatLng(37.3595704, 127.105399)}
+          />
+        </NaverMap>
+      }
       <h1>{area}</h1>
       <h2>{data?.AREA_CONGEST_MSG[0]}</h2>
       <h3>
@@ -51,15 +61,4 @@ export default function NaverMaps() {
       </h3>
     </>
   );
-}
-
-{
-  /* <NaverMap
-        defaultCenter={new navermaps.LatLng(37.3595704, 127.105399)}
-        defaultZoom={15}
-      >
-        <Marker
-          defaultPosition={new navermaps.LatLng(37.3595704, 127.105399)}
-        />
-      </NaverMap> */
 }

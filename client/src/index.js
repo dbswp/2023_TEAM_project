@@ -6,12 +6,15 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { NavermapsProvider } from "react-naver-maps";
 import { NAVER_MAP_API } from "./kakaoLoginData";
 import Router from "./Router";
+import { AppProvider } from "./components/MapPage/Context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <NavermapsProvider ncpClientId={NAVER_MAP_API}>
+      <AppProvider>
       <App />
+      </AppProvider>
     </NavermapsProvider>
   </BrowserRouter>
 );
