@@ -9,14 +9,15 @@
   left: 50%;
   transform: translateX(-55px);
 }
-.login__box p {
-  width: 130px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-10rem, 9rem);
-  font-size: 1.1rem;
-  color: #111;
+.login__box .message {
+  font-size: 0.75rem;
+  letter-spacing: -1px;
+}
+.login__box .message.success {
+  color: #8f8c8b;
+}
+.login__box .message.error {
+  color: #ff2727;
 }
 .login__box form input {
   width: 20rem;
@@ -44,4 +45,4 @@
   height: 36px;
   border-radius: 50%;
   cursor: pointer;
-}/*# sourceMappingURL=login.css.map */
+}/*# sourceMappingURL=Register.css.map */
