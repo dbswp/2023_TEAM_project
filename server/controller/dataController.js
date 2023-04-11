@@ -7,6 +7,7 @@ const mongooseConnect = require("./mongooseConnect");
 mongooseConnect();
 
 const datarefreshing = async (END_POINT) => {
+  console.log(END_POINT);
   try {
     const data = await fetchData(END_POINT);
     const weather = await fetchWeatherData(END_POINT);
@@ -25,9 +26,10 @@ const datarefreshing = async (END_POINT) => {
 };
 
 const sendData = async (req, res) => {
+  console.log("!!!");
   try {
     const END_POINT = req.body.END_POINT;
-    datarefreshing(END_POINT);
+    await datarefreshing(END_POINT);
 
     const data = await PopulationData.find({});
     const weather = await WeatherData.find({});

@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 // import { useSelector } from "react-redux";
-import axios from 'axios';
+import axios from "axios";
 import {
   Container as MapDiv,
   NaverMap,
   Marker,
   useNavermaps,
-} from 'react-naver-maps';
+} from "react-naver-maps";
 // import { readXlsxFile } from "./excelFileRead";
 
 export default function NaverMaps() {
@@ -14,10 +14,10 @@ export default function NaverMaps() {
   const [area, setArea] = useState();
   const [data, setData] = useState();
   const [weather, setWeather] = useState();
-  const [END_POINT, setEND_POINT] = useState('국립중앙박물관·용산가족공원');
+  const [END_POINT, setEND_POINT] = useState("서울역");
 
   const getData = async () => {
-    const res = await axios.post('http://localhost:4000/data/getdata', {
+    const res = await axios.post("http://localhost:4000/data/getdata", {
       END_POINT,
     });
     res.status === 200 ? console.log(res.status) : console.log(res.json());
@@ -29,11 +29,12 @@ export default function NaverMaps() {
   };
 
   useEffect(() => {
+    console.log("!!!!!!!!!!!");
     getData();
     //10분마다 데이터 갱신 시키기
     const reNew = setInterval(() => {
       getData();
-      console.log('데이터 갱신 완료');
+      console.log("데이터 갱신 완료");
     }, 600000);
 
     // return clearInterval(reNew);
