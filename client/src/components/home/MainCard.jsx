@@ -8,18 +8,20 @@ export default function MainCard() {
 
   return (
     <>
-      <div className="row">
-        {arr.map((name, index) => {
-          return (
-            <Card
-              onClick={() => {
-                navigate("/blog");
-              }}
-              name={name}
-              key={index}
-            />
-          );
-        })}
+      <div className="container">
+        <div className="row">
+          {arr.map((name, index) => {
+            return (
+              <Card
+                onClick={() => {
+                  navigate("/blog");
+                }}
+                name={name}
+                key={index}
+              />
+            );
+          })}
+        </div>
       </div>
     </>
   );

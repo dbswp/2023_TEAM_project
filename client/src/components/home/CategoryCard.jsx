@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import '../../styles/card.scss';
+import React, { useEffect, useState } from "react";
+import "../../styles/card.scss";
 
 export default function CategoryCard({ name }) {
   return (
     <>
       {name.map((el, idx) => {
         return (
-          <div key={idx}>
-            <div className="main-card col">
-              <div className="img"></div>
-              <p className="seoul_end_point">{el}</p>
-              <span>Gangnam-gu</span>
-            </div>
+          <div className="main-card col" key={idx}>
+            <div className="img"></div>
+            <p className="seoul_end_point">{el}</p>
+            <span>Gangnam-gu</span>
           </div>
         );
       })}

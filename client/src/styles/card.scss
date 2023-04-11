@@ -1,7 +1,7 @@
-.main-card.col{
+.main-card{
   text-align: left;
-  margin-bottom: 20px;
-  width: 20%;
+  margin-bottom: 50px;
+  padding: 0 15px;
   .img{
     width: 100%;
     min-width: 200px;
@@ -10,7 +10,7 @@
     background-color: #f7f7f7;
   }
   .seoul_end_point{
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 600;
     margin-top: 10px;
     margin-bottom: 2px;
