@@ -9,7 +9,7 @@ export default function CategoryCard({ name }) {
           <div className="main-card col" key={idx}>
             <div className="img"></div>
             <p className="seoul_end_point">{el}</p>
-            <span>Gangnam-gu</span>
+            <span>Seoul</span>
           </div>
         );
       })}
