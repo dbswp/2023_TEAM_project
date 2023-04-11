@@ -6,6 +6,7 @@ async function seoulData(req, res) {
     const sheets = await xlsxFile("./seoulData.xlsx");
 
     const dataIndex = [];
+    const dataLink = [];
     const dataNmae_STZ = [];
     const dataNmae_Station = [];
     const dataNmae_Park = [];
@@ -13,6 +14,7 @@ async function seoulData(req, res) {
 
     for (let i = 1; i < sheets.length; i++) {
       dataIndex.push(sheets[i][1]);
+      dataLink.push(sheets[i][2]);
     }
 
     dataIndex.filter((el) => {
@@ -40,7 +42,12 @@ async function seoulData(req, res) {
         id: 4,
         name: dataName_Other,
       },
+      {
+        id: 5,
+        name: dataLink,
+      },
     ];
+    console.log(Arr);
     res.status(200).json({ dataIndex, Arr });
   } catch (err) {
     console.error(err);
