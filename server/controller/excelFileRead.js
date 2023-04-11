@@ -1,9 +1,9 @@
 // seoulData.js
-const xlsxFile = require('read-excel-file/node');
+const xlsxFile = require("read-excel-file/node");
 
 async function seoulData(req, res) {
   try {
-    const sheets = await xlsxFile('./seoulData.xlsx');
+    const sheets = await xlsxFile("./seoulData.xlsx");
 
     const dataIndex = [];
     const dataNmae_STZ = [];
@@ -16,9 +16,9 @@ async function seoulData(req, res) {
     }
 
     dataIndex.filter((el) => {
-      if (el.includes('관광특구') === true) dataNmae_STZ.push(el);
-      else if (el.includes('역') === true) dataNmae_Station.push(el);
-      else if (el.includes('공원') === true || el.includes('숲') === true)
+      if (el.includes("관광특구") === true) dataNmae_STZ.push(el);
+      else if (el.includes("역") === true) dataNmae_Station.push(el);
+      else if (el.includes("공원") === true || el.includes("숲") === true)
         dataNmae_Park.push(el);
       else dataName_Other.push(el);
     });
@@ -41,7 +41,6 @@ async function seoulData(req, res) {
         name: dataName_Other,
       },
     ];
-
     res.status(200).json({ dataIndex, Arr });
   } catch (err) {
     console.error(err);

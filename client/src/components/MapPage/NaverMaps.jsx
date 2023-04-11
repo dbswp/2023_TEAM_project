@@ -14,7 +14,7 @@ export default function NaverMaps() {
   const [area, setArea] = useState();
   const [data, setData] = useState();
   const [weather, setWeather] = useState();
-  const [END_POINT, setEND_POINT] = useState("국립중앙박물관·용산가족공원");
+  const [END_POINT, setEND_POINT] = useState("서울역");
 
   const getData = async () => {
     const res = await axios.post("http://localhost:4000/data/getdata", {
@@ -29,6 +29,7 @@ export default function NaverMaps() {
   };
 
   useEffect(() => {
+    console.log("!!!!!!!!!!!");
     getData();
     //10분마다 데이터 갱신 시키기
     const reNew = setInterval(() => {

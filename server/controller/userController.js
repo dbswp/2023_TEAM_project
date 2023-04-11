@@ -70,7 +70,7 @@ const loginUser = async (req, res) => {
       secure: false,
       httpOnly: false,
     });
-    console.log(accessToken);
+    // console.log(accessToken);
 
     // console.log(accessToken);
     // console.log(refreshToken);
@@ -86,6 +86,7 @@ const kakaoLoginUser = async (req, res) => {
   const KAKAO_CODE = req.body.code;
 
   try {
+    console.log(KAKAO_API_KEY, KAKAO_REDIRECT_URI);
     const getKakaoAccessToken = await fetch(
       `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${KAKAO_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&code=${KAKAO_CODE}`,
       {
@@ -136,6 +137,27 @@ const kakaoLoginUser = async (req, res) => {
     if (userResponese.status === 200) {
       const userKaKaoInfo = await userResponese.json();
       console.log(userKaKaoInfo);
+      // console.log(userKaKaoInfo.id);
+      // console.log(userKaKaoInfo.kakao_account.email);
+
+      // accesstoken 발급
+      const kakaoAccessToken = jwt.sign(
+        {
+          id: userKaKaoInfo.id,
+          email: userKaKaoInfo.kakao_account.email,
+        },
+        ACCESS_SECRET,
+        {
+          expiresIn: 1000 * 60,
+          issuer: "About Tech",
+        }
+      );
+      // 쿠키에 담아서 전송
+      res.cookie("kakaoAccessToken", kakaoAccessToken, {
+        secure: false,
+        httpOnly: false,
+      });
+      console.log(kakaoAccessToken);
     }
     res.status(200).json("엑세스 토큰 받기 성공!");
   } catch (err) {
