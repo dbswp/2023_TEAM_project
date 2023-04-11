@@ -7,7 +7,7 @@ export default function Card({ name }) {
       <div className="main-card col">
         <div className="img" style={{ "min-width": "200px" }}></div>
         <p className="seoul_end_point">{name}</p>
-        <span>Gangnam-gu</span>
+        <span>Seoul</span>
       </div>
     </>
   );

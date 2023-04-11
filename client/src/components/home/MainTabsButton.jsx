@@ -71,7 +71,7 @@ export default function MainTabsButton() {
                   toggleTab(3);
                 }}
               >
-                공원
+                지하철
               </button>
             </li>
             <li className="tab-item">
@@ -81,7 +81,7 @@ export default function MainTabsButton() {
                   toggleTab(4);
                 }}
               >
-                지하철
+                공원
               </button>
             </li>
           </ul>
