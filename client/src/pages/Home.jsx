@@ -9,6 +9,7 @@ export default function Home() {
     <div>
       <MainBanner />
       <MainTabsButton />
+      <MainTabsBtn />
     </div>
   );
 }

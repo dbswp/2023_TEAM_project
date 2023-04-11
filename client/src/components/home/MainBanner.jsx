@@ -1,6 +1,6 @@
 import React from "react";
 import mainBanner from "../../assets/mainBanner@2x.png";
-import style from "../../styles/main_banner.scss";
+import "../../styles/main_banner.scss";
 
 export default function MainBanner() {
   return (
