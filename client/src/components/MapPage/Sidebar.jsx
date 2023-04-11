@@ -1,8 +1,8 @@
 import React from "react";
 import { useGlobalContext } from "./Context";
 import { links } from "./Data";
-import styles from "../../styles/mp-sidebar.scss";
 import { FaTimes } from "react-icons/fa";
+import styles from "../../styles/mp-sidebar.scss";
 
 const Sidebar = () => {
   const { isSidebarOpen, closeSidebar } = useGlobalContext();
@@ -15,18 +15,18 @@ const Sidebar = () => {
         </button>
       </div>
 
-      <div className="links">
+      <ul className="links">
         {links.map((link) => {
           const { id, url, icon, text } = link;
           return (
-            <div className="live-data" key={id}>
+            <div key={id}>
               <p href={url}>
                 {icon} {text}
               </p>
             </div>
           );
         })}
-      </div>
+      </ul>
     </aside>
   );
 };

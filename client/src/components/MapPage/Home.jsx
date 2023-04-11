@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { BiMenu } from "react-icons/bi";
 import { useGlobalContext } from "./Context";
 import styles from "../../styles/mp-home.scss";
