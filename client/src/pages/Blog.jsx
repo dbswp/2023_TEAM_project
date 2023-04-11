@@ -8,15 +8,15 @@ import styles from "../styles/mp-blog.scss";
 export default function Blog() {
   return (
     <>
-      <Home />
-      <Sidebar />
       <MapDiv
         style={{
           width: "100%",
           height: "90vh",
         }}
       >
-        {/* <NaverMaps /> */}
+        <NaverMaps />
+        <Home />
+        <Sidebar />
       </MapDiv>
     </>
   );
