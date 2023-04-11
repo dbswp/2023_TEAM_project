@@ -1,22 +1,22 @@
-.main-card.col {
+.main-card {
   text-align: left;
-  margin-bottom: 20px;
-  width: 20%;
+  margin-bottom: 50px;
+  padding: 0 15px;
 }
-.main-card.col .img {
-  width: 200px;
-  max-width: 200px;
+.main-card .img {
+  width: 100%;
+  min-width: 200px;
   height: 200px;
   border-radius: 20px;
   background-color: #f7f7f7;
 }
-.main-card.col .seoul_end_point {
-  font-size: 18px;
+.main-card .seoul_end_point {
+  font-size: 17px;
   font-weight: 600;
   margin-top: 10px;
   margin-bottom: 2px;
 }
-.main-card.col span {
+.main-card span {
   margin-top: 2px;
   font-size: 15px;
   color: #777;
