@@ -16,7 +16,7 @@ export default function Blog() {
           height: "90vh",
         }}
       >
-        <NaverMaps />
+        {/* <NaverMaps /> */}
       </MapDiv>
     </>
   );
