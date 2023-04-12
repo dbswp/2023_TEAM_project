@@ -23,10 +23,33 @@ main {
     position: sticky;
     z-index: 99;
     width: 50px;
-    height: 35vh;
+    height: 25vh;
   }
 
-  .sidebar-toggle {
+  // .sidebar-toggle {
+  //   // position: absolute;
+  //   // top: 0;
+  //   font-size: 1.5rem;
+  //   background: transparent;
+  //   border-color: transparent;
+  //   transition: all 0.3s linear;
+  //   cursor: pointer;
+  //   animation: bounce 2s ease-in-out infinite;
+  // }
+
+  // @keyframes bounce {
+  //   0% {
+  //     transform: scale(1);
+  //   }
+  //   50% {
+  //     transform: scale(1.1);
+  //   }
+  //   100% {
+  //     transform: scale(1);
+  //   }
+  // }
+
+  .sidebar-information {
     // position: absolute;
     // top: 0;
     font-size: 1.5rem;
@@ -49,9 +72,7 @@ main {
     }
   }
 
-  .sidebar-location {
-    // position: absolute;
-    // top: 0;
+  .sidebar-emergency {
     font-size: 1.5rem;
     background: transparent;
     border-color: transparent;
@@ -72,46 +93,25 @@ main {
     }
   }
 
-  .sidebar-weather {
-    font-size: 1.5rem;
-    background: transparent;
-    border-color: transparent;
-    transition: all 0.3s linear;
-    cursor: pointer;
-    animation: bounce 2s ease-in-out infinite;
-  }
+  // .sidebar-population {
+  //   // position: absolute;
+  //   // top: 0;
+  //   font-size: 1.5rem;
+  //   background: transparent;
+  //   border-color: transparent;
+  //   transition: all 0.3s linear;
+  //   cursor: pointer;
+  //   animation: bounce 2s ease-in-out infinite;
+  // }
 
-  @keyframes bounce {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-
-  .sidebar-population {
-    // position: absolute;
-    // top: 0;
-    font-size: 1.5rem;
-    background: transparent;
-    border-color: transparent;
-    transition: all 0.3s linear;
-    cursor: pointer;
-    animation: bounce 2s ease-in-out infinite;
-  }
-
-  @keyframes bounce {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
+  // @keyframes bounce {
+  //   0% {
+  //     transform: scale(1);
+  //   }
+  //   50% {
+  //     transform: scale(1.1);
+  //   }
+  //   100% {
+  //     transform: scale(1);
+  //   }
+  // }

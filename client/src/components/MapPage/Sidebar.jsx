@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useGlobalContext } from "./Context";
-import { links } from "./Data";
 import { FaTimes } from "react-icons/fa";
 import styles from "../../styles/mp-sidebar.scss";
 import axios from "axios";
@@ -36,25 +35,17 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <aside className={`${isSidebarOpen ? "sidebar show-sidebar" : "sidebar"}`}>
+    <aside className={`${isSidebarOpen ? "sidebar show-sidebar" : "sidebar"} `}>
       <div className="sidebar-header">
         <button className="close-btn" onClick={closeSidebar}>
           <FaTimes />
         </button>
       </div>
       <div className="detail-content">
-        {sidebarCategory === "location" && (
-          <div className="detail-location">
-            <p>{area}</p>
-          </div>
-        )}
-        {sidebarCategory === "population" && (
-          <div className="detail-population">
-            <p>{data?.AREA_CONGEST_MSG[0]}</p>
-          </div>
-        )}
-        {sidebarCategory === "weather" && (
-          <div className="detail-weather">
+        {sidebarCategory === "information" && (
+          <div className="detail-information">
+            <h1>{area}</h1>
+            <h2>{data?.AREA_CONGEST_MSG[0]}</h2>
             <p>
               오늘 최고 기온은 {weather?.max_temperature}도 <br />
               최저 기온은 {weather?.min_temperature}도 이고, <br />
@@ -62,23 +53,12 @@ const Sidebar = () => {
             </p>
           </div>
         )}
+        {sidebarCategory === "emergency" && (
+          <div className="detail-emergency"></div>
+        )}
       </div>
     </aside>
   );
 };
-{
-  /* <ul className="links">
-  {links.map((link) => {
-    const { id, url, icon, text } = link;
-    return (
-      <div key={id}>
-        <p href={url}>
-          {icon} {text}
-        </p>
-      </div>
-    );
-  })}
-</ul> */
-}
 
 export default Sidebar;
