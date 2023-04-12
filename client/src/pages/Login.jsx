@@ -7,13 +7,13 @@ import Logo from "../assets/Logo.gif";
 import style from "../styles/login.css";
 
 export default function Login() {
-  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const idHandler = (e) => {
+  const emailHandler = (e) => {
     e.preventDefault();
-    setId(e.target.value);
+    setEmail(e.target.value);
   };
   const passwordHandler = (e) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ export default function Login() {
       method: "POST",
       withCredentials: true,
       data: {
-        id: id,
+        email: email,
         password: password,
       },
     }).then((result) => {
@@ -41,17 +41,17 @@ export default function Login() {
   return (
     <>
       <div className="login__box">
-        <h1>LOGIN</h1>
+        <h1>로그인</h1>
         <form method="post" onSubmit={sendData}>
           <div className="mt-3 id">
             <label className="mb-2" htmlFor="input-email"></label>
             <input
               type="text"
-              name="id"
-              value={id}
-              onChange={idHandler}
+              name="email"
+              value={email}
+              onChange={emailHandler}
               id="input-email"
-              placeholder="아이디를 입력하세요"
+              placeholder="이메일을 입력하세요"
               required
             />
           </div>

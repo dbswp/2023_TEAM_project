@@ -5,17 +5,20 @@ import style from "../styles/Register.css";
 
 export default function Register() {
   //이름, 이메일, 비밀번호, 비밀번호 확인
-  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
   //오류메시지 상태저장
-  const [idMessage, setIdMessage] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+  const [phoneMessage, setPhoneMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
 
   // 유효성 검사
-  const [isId, setIsId] = useState(false);
+  const [isEmail, setIsEmail] = useState(false);
+  const [isPhone, setIsPhone] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
   const navigate = useNavigate();
@@ -26,7 +29,7 @@ export default function Register() {
       try {
         await axios
           .post("http://localhost:4000/register", {
-            id: id,
+            email: email,
             password: password,
           })
           .then((res) => {
@@ -39,20 +42,39 @@ export default function Register() {
         console.error(err);
       }
     },
-    [id, password]
+    [email, password]
   );
 
-  // 이름
-  const onChangeId = useCallback((e) => {
-    setId(e.target.value);
-    if (e.target.value.length < 2 || e.target.value.length > 9) {
-      setIdMessage("2글자 이상 9글자 미만으로 입력해주세요.");
-      setIsId(false);
+  // 이메일
+  const onChangeEmail = useCallback((e) => {
+    const emailRegex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    const emailCurrent = e.target.value;
+    setEmail(emailCurrent);
+
+    if (!emailRegex.test(emailCurrent)) {
+      setEmailMessage("이메일 형식이 틀렸어요! 다시 확인해주세요 ㅜ ㅜ");
+      setIsEmail(false);
     } else {
-      setIdMessage("올바른 이름 형식입니다 :)");
-      setIsId(true);
+      setEmailMessage("올바른 이메일 형식이에요 : )");
+      setIsEmail(true);
     }
   }, []);
+
+  // 번호
+  const onChangePhone = (e) => {
+    const currentPhone = e.target.value;
+    setPhone(currentPhone);
+    const phoneRegExp = /^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/;
+
+    if (!phoneRegExp.test(currentPhone)) {
+      setPhoneMessage("올바른 형식이 아닙니다!");
+      setIsPhone(false);
+    } else {
+      setPhoneMessage("사용 가능한 번호입니다:-)");
+      setIsPhone(true);
+    }
+  };
 
   // 비밀번호
   const onChangePassword = useCallback((e) => {
@@ -91,10 +113,25 @@ export default function Register() {
       <div className="login__box">
         <h1>회원가입</h1>
         <form onSubmit={onSubmit}>
-          <div className="mt-3 id formBox">
-            <input type="text" value={id} onChange={onChangeId} placeholder="아이디를 입력하세요" required />
-            {id.length > 0 && <div className={`message ${isId ? "success" : "error"}`}>{idMessage}</div>}
+          {/* Email Part*/}
+          <div className="mt-3 email">
+            <input type="email" onChange={onChangeEmail} placeholder="이메일을 입력해주세요" value={email} />
+            {email.length > 0 && <div className={`message ${isEmail ? "success" : "error"}`}>{emailMessage}</div>}
           </div>
+
+          {/* Phone Part */}
+          <div className="mt-3 phone">
+            <input
+              id="phone"
+              name="phone"
+              placeholder="핸드폰 번호를 입력해주세요"
+              value={phone}
+              onChange={onChangePhone}
+            />
+            {phone.length > 0 && <div className={`message ${isEmail ? "success" : "error"}`}>{phoneMessage}</div>}
+          </div>
+
+          {/* Password Part */}
           <div className="mt-3 password">
             <input
               type="password"
@@ -107,12 +144,13 @@ export default function Register() {
               <div className={`message ${isPassword ? "success" : "error"}`}>{passwordMessage}</div>
             )}
           </div>
-          <div className="mt-3 password">
+          {/* PasswordConfirm Part*/}
+          <div className="mt-3 passwordConfirm">
             <input
               type="password"
               value={passwordConfirm}
               onChange={onChangePasswordConfirm}
-              placeholder="비밀번호를 입력하세요"
+              placeholder="비밀번호를 확인하세요"
               required
             />
             {passwordConfirm.length > 0 && (
