@@ -1,6 +1,6 @@
 const CryptoJS = require('crypto-js');
 const axios = require('axios');
-const sendKakaoMessage = require('./kakaoMessage');
+const { sendKakaoMessage } = require('./kakaoMessage');
 
 require('dotenv').config();
 
@@ -33,7 +33,7 @@ const simpleNotification = async (phone, kakao_access_token) => {
     const hash = hmac.finalize();
     const signature = hash.toString(CryptoJS.enc.Base64);
 
-    const res = await axios({
+    const smsResponse = await axios({
       method: method,
       url: url,
       headers: {
@@ -47,11 +47,11 @@ const simpleNotification = async (phone, kakao_access_token) => {
         countryCode: '82',
         from: `${myPhone}`,
         content: `[북적북적] 현재 인구밀집 '혼잡' 지역에 위치해 있습니다. 안전에 유의해주세요!`,
-        messages: [{ to: `${phone}` }],
+        messages: [{ to: `${DEFAULT_PHONE}` }],
       },
     });
 
-    console.log(res.data);
+    console.log(smsResponse.data);
   } catch (err) {
     console.error(err);
   }

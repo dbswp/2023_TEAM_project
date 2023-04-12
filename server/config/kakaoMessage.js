@@ -1,6 +1,6 @@
-import request from 'request';
+const request = require('request');
 
-export const sendKakaoMessage = (kakao_access_token) => {
+const sendKakaoMessage = (kakao_access_token) => {
   let testObj = {
     object_type: 'text',
     text: '현재 인구밀도 혼잡 지역에 있습니다!',
@@ -29,3 +29,5 @@ export const sendKakaoMessage = (kakao_access_token) => {
   }
   request(options, callback);
 };
+
+module.exports = { sendKakaoMessage };

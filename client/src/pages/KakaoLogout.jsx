@@ -15,5 +15,9 @@ export default function KakaoLogout() {
     logoutKakao();
   }, []);
 
-  return <div>KakaoLogout 리다이렉트 페이지 입니다.</div>;
+  return (
+    <>
+      <div>KakaoLogout 리다이렉트 페이지 입니다.</div>;
+    </>
+  );
 }
