@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../../styles/main-tabs-button.scss";
-import MainCard from "./MainCard";
+
 import Card from "./Card";
 import axios from "axios";
 
