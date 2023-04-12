@@ -1,6 +1,6 @@
 .login__box {
   position: relative;
-  padding: 5rem 0;
+  padding: 5rem 0 0 0;
   margin-top: 5rem;
 }
 .login__box h1 {
@@ -20,7 +20,7 @@
 }
 .login__box form input {
   width: 20rem;
-  height: 3.5rem;
+  height: 2rem;
   padding-left: 0.8rem;
   border: 1px solid #000;
   border-radius: 10px;
@@ -29,7 +29,7 @@
 }
 .login__box form .btn-primary {
   width: 20rem;
-  height: 3.5rem;
+  height: 2rem;
   border-radius: 10px;
   margin-bottom: 1rem;
   background-color: #333;

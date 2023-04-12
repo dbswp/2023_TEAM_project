@@ -53,7 +53,7 @@ export default function Register() {
     const emailCurrent = e.target.value;
     setEmail(emailCurrent);
 
-    if (!emailRegex.test(emailCurrent)) {
+    if (!emailRegex.includes(emailCurrent)) {
       setEmailMessage("이메일 형식이 틀렸어요! 다시 확인해주세요 ㅜ ㅜ");
       setIsEmail(false);
     } else {
@@ -68,7 +68,7 @@ export default function Register() {
     const currentPhone = e.target.value;
     setPhone(currentPhone);
 
-    if (!phoneRegExp.test(currentPhone)) {
+    if (!phoneRegExp.includes(currentPhone)) {
       setPhoneMessage(` "-" 빼고 입력해주세요`);
       setIsPhone(false);
     } else {
@@ -83,7 +83,7 @@ export default function Register() {
     const passwordCurrent = e.target.value;
     setPassword(passwordCurrent);
 
-    if (!passwordRegex.test(passwordCurrent)) {
+    if (!passwordRegex.includes(passwordCurrent)) {
       setPasswordMessage("숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!");
       setIsPassword(false);
     } else {
