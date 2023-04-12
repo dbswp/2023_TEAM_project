@@ -20,7 +20,7 @@
 }
 .login__box form input {
   width: 20rem;
-  height: 2rem;
+  height: 4rem;
   padding-left: 0.8rem;
   border: 1px solid #000;
   border-radius: 10px;
@@ -44,4 +44,4 @@
   height: 36px;
   border-radius: 50%;
   cursor: pointer;
-}
+}/*# sourceMappingURL=login.css.map */

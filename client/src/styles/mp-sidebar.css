@@ -58,10 +58,34 @@
 
 .show-sidebar {
   transform: translate(50px);
+  width: 400px;
 }
 
 @media screen and (min-width: 676px) {
   .sidebar {
     width: 400px;
   }
+}
+.detail-content {
+  display: flex;
+  justify-content: center;
+  width: 400px;
+}
+.detail-content .detail-location p {
+  width: 300px;
+  font-size: 3em;
+  text-align: center;
+}
+.detail-content .detail-weather p {
+  width: 300px;
+  font-size: 2em;
+  text-align: center;
+}
+.detail-content .detail-population p {
+  width: 300px;
+  font-size: 2em;
+  line-height: 1.7;
+  text-align: center;
+  -moz-columns: 200px 4;
+       columns: 200px 4;
 }/*# sourceMappingURL=mp-sidebar.css.map */
