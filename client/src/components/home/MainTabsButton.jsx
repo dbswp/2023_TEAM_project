@@ -1,39 +1,35 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../../styles/main-tabs-button.scss";
-import MainCard from "./MainCard";
+
 import Card from "./Card";
 import axios from "axios";
-import CategoryCard from "./CategoryCard";
 
 export default function MainTabsButton() {
   const getData = async () => {
     const res = await axios.get("http://localhost:4000/nameData");
     if (res.status !== 200) alert("데이터 수신 실패");
-    //지역 분류 데이터
-    const allData = res.data.Arr;
-    console.log(allData);
-    setAllData((cur) => allData);
+    // 전체 분류 데이터
+    const allDataBase = res.data.Arr;
+    // 첫번째 전체 데이터
+    const firstNameData = res.data.Arr[0].name;
+    const firstImgData = res.data.Arr[0].img;
+
+    setAllDataBase((cur) => allDataBase);
+    setAllData((cur) => firstNameData);
+    setAllImgData((cur) => firstImgData);
   };
 
   useEffect(() => {
     getData();
   }, []);
 
+  const [allDataBase, setAllDataBase] = useState();
   const [allData, setAllData] = useState();
-
-  const [toggleState, setToggleState] = useState(1);
+  const [allImgData, setAllImgData] = useState();
+  const [toggleState, setToggleState] = useState(0);
   const toggleTab = (index) => {
     setToggleState(index);
   };
-
-  function dataName() {
-    for (let item of allData) {
-      if (item.id === 1) {
-        let a = item.name;
-        a.map((el, idx) => <CategoryCard name={el} key={idx} />);
-      }
-    }
-  }
 
   return (
     <>
@@ -42,12 +38,22 @@ export default function MainTabsButton() {
           <ul className="tab-list">
             <li className="tab-item">
               <button
+                className={toggleState === 0 ? "nav-link active" : "nav-link"}
+                onClick={() => {
+                  toggleTab(0);
+                }}
+              >
+                전체보기
+              </button>
+            </li>
+            <li className="tab-item">
+              <button
                 className={toggleState === 1 ? "nav-link active" : "nav-link"}
                 onClick={() => {
                   toggleTab(1);
                 }}
               >
-                전체보기
+                특구
               </button>
             </li>
             <li className="tab-item">
@@ -57,7 +63,7 @@ export default function MainTabsButton() {
                   toggleTab(2);
                 }}
               >
-                특구
+                지하철
               </button>
             </li>
             <li className="tab-item">
@@ -67,16 +73,6 @@ export default function MainTabsButton() {
                   toggleTab(3);
                 }}
               >
-                지하철
-              </button>
-            </li>
-            <li className="tab-item">
-              <button
-                className={toggleState === 4 ? "nav-link active" : "nav-link"}
-                onClick={() => {
-                  toggleTab(4);
-                }}
-              >
                 공원
               </button>
             </li>
@@ -84,28 +80,42 @@ export default function MainTabsButton() {
         </div>
         <div className="row" style={{ height: "500px" }}>
           <div className="tab-contents-wrap">
-            <div className={toggleState === 1 ? "tab-content1" : "tab-content"}>
+            <div className={toggleState === 0 ? "tab-content1" : "tab-content"}>
               {allData?.map((el, idx) => {
-                if (el.id === 1)
-                  return <Card name={el.name} img={el.img} key={idx} />;
+                return <Card name={el} key={idx} img={allImgData[idx]} />;
               })}
             </div>
-            <div className={toggleState === 2 ? "tab-content2" : "tab-content"}>
-              {allData?.map((el, idx) => {
-                if (el.id === 2)
-                  return <CategoryCard key={idx} name={el.name} img={el.img} />;
+            <div className={toggleState === 1 ? "tab-content2" : "tab-content"}>
+              {allDataBase[toggleState]?.name?.map((el, idx) => {
+                return (
+                  <Card
+                    key={idx}
+                    name={el}
+                    img={allDataBase[toggleState].img[idx]}
+                  />
+                );
               })}
             </div>
-            <div className={toggleState === 3 ? "tab-content3" : "tab-content"}>
-              {allData?.map((el, idx) => {
-                if (el.id === 3)
-                  return <CategoryCard key={idx} name={el.name} img={el.img} />;
+            <div className={toggleState === 2 ? "tab-content3" : "tab-content"}>
+              {allDataBase[toggleState]?.name?.map((el, idx) => {
+                return (
+                  <Card
+                    key={idx}
+                    name={el}
+                    img={allDataBase[toggleState].img[idx]}
+                  />
+                );
               })}
             </div>
-            <div className={toggleState === 4 ? "tab-content4" : "tab-content"}>
-              {allData?.map((el, idx) => {
-                if (el.id === 4)
-                  return <CategoryCard key={idx} name={el.name} img={el.img} />;
+            <div className={toggleState === 3 ? "tab-content4" : "tab-content"}>
+              {allDataBase[toggleState]?.name?.map((el, idx) => {
+                return (
+                  <Card
+                    key={idx}
+                    name={el}
+                    img={allDataBase[toggleState].img[idx]}
+                  />
+                );
               })}
             </div>
           </div>
