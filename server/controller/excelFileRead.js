@@ -11,6 +11,10 @@ async function seoulData(req, res) {
     const dataNmae_Station = [];
     const dataNmae_Park = [];
     const dataName_Other = [];
+    const dataLink_STZ = [];
+    const dataLink_Park = [];
+    const dataLink_Station = [];
+    const dataLink_Other = [];
 
     for (let i = 1; i < sheets.length; i++) {
       dataIndex.push(sheets[i][1]);
@@ -26,10 +30,21 @@ async function seoulData(req, res) {
     // });
 
     sheets.filter((el) => {
-      if (el[0] === 1) dataNmae_STZ.push(el);
-      else if (el[0] === 2) dataNmae_Park.push(el);
-      else if (el[0] === 3) dataNmae_Station.push(el);
-      else dataName_Other.push(el);
+      if (el[0] === 1) {
+        dataNmae_STZ.push(el[1]);
+        dataLink_STZ.push(el[2]);
+      }
+      if (el[0] === 2) {
+        dataNmae_Park.push(el[1]);
+        dataLink_Park.push(el[2]);
+      }
+      if (el[0] === 3) {
+        dataNmae_Station.push(el[1]);
+        dataLink_Station.push(el[2]);
+      } else {
+        dataName_Other.push(el[1]);
+        dataLink_Other.push(el[2]);
+      }
     });
 
     const Arr = [
@@ -49,11 +64,24 @@ async function seoulData(req, res) {
         id: 4,
         name: dataName_Other,
       },
+      {
+        id: 5,
+        name: dataLink,
+      },
+      {
+        id: 6,
+        name: dataLink_STZ,
+      },
+      {
+        id: 7,
+        name: dataLink_Park,
+      },
+      {
+        id: 8,
+        name: dataLink_Station,
+      },
     ];
-    console.log(dataNmae_STZ);
-    console.log(dataNmae_Park);
-    console.log(dataNmae_Station);
-    res.status(200).json({ dataIndex, Arr, sheets });
+    res.status(200).json({ Arr, dataIndex });
   } catch (err) {
     console.error(err);
   }
