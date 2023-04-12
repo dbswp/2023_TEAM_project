@@ -12,16 +12,25 @@ const Home = () => {
     <main>
       <div className="wrap-container">
         <div className="menubar">
-          <button className="sidebar-toggle" onClick={openSidebar}>
+          {/* <button className="sidebar-toggle" onClick={openSidebar} >
             <BiMenu />
-          </button>
-          <button className="sidebar-location" onClick={openSidebar}>
+          </button> */}
+          <button
+            className="sidebar-location"
+            onClick={() => openSidebar("location")}
+          >
             <BiMap />
           </button>
-          <button className="sidebar-weather" onClick={openSidebar}>
+          <button
+            className="sidebar-weather"
+            onClick={() => openSidebar("weather")}
+          >
             <TiWeatherSunny />
           </button>
-          <button className="sidebar-population" onClick={openSidebar}>
+          <button
+            className="sidebar-population"
+            onClick={() => openSidebar("population")}
+          >
             <IoIosPeople />
           </button>
         </div>

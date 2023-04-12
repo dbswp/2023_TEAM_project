@@ -6,7 +6,8 @@ import styles from "../../styles/mp-sidebar.scss";
 import axios from "axios";
 
 const Sidebar = () => {
-  const { isSidebarOpen, closeSidebar } = useGlobalContext();
+  const { isSidebarOpen, closeSidebar, sidebarCategory } = useGlobalContext();
+  const { openSidebar } = useGlobalContext();
   const [area, setArea] = useState();
   const [data, setData] = useState();
   const [weather, setWeather] = useState();
@@ -32,8 +33,6 @@ const Sidebar = () => {
       getData();
       console.log("데이터 갱신 완료");
     }, 600000);
-
-    // return clearInterval(reNew);
   }, []);
 
   return (
@@ -43,15 +42,33 @@ const Sidebar = () => {
           <FaTimes />
         </button>
       </div>
-      <h1>{area}</h1>
-      <h2>{data?.AREA_CONGEST_MSG[0]}</h2>
-      <h3>
-        오늘 최고 기온은 {weather?.max_temperature}도 <br />
-        최저 기온은 {weather?.min_temperature}도 이고, <br />
-        현재 체감 온도는 {weather?.sen_temperature}입니다.
-      </h3>
+      <div className="detail-content">
+        {sidebarCategory === "location" && (
+          <div className="Deatil-location" onClick={closeSidebar}>
+            <h1>{area}</h1>
+          </div>
+        )}
+        {sidebarCategory === "population" && (
+          <div className="Deatil-population" onClick={closeSidebar}>
+            <h2>{data?.AREA_CONGEST_MSG[0]}</h2>
+          </div>
+        )}
+        {sidebarCategory === "weather" && (
+          <div className="Deatil-weather" onClick={closeSidebar}>
+            <h3>
+              오늘 최고 기온은 {weather?.max_temperature}도 <br />
+              최저 기온은 {weather?.min_temperature}도 이고, <br />
+              현재 체감 온도는 {weather?.sen_temperature}입니다.
+            </h3>
+          </div>
+        )}
+      </div>
+    </aside>
+  );
+};
 
-      {/* <ul className="links">
+{
+  /* <ul className="links">
         {links.map((link) => {
           const { id, url, icon, text } = link;
           return (
@@ -62,9 +79,7 @@ const Sidebar = () => {
             </div>
           );
         })}
-      </ul> */}
-    </aside>
-  );
-};
+      </ul> */
+}
 
 export default Sidebar;
