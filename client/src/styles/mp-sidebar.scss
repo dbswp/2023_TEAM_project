@@ -60,9 +60,34 @@
   }
   .show-sidebar {
     transform: translate(50px);
+    width: 400px;
   }
   @media screen and (min-width: 676px) {
     .sidebar {
       width: 400px;
+    }
+  }
+
+  // Detail content
+  .detail-content{
+    display: flex;
+    justify-content: center;
+    width: 400px;
+    .detail-location p{
+      width: 300px;
+      font-size: 3em;
+      text-align: center;
+    }
+    .detail-weather p{
+      width: 300px;
+      font-size: 2em;
+      text-align: center;
+    }
+    .detail-population p{
+      width: 300px;
+      font-size: 2em;
+      line-height: 1.7;
+      text-align: center;
+      columns: 200px 4;
     }
   }
