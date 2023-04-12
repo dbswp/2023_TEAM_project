@@ -11,9 +11,16 @@ export default function MainTabsButton() {
     if (res.status !== 200) alert("데이터 수신 실패");
     //지역 분류 데이터
     const allData = res.data.Arr;
-    console.log(allData);
+    //전체 이름이 들어간 데이터
+    const indexData = res.data.dataIndex;
+    //이미지 링크가 들어간 데이터
+    const imgData = res.data.Arr[4];
+    console.log(res.data);
+    // console.log(allData);
+
+    setIndexData((cur) => indexData);
     setAllData((cur) => allData);
-    setImgData((cur) => imgData);
+    setImgData((cur) => srcImgData);
   };
 
   useEffect(() => {
@@ -86,9 +93,8 @@ export default function MainTabsButton() {
         <div className="row" style={{ height: "500px" }}>
           <div className="tab-contents-wrap">
             <div className={toggleState === 1 ? "tab-content1" : "tab-content"}>
-              {allData?.map((el, idx) => {
-                if (el.id === 1)
-                  return <Card name={el.name} img={el.img} key={idx} />;
+              {indexData?.map((el, idx) => {
+                return <Card name={el} key={idx} img={el} />;
               })}
             </div>
             <div className={toggleState === 2 ? "tab-content2" : "tab-content"}>
