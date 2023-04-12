@@ -31,6 +31,7 @@ export default function Register() {
           .post("http://localhost:4000/register", {
             email: email,
             password: password,
+            phone: phone,
           })
           .then((res) => {
             console.log("response:", res);
@@ -42,7 +43,7 @@ export default function Register() {
         console.error(err);
       }
     },
-    [email, password]
+    [email, password, phone]
   );
 
   // 이메일
@@ -62,19 +63,19 @@ export default function Register() {
   }, []);
 
   // 번호
-  const onChangePhone = (e) => {
+  const onChangePhone = useCallback((e) => {
+    const phoneRegExp = /^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/;
     const currentPhone = e.target.value;
     setPhone(currentPhone);
-    const phoneRegExp = /^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/;
 
     if (!phoneRegExp.test(currentPhone)) {
-      setPhoneMessage("올바른 형식이 아닙니다!");
+      setPhoneMessage(` "-" 빼고 입력해주세요`);
       setIsPhone(false);
     } else {
       setPhoneMessage("사용 가능한 번호입니다:-)");
       setIsPhone(true);
     }
-  };
+  }, []);
 
   // 비밀번호
   const onChangePassword = useCallback((e) => {
@@ -121,14 +122,8 @@ export default function Register() {
 
           {/* Phone Part */}
           <div className="mt-3 phone">
-            <input
-              id="phone"
-              name="phone"
-              placeholder="핸드폰 번호를 입력해주세요"
-              value={phone}
-              onChange={onChangePhone}
-            />
-            {phone.length > 0 && <div className={`message ${isEmail ? "success" : "error"}`}>{phoneMessage}</div>}
+            <input type="phone" placeholder="핸드폰 번호를 입력해주세요" value={phone} onChange={onChangePhone} />
+            {phone.length > 0 && <div className={`message ${isPhone ? "success" : "error"}`}>{phoneMessage}</div>}
           </div>
 
           {/* Password Part */}

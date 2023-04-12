@@ -10,7 +10,6 @@ export default function Router() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/" element={<Home />} />
       <Route path="kakaologin" element={<KakaoLogin />} />
       <Route path="/register" element={<Register />} />
       <Route path="/blog" element={<Blog />} />

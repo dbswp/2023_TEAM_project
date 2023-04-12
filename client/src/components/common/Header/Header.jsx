@@ -45,7 +45,7 @@ export default function Header() {
           </Link>
 
           <MyGnb>
-            <Link to="./Login">
+            <Link to="/Login">
               <BlackButton text="로그인" />
             </Link>
 

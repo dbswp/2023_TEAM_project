@@ -21,19 +21,18 @@ export default function Login() {
   };
 
   const sendData = async (e) => {
-    e.preventDefault();
-
     axios({
       url: "http://localhost:4000/login",
-      method: "POST",
+      method: "post",
       withCredentials: true,
       data: {
         email: email,
         password: password,
       },
     }).then((result) => {
+      console.log(result);
       if (result.status === 200) {
-        navigate("/blog");
+        navigate("/");
       }
     });
   };
@@ -42,7 +41,7 @@ export default function Login() {
     <>
       <div className="login__box">
         <h1>로그인</h1>
-        <form method="post" onSubmit={sendData}>
+        <form>
           <div className="mt-3 id">
             <label className="mb-2" htmlFor="input-email"></label>
             <input
@@ -67,7 +66,7 @@ export default function Login() {
             />
           </div>
           <div className="d-flex justify-content-center mt-4 password">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary" onClick={sendData}>
               로그인
             </button>
           </div>
