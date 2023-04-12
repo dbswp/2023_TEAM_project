@@ -231,6 +231,7 @@ const refreshtoken = async (req, res) => {
 const loginSuccess = (req, res) => {};
 
 const logout = (req, res) => {
+  console.log("들어오나?");
   try {
     res.cookie("accessToken", "");
     res.status(200).json("Logout Success");
