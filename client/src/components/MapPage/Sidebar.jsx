@@ -44,42 +44,41 @@ const Sidebar = () => {
       </div>
       <div className="detail-content">
         {sidebarCategory === "location" && (
-          <div className="Deatil-location" onClick={closeSidebar}>
-            <h1>{area}</h1>
+          <div className="detail-location">
+            <p>{area}</p>
           </div>
         )}
         {sidebarCategory === "population" && (
-          <div className="Deatil-population" onClick={closeSidebar}>
-            <h2>{data?.AREA_CONGEST_MSG[0]}</h2>
+          <div className="detail-population">
+            <p>{data?.AREA_CONGEST_MSG[0]}</p>
           </div>
         )}
         {sidebarCategory === "weather" && (
-          <div className="Deatil-weather" onClick={closeSidebar}>
-            <h3>
+          <div className="detail-weather">
+            <p>
               오늘 최고 기온은 {weather?.max_temperature}도 <br />
               최저 기온은 {weather?.min_temperature}도 이고, <br />
               현재 체감 온도는 {weather?.sen_temperature}입니다.
-            </h3>
+            </p>
           </div>
         )}
       </div>
     </aside>
   );
 };
-
 {
   /* <ul className="links">
-        {links.map((link) => {
-          const { id, url, icon, text } = link;
-          return (
-            <div key={id}>
-              <p href={url}>
-                {icon} {text}
-              </p>
-            </div>
-          );
-        })}
-      </ul> */
+  {links.map((link) => {
+    const { id, url, icon, text } = link;
+    return (
+      <div key={id}>
+        <p href={url}>
+          {icon} {text}
+        </p>
+      </div>
+    );
+  })}
+</ul> */
 }
 
 export default Sidebar;

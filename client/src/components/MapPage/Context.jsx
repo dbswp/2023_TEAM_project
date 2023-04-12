@@ -3,11 +3,12 @@ import React, { useContext, useState } from "react";
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
-  const [isSidebarOpen, setIsSidebarOpen, setSidebarCategory] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [sidebarCategory, setSidebarCategory] = useState();
 
-  const openSidebar = (category) => {
+  const openSidebar = (sidebarCategory) => {
     setIsSidebarOpen(true);
-    setSidebarCategory(category);
+    setSidebarCategory(sidebarCategory);
   };
   const closeSidebar = () => {
     setIsSidebarOpen(false);
@@ -17,6 +18,7 @@ const AppProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         isSidebarOpen,
+        sidebarCategory,
         openSidebar,
         closeSidebar,
       }}
