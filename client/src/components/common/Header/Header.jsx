@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import BlackButton from './BlackButton';
-import Logo from '../../../assets/Logo.gif';
-import { kakaoLogoutUrl } from '../../../kakaoLoginData';
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import BlackButton from "./BlackButton";
+import Logo from "../../../assets/Logo.gif";
+import { kakaoLogoutUrl } from "../../../kakaoLoginData";
 
 const HeaderIntro = styled.div`
   height: 80px;

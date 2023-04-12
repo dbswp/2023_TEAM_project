@@ -33,48 +33,34 @@ async function seoulData(req, res) {
       if (el[0] === 3) {
         dataNmae_Station.push(el[1]);
         dataLink_Station.push(el[2]);
-      } else {
-        dataName_Other.push(el[1]);
-        dataLink_Other.push(el[2]);
       }
     });
 
     const Arr = [
       {
+        // 특구 관련 데이터
         id: 1,
-        name: dataNmae_STZ,
+        name: dataIndex,
+        img: dataLink,
       },
       {
         id: 2,
-        name: dataNmae_Station,
+        name: dataNmae_STZ,
+        img: dataLink_STZ,
       },
       {
         id: 3,
-        name: dataNmae_Park,
+        name: dataNmae_Station,
+        img: dataLink_Station,
       },
       {
         id: 4,
-        name: dataName_Other,
-      },
-      {
-        id: 5,
-        name: dataLink,
-      },
-      {
-        id: 6,
-        name: dataLink_STZ,
-      },
-      {
-        id: 7,
-        name: dataLink_Park,
-      },
-      {
-        id: 8,
-        name: dataLink_Station,
+        name: dataNmae_Park,
+        img: dataLink_Park,
       },
     ];
-    console.log(Arr[3].name);
-    res.status(200).json({ Arr, dataIndex });
+    console.log(Arr);
+    res.status(200).json({ Arr });
   } catch (err) {
     console.error(err);
   }
