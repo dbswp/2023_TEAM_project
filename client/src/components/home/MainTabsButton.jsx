@@ -13,6 +13,7 @@ export default function MainTabsButton() {
     const allData = res.data.Arr;
     console.log(allData);
     setAllData((cur) => allData);
+    setImgData((cur) => imgData);
   };
 
   useEffect(() => {
