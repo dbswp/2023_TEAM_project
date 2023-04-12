@@ -7,7 +7,7 @@ export default function CategoryCard({ name, img }) {
       {name.map((el, idx) => {
         return (
           <div className="main-card col" key={idx}>
-            <img className="img" src={name[2]}></img>
+            <img className="img" src={img}></img>
             <p className="seoul_end_point">{el[1]}</p>
             <span>Seoul</span>
           </div>

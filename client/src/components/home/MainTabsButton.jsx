@@ -15,7 +15,7 @@ export default function MainTabsButton() {
     const indexData = res.data.dataIndex;
     //이미지 링크가 들어간 데이터
     const srcImgData = res.data.Arr;
-    console.log(allData);
+    console.log(res.data);
 
     setIndexData((cur) => indexData);
     setAllData((cur) => allData);
@@ -28,7 +28,7 @@ export default function MainTabsButton() {
 
   const [allData, setAllData] = useState();
 
-  const [toggleState, setToggleState] = useState(1);
+  const [toggleState, setToggleState] = useState(0);
   const toggleTab = (index) => {
     setToggleState(index);
   };
@@ -49,12 +49,22 @@ export default function MainTabsButton() {
           <ul className="tab-list">
             <li className="tab-item">
               <button
+                className={toggleState === 0 ? "nav-link active" : "nav-link"}
+                onClick={() => {
+                  toggleTab(0);
+                }}
+              >
+                전체보기
+              </button>
+            </li>
+            <li className="tab-item">
+              <button
                 className={toggleState === 1 ? "nav-link active" : "nav-link"}
                 onClick={() => {
                   toggleTab(1);
                 }}
               >
-                전체보기
+                특구
               </button>
             </li>
             <li className="tab-item">
@@ -64,7 +74,7 @@ export default function MainTabsButton() {
                   toggleTab(2);
                 }}
               >
-                특구
+                지하철
               </button>
             </li>
             <li className="tab-item">
@@ -74,16 +84,6 @@ export default function MainTabsButton() {
                   toggleTab(3);
                 }}
               >
-                지하철
-              </button>
-            </li>
-            <li className="tab-item">
-              <button
-                className={toggleState === 4 ? "nav-link active" : "nav-link"}
-                onClick={() => {
-                  toggleTab(4);
-                }}
-              >
                 공원
               </button>
             </li>
@@ -91,27 +91,27 @@ export default function MainTabsButton() {
         </div>
         <div className="row" style={{ height: "500px" }}>
           <div className="tab-contents-wrap">
-            <div className={toggleState === 1 ? "tab-content1" : "tab-content"}>
+            <div className={toggleState === 0 ? "tab-content1" : "tab-content"}>
               {indexData?.map((el, idx) => {
                 return <Card name={el} key={idx} img={el} />;
               })}
             </div>
-            <div className={toggleState === 2 ? "tab-content2" : "tab-content"}>
+            <div className={toggleState === 1 ? "tab-content2" : "tab-content"}>
               {allData?.map((el, idx) => {
                 if (el.id === 2)
                   return <CategoryCard key={idx} name={el.name} img={el.img} />;
               })}
             </div>
-            <div className={toggleState === 3 ? "tab-content3" : "tab-content"}>
+            <div className={toggleState === 2 ? "tab-content3" : "tab-content"}>
               {allData?.map((el, idx) => {
                 if (el.id === 3)
                   return <CategoryCard key={idx} name={el.name} img={el.img} />;
               })}
             </div>
-            <div className={toggleState === 4 ? "tab-content4" : "tab-content"}>
-              {allData?.map((el, idx) => {
-                if (el.id === 4)
-                  return <CategoryCard key={idx} name={el.name} img={el.img} />;
+            <div className={toggleState === 3 ? "tab-content4" : "tab-content"}>
+              {allData?.map((el, img, idx) => {
+                if (el.id === 3)
+                  return <CategoryCard key={idx} name={el.name} img={img} />;
               })}
             </div>
           </div>
