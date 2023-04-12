@@ -14,9 +14,8 @@ export default function MainTabsButton() {
     //전체 이름이 들어간 데이터
     const indexData = res.data.dataIndex;
     //이미지 링크가 들어간 데이터
-    const imgData = res.data.Arr[4];
-    console.log(res.data);
-    // console.log(allData);
+    const srcImgData = res.data.Arr;
+    console.log(allData);
 
     setIndexData((cur) => indexData);
     setAllData((cur) => allData);
