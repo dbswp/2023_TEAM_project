@@ -2,30 +2,103 @@ main {
   position: absolute;
   top: 0;
     min-height: 100vh;
-    display: flex;
-    // justify-content: center;
-    align-items: center;
+    // display: flex;
+    // align-items: center;
   }
   
   .wrap-container {
     position: sticky;
     z-index: 99;
     border-right: 1px solid rgb(212, 212, 212);
-    // left: 0;
-    // top: 0;
     width: 50px;
     height: 200vh;
     background-color: white;
   }
 
+  .menubar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    position: sticky;
+    z-index: 99;
+    width: 50px;
+    height: 35vh;
+  }
+
   .sidebar-toggle {
-    position: absolute;
-    top: 0;
-    left: 0.5rem;
+    // position: absolute;
+    // top: 0;
     font-size: 1.5rem;
     background: transparent;
     border-color: transparent;
-    // color: var(--clr-primary-5);
+    transition: all 0.3s linear;
+    cursor: pointer;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .sidebar-location {
+    // position: absolute;
+    // top: 0;
+    font-size: 1.5rem;
+    background: transparent;
+    border-color: transparent;
+    transition: all 0.3s linear;
+    cursor: pointer;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .sidebar-weather {
+    font-size: 1.5rem;
+    background: transparent;
+    border-color: transparent;
+    transition: all 0.3s linear;
+    cursor: pointer;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .sidebar-population {
+    // position: absolute;
+    // top: 0;
+    font-size: 1.5rem;
+    background: transparent;
+    border-color: transparent;
     transition: all 0.3s linear;
     cursor: pointer;
     animation: bounce 2s ease-in-out infinite;

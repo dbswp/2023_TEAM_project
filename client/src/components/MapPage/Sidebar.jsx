@@ -15,7 +15,7 @@ const Sidebar = () => {
         </button>
       </div>
 
-      <ul className="links">
+      {/* <ul className="links">
         {links.map((link) => {
           const { id, url, icon, text } = link;
           return (
@@ -26,7 +26,7 @@ const Sidebar = () => {
             </div>
           );
         })}
-      </ul>
+      </ul> */}
     </aside>
   );
 };

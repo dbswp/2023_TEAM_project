@@ -11,15 +11,20 @@ const Home = () => {
   return (
     <main>
       <div className="wrap-container">
-        <button className="sidebar-toggle" onClick={openSidebar}>
-          <BiMenu />
-        </button>
-        <button className="sidebar-location" onClick={openSidebar}>
-          <BiMap />
-        </button>
-        <button className="sidebar-population" onClick={openSidebar}>
-          <IoIosPeople />
-        </button>
+        <div className="menubar">
+          <button className="sidebar-toggle" onClick={openSidebar}>
+            <BiMenu />
+          </button>
+          <button className="sidebar-location" onClick={openSidebar}>
+            <BiMap />
+          </button>
+          <button className="sidebar-weather" onClick={openSidebar}>
+            <TiWeatherSunny />
+          </button>
+          <button className="sidebar-population" onClick={openSidebar}>
+            <IoIosPeople />
+          </button>
+        </div>
       </div>
     </main>
   );
