@@ -23,7 +23,7 @@ export default function MainTabsButton() {
     getData();
   }, []);
 
-  const [allDataBase, setAllDataBase] = useState();
+  const [allDataBase, setAllDataBase] = useState([]);
   const [allData, setAllData] = useState();
   const [allImgData, setAllImgData] = useState();
   const [toggleState, setToggleState] = useState(0);
