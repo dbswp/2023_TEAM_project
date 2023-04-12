@@ -47,8 +47,8 @@ async function seoulData(req, res) {
         name: dataLink,
       },
     ];
-    console.log(Arr[4]);
-    res.status(200).json({ dataIndex, Arr });
+    // console.log(Arr[4]);
+    res.status(200).json({ dataIndex, Arr, sheets });
   } catch (err) {
     console.error(err);
   }
