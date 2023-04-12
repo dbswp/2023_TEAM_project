@@ -17,11 +17,18 @@ async function seoulData(req, res) {
       dataLink.push(sheets[i][2]);
     }
 
-    dataIndex.filter((el) => {
-      if (el.includes("관광특구") === true) dataNmae_STZ.push(el);
-      else if (el.includes("역") === true) dataNmae_Station.push(el);
-      else if (el.includes("공원") === true || el.includes("숲") === true)
-        dataNmae_Park.push(el);
+    // dataIndex.filter((el) => {
+    //   // if (el.includes("관광특구") === true) dataNmae_STZ.push(el);
+    //   else if (el.includes("역") === true) dataNmae_Station.push(el);
+    //   else if (el.includes("공원") === true || el.includes("숲") === true)
+    //     dataNmae_Park.push(el);
+    //   else dataName_Other.push(el);
+    // });
+
+    sheets.filter((el) => {
+      if (el[0] === 1) dataNmae_STZ.push(el);
+      else if (el[0] === 2) dataNmae_Park.push(el);
+      else if (el[0] === 3) dataNmae_Station.push(el);
       else dataName_Other.push(el);
     });
 
@@ -42,13 +49,11 @@ async function seoulData(req, res) {
         id: 4,
         name: dataName_Other,
       },
-      {
-        id: 5,
-        name: dataLink,
-      },
     ];
-    console.log(Arr[4]);
-    res.status(200).json({ dataIndex, Arr });
+    console.log(dataNmae_STZ);
+    console.log(dataNmae_Park);
+    console.log(dataNmae_Station);
+    res.status(200).json({ dataIndex, Arr, sheets });
   } catch (err) {
     console.error(err);
   }
