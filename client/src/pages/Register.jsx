@@ -109,7 +109,7 @@ export default function Register() {
         setIsPasswordConfirm(false);
       }
     },
-    [password, passwordConfirm]
+    [password]
   );
 
   return (
@@ -180,7 +180,13 @@ export default function Register() {
             )}
           </div>
           <div className="d-flex justify-content-center mt-4 password">
-            <button type="submit" className="btn btn-primary">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={
+                !(isEmail && isPassword && isPasswordConfirm && isPhone)
+              }
+            >
               회원가입
             </button>
           </div>
