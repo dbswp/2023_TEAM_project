@@ -15,6 +15,7 @@ const refreshToken = require('./routes/refreshtoken');
 const logoutRouter = require('./routes/logout');
 const dataRouter = require('./routes/data');
 const seoulDataRouter = require('./routes/seoulDataName');
+const pushAlarmRouter = require('./routes/webPush');
 
 app.use(
   cors({
@@ -35,6 +36,7 @@ app.use('/accesstoken', accessToken);
 app.use('/refreshtoken', refreshToken);
 app.use('/data', dataRouter);
 app.use('/nameData', seoulDataRouter);
+app.use('/push', pushAlarmRouter);
 // app.get("/login/success", loginSuccess);
 
 app.get('/', (req, res) => {
