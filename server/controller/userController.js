@@ -25,7 +25,7 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   const { email, password, phone } = req.body;
   try {
-    const duplicatedUser = await User.findOne({ email, phone, password });
+    const duplicatedUser = await User.findOne({ email });
     if (duplicatedUser) {
       console.log("db에서 아이디 대조까지는 성공");
     }

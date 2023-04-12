@@ -21,6 +21,7 @@ export default function Login() {
   };
 
   const sendData = async (e) => {
+    e.preventDefault();
     axios({
       url: "http://localhost:4000/login",
       method: "post",
@@ -66,7 +67,11 @@ export default function Login() {
             />
           </div>
           <div className="d-flex justify-content-center mt-4 password">
-            <button type="submit" className="btn btn-primary" onClick={sendData}>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={sendData}
+            >
               로그인
             </button>
           </div>
