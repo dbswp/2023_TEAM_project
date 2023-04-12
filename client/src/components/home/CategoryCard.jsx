@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/card.scss";
 
-export default function CategoryCard({ name }) {
+export default function CategoryCard({ name, img }) {
   return (
     <>
       {name.map((el, idx) => {

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function MainCard() {
   const navigate = useNavigate();
-  const arr = [1, 2, 3, 4, 5];
+  const arr = [1, 2, 3, 4];
 
   return (
     <>

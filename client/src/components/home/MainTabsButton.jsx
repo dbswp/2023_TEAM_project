@@ -11,10 +11,7 @@ export default function MainTabsButton() {
     if (res.status !== 200) alert("데이터 수신 실패");
     //지역 분류 데이터
     const allData = res.data.Arr;
-    //전체 이름이 들어간 데이터
-    const indexData = res.data.dataIndex;
     console.log(allData);
-    setIndexData((cur) => indexData);
     setAllData((cur) => allData);
   };
 
@@ -23,7 +20,6 @@ export default function MainTabsButton() {
   }, []);
 
   const [allData, setAllData] = useState();
-  const [indexData, setIndexData] = useState();
 
   const [toggleState, setToggleState] = useState(1);
   const toggleTab = (index) => {
@@ -32,8 +28,8 @@ export default function MainTabsButton() {
 
   function dataName() {
     for (let item of allData) {
-      if (item.id === 2) {
-        let a = item.name.dataName_STZ;
+      if (item.id === 1) {
+        let a = item.name;
         a.map((el, idx) => <CategoryCard name={el} key={idx} />);
       }
     }
@@ -89,26 +85,27 @@ export default function MainTabsButton() {
         <div className="row" style={{ height: "500px" }}>
           <div className="tab-contents-wrap">
             <div className={toggleState === 1 ? "tab-content1" : "tab-content"}>
-              {indexData?.map((el, idx) => {
-                return <Card name={el} key={idx} />;
+              {allData?.map((el, idx) => {
+                if (el.id === 1)
+                  return <Card name={el.name} img={el.img} key={idx} />;
               })}
             </div>
             <div className={toggleState === 2 ? "tab-content2" : "tab-content"}>
               {allData?.map((el, idx) => {
-                if (el.id === 1)
-                  return <CategoryCard key={idx} name={el.name} />;
+                if (el.id === 2)
+                  return <CategoryCard key={idx} name={el.name} img={el.img} />;
               })}
             </div>
             <div className={toggleState === 3 ? "tab-content3" : "tab-content"}>
               {allData?.map((el, idx) => {
-                if (el.id === 2)
-                  return <CategoryCard key={idx} name={el.name} />;
+                if (el.id === 3)
+                  return <CategoryCard key={idx} name={el.name} img={el.img} />;
               })}
             </div>
             <div className={toggleState === 4 ? "tab-content4" : "tab-content"}>
               {allData?.map((el, idx) => {
-                if (el.id === 3)
-                  return <CategoryCard key={idx} name={el.name} />;
+                if (el.id === 4)
+                  return <CategoryCard key={idx} name={el.name} img={el.img} />;
               })}
             </div>
           </div>

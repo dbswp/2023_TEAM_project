@@ -10,11 +10,9 @@ async function seoulData(req, res) {
     const dataNmae_STZ = [];
     const dataNmae_Station = [];
     const dataNmae_Park = [];
-    const dataName_Other = [];
     const dataLink_STZ = [];
     const dataLink_Park = [];
     const dataLink_Station = [];
-    const dataLink_Other = [];
 
     for (let i = 1; i < sheets.length; i++) {
       dataIndex.push(sheets[i][1]);
