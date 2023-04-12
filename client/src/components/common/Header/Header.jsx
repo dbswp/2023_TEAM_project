@@ -1,8 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import BlackButton from "./BlackButton";
-import Logo from "../../../assets/Logo.gif";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import BlackButton from './BlackButton';
+import Logo from '../../../assets/Logo.gif';
+import { kakaoLogoutUrl } from '../../../kakaoLoginData';
 
 const HeaderIntro = styled.div`
   height: 80px;
@@ -51,6 +52,14 @@ export default function Header() {
             <Link to="/register">
               <BlackButton text="회원가입" />
             </Link>
+
+            <button
+              onClick={() => {
+                window.location.href = kakaoLogoutUrl;
+              }}
+            >
+              카카오 계정 로그아웃
+            </button>
           </MyGnb>
         </MyHeader>
       </HeaderIntro>

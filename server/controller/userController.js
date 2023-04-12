@@ -171,32 +171,6 @@ const kakaoLoginUser = async (req, res) => {
     console.error(err);
   }
 };
-const kakaoLogoutUser = async (req, res) => {
-  try {
-    const logoutResponse = await fetch(
-      'https://kapi.kakao.com/v1/user/logout',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Authorization: `Bearer ${kakao_access_token}`,
-        },
-      }
-    );
-    console.log(logoutResponse.status);
-
-    const logoutRes = await fetch(
-      `https://kauth.kakao.com/oauth/logout?client_id=${KAKAO_API_KEY}&logout_redirect_uri=${KAKAO_LOGOUT_REDIRECT_URI}`
-    );
-
-    console.log(logoutRes.status);
-
-    res.status(200).json('카카오 계정 로그아웃 요청 성공!');
-  } catch (err) {
-    console.error(err);
-    res.status(500).json('엑세스 토큰 받기 실패!!');
-  }
-};
 
 const accesstoken = async (req, res) => {
   const { id } = req.body;
@@ -268,6 +242,5 @@ module.exports = {
   loginSuccess,
   registerUser,
   kakaoLoginUser,
-  kakaoLogoutUser,
   logout,
 };
