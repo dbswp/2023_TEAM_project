@@ -21,14 +21,6 @@ async function seoulData(req, res) {
       dataLink.push(sheets[i][2]);
     }
 
-    // dataIndex.filter((el) => {
-    //   // if (el.includes("관광특구") === true) dataNmae_STZ.push(el);
-    //   else if (el.includes("역") === true) dataNmae_Station.push(el);
-    //   else if (el.includes("공원") === true || el.includes("숲") === true)
-    //     dataNmae_Park.push(el);
-    //   else dataName_Other.push(el);
-    // });
-
     sheets.filter((el) => {
       if (el[0] === 1) {
         dataNmae_STZ.push(el[1]);
@@ -81,6 +73,7 @@ async function seoulData(req, res) {
         name: dataLink_Station,
       },
     ];
+    console.log(Arr[3].name);
     res.status(200).json({ Arr, dataIndex });
   } catch (err) {
     console.error(err);
