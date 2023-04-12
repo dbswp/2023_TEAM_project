@@ -13,7 +13,7 @@ export default function MainTabsButton() {
     const allData = res.data.Arr;
     //전체 이름이 들어간 데이터
     const indexData = res.data.dataIndex;
-    // console.log(allData);
+    console.log(allData);
     setIndexData((cur) => indexData);
     setAllData((cur) => allData);
   };
