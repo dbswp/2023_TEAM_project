@@ -1,7 +1,7 @@
-const mongooseConnect = require("./mongooseConnect");
-const User = require("../models/user");
-const jwt = require("jsonwebtoken");
-const request = require("request");
+const mongooseConnect = require('./mongooseConnect');
+const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+const request = require('request');
 
 const { ACCESS_SECRET, REFRESH_SECRET, KAKAO_API_KEY, KAKAO_REDIRECT_URI } =
   process.env;
@@ -14,11 +14,11 @@ const registerUser = async (req, res) => {
   console.log(req.body);
   try {
     await User.create(req.body);
-    res.status(200).json({ text: "회원가입 성공!!" });
-    console.log("회원가입 성공!");
+    res.status(200).json({ text: '회원가입 성공!!' });
+    console.log('회원가입 성공!');
   } catch (err) {
     console.error(err);
-    res.status(500).json({ text: "회원가입 실패" });
+    res.status(500).json({ text: '회원가입 실패' });
   }
 };
 
@@ -27,13 +27,13 @@ const loginUser = async (req, res) => {
   try {
     const duplicatedUser = await User.findOne({ id });
     if (duplicatedUser) {
-      console.log("db에서 아이디 대조까지는 성공");
+      console.log('db에서 아이디 대조까지는 성공');
     }
     if (!duplicatedUser) {
-      return res.status(400).json({ text: "없는 아이디임.." });
+      return res.status(400).json({ text: '없는 아이디임..' });
     }
     if (duplicatedUser.password !== req.body.password) {
-      return res.status(400).json({ text: "비밀번호 틀림!" });
+      return res.status(400).json({ text: '비밀번호 틀림!' });
     }
     // console.log(duplicatedUser);
 
@@ -45,7 +45,7 @@ const loginUser = async (req, res) => {
       ACCESS_SECRET,
       {
         expiresIn: 1000 * 60,
-        issuer: "About Tech",
+        issuer: 'About Tech',
       }
     );
 
@@ -56,17 +56,17 @@ const loginUser = async (req, res) => {
       },
       REFRESH_SECRET,
       {
-        expiresIn: "24h",
-        issuer: "About Tech",
+        expiresIn: '24h',
+        issuer: 'About Tech',
       }
     );
 
     // 쿠키에 담아서 전송
-    res.cookie("accessToken", accessToken, {
+    res.cookie('accessToken', accessToken, {
       secure: false,
       httpOnly: false,
     });
-    res.cookie("refreshToken", refreshToken, {
+    res.cookie('refreshToken', refreshToken, {
       secure: false,
       httpOnly: false,
     });
@@ -75,12 +75,14 @@ const loginUser = async (req, res) => {
     // console.log(accessToken);
     // console.log(refreshToken);
 
-    res.status(200).json({ text: "로그인 성공" });
+    res.status(200).json({ text: '로그인 성공' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ text: "로그인 오류" });
+    res.status(500).json({ text: '로그인 오류' });
   }
 };
+
+let kakao_access_token;
 
 const kakaoLoginUser = async (req, res) => {
   const KAKAO_CODE = req.body.code;
@@ -90,48 +92,53 @@ const kakaoLoginUser = async (req, res) => {
     const getKakaoAccessToken = await fetch(
       `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${KAKAO_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&code=${KAKAO_CODE}`,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "x-www-form-urlencoded;charset=utf-8",
+          'Content-Type': 'x-www-form-urlencoded;charset=utf-8',
         },
       }
     );
     const data = await getKakaoAccessToken.json();
-    console.log("카카오 엑세스 토큰 발급 성공!!   토큰:", data.access_token);
+    kakao_access_token = data.access_token;
+    console.log('카카오 엑세스 토큰 발급 성공!!   토큰:', data.access_token);
 
     let testObj = {
-      object_type: "text",
-      text: "현재 인구밀도 혼잡 지역에 있습니다! 다른 지역으로의 이동은 어떨까요?",
+      object_type: 'text',
+      text: '현재 인구밀도 혼잡 지역에 있습니다! 다른 지역으로의 이동은 어떨까요?',
       link: {
-        web_url: "https://localhost:3000/login",
-        mobile_web_url: "https://localhost:3000/login",
+        web_url: 'https://localhost:3000/login',
+        mobile_web_url: 'https://localhost:3000/login',
       },
-      button_title: "바로 확인",
+      button_title: '바로 확인',
     };
+
     let testObjStr = JSON.stringify(testObj);
+
     let options = {
-      url: "https://kapi.kakao.com/v2/api/talk/memo/default/send",
-      method: "POST",
+      url: 'https://kapi.kakao.com/v2/api/talk/memo/default/send',
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${data.access_token}`,
-        "Content-Type": "application/x-www-form-urlencoded",
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       form: {
         template_object: testObjStr,
       },
     };
+
     function callback(error, response, body) {
       if (response) {
         console.log(body);
       }
     }
+
     request(options, callback);
 
     const userResponese = await fetch(`https://kapi.kakao.com/v2/user/me`, {
-      method: "POST",
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${data.access_token}`,
-        "Content-type": "application/x-www-form-urlencoded",
+        'Content-type': 'application/x-www-form-urlencoded',
       },
     });
     if (userResponese.status === 200) {
@@ -149,20 +156,45 @@ const kakaoLoginUser = async (req, res) => {
         ACCESS_SECRET,
         {
           expiresIn: 1000 * 60,
-          issuer: "About Tech",
+          issuer: 'About Tech',
         }
       );
       // 쿠키에 담아서 전송
-      res.cookie("kakaoAccessToken", kakaoAccessToken, {
+      res.cookie('kakaoAccessToken', kakaoAccessToken, {
         secure: false,
         httpOnly: false,
       });
       console.log(kakaoAccessToken);
     }
-    res.status(200).json("엑세스 토큰 받기 성공!");
+    res.status(200).json('엑세스 토큰 받기 성공!');
   } catch (err) {
     console.error(err);
-    res.status(500).json("엑세스 토큰 받기 실패!!");
+  }
+};
+const kakaoLogoutUser = async (req, res) => {
+  try {
+    const logoutResponse = await fetch(
+      'https://kapi.kakao.com/v1/user/logout',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: `Bearer ${kakao_access_token}`,
+        },
+      }
+    );
+    console.log(logoutResponse.status);
+
+    const logoutRes = await fetch(
+      `https://kauth.kakao.com/oauth/logout?client_id=${KAKAO_API_KEY}&logout_redirect_uri=${KAKAO_LOGOUT_REDIRECT_URI}`
+    );
+
+    console.log(logoutRes.status);
+
+    res.status(200).json('카카오 계정 로그아웃 요청 성공!');
+  } catch (err) {
+    console.error(err);
+    res.status(500).json('엑세스 토큰 받기 실패!!');
   }
 };
 
@@ -202,16 +234,16 @@ const refreshtoken = async (req, res) => {
       },
       ACCESS_SECRET,
       {
-        expiresIn: "1m",
-        issuer: "About Tech",
+        expiresIn: '1m',
+        issuer: 'About Tech',
       }
     );
 
-    res.cookie("accessToken", accessToken, {
+    res.cookie('accessToken', accessToken, {
       secure: false,
       httpOnly: true,
     });
-    res.status(200).json("Access Token Recreated");
+    res.status(200).json('Access Token Recreated');
     console.log(userData);
   } catch (err) {
     res.status(500).json(err);
@@ -222,8 +254,8 @@ const loginSuccess = (req, res) => {};
 
 const logout = (req, res) => {
   try {
-    res.cookie("accessToken", "");
-    res.status(200).json("Logout Success");
+    res.cookie('accessToken', '');
+    res.status(200).json('Logout Success');
   } catch (error) {
     res.status(500).json(error);
   }
@@ -236,5 +268,6 @@ module.exports = {
   loginSuccess,
   registerUser,
   kakaoLoginUser,
+  kakaoLogoutUser,
   logout,
 };
