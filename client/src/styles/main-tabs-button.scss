@@ -13,7 +13,6 @@
         color: #555;
         border-radius: 10px;
         border: none;
-        margin-bottom: 35px !important;
       }
       .nav-link.active {
         background-color: black;
@@ -22,6 +21,7 @@
     }
   }
   .tab-contents-wrap {
+    margin-top: 35px;
     padding: 0px !important;
     .tab-content {
       display: none;
