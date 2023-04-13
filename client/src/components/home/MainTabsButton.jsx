@@ -1,8 +1,35 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../../styles/main-tabs-button.scss";
-
 import Card from "./Card";
 import axios from "axios";
+
+window.addEventListener("scroll", () => {
+  const tabListWrap = document.querySelector(".main-tab-top");
+  const tabListUl = document.querySelector(".tab-list");
+
+  let scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
+
+  if (scrollLocation > 830) {
+    tabListWrap.style.position = "fixed";
+    tabListWrap.style.background = "white";
+    tabListWrap.style.boxShadow = "rgb(173 173 173 / 22%) 0px 3px 6px";
+    tabListWrap.style.zIndex = "2";
+    tabListWrap.style.width = "101vw";
+    tabListUl.style.width = "1140px";
+    tabListUl.style.margin = "auto";
+
+    tabListWrap.style.top = "0";
+    tabListWrap.style.left = "0";
+    tabListUl.style.marginTop = "15px";
+    tabListUl.style.marginBottom = "15px";
+  } else if (scrollLocation < 820) {
+    tabListWrap.style.position = "relative";
+    tabListWrap.style.boxShadow = "none";
+    tabListUl.style.backgroundColor = "none";
+    tabListWrap.style.width = "auto";
+    tabListUl.style.margin = "none";
+  }
+});
 
 export default function MainTabsButton() {
   const getData = async () => {
@@ -42,7 +69,7 @@ export default function MainTabsButton() {
   return (
     <>
       <div className="container main-tab-wrap">
-        <div className="row">
+        <div className="row main-tab-top">
           <ul className="tab-list">
             <li className="tab-item">
               <button
@@ -109,6 +136,9 @@ export default function MainTabsButton() {
                     key={idx}
                     name={el}
                     img={allDataBase[toggleState]?.img[idx]}
+                    latitude={allDataBase[toggleState]?.latitude[idx]}
+                    longitude={allDataBase[toggleState]?.longitude[idx]}
+                    // location={[allLatitudeData, allLongitudeData]}
                   />
                 );
               })}
@@ -120,6 +150,9 @@ export default function MainTabsButton() {
                     key={idx}
                     name={el}
                     img={allDataBase[toggleState]?.img[idx]}
+                    latitude={allDataBase[toggleState]?.latitude[idx]}
+                    longitude={allDataBase[toggleState]?.longitude[idx]}
+                    // location={[allLatitudeData, allLongitudeData]}
                   />
                 );
               })}
@@ -131,6 +164,9 @@ export default function MainTabsButton() {
                     key={idx}
                     name={el}
                     img={allDataBase[toggleState]?.img[idx]}
+                    latitude={allDataBase[toggleState]?.latitude[idx]}
+                    longitude={allDataBase[toggleState]?.longitude[idx]}
+                    // location={[allLatitudeData, allLongitudeData]}
                   />
                 );
               })}

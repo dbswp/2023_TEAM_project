@@ -4,6 +4,7 @@ import "../../styles/main_banner.scss";
 import weatherImg from "../../assets/weather.png";
 import peopleImg from "../../assets/people.png";
 import peopleImg2 from "../../assets/people2.png";
+import notice from "../../assets/notice.png";
 
 export default function MainBanner() {
   return (
@@ -51,12 +52,27 @@ export default function MainBanner() {
                   </h4>
                 </div>
                 <div className="col-md-5">
-                  <img className="img" src={peopleImg2} alt="날씨 이미지" />
+                  <img className="img" src={peopleImg2} alt="사람 이미지" />
                 </div>
               </div>
             </div>
           </div>
-          <div className="col-md-4 banner-3"></div>
+          <div className="col-md-4">
+            <div className="banner-3">
+              <div className="row">
+                <div className="col-md-7 text">
+                  <h4>
+                    실시간 인구
+                    <br />
+                    알림받기
+                  </h4>
+                </div>
+                <div className="col-md-5">
+                  <img className="img" src={notice} alt="알림 이미지" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

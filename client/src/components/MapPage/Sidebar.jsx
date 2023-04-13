@@ -47,7 +47,14 @@ const Sidebar = () => {
         {sidebarCategory === "information" && (
           <div className="detail-information">
             <h1>{area}</h1>
+            <h2>{data?.AREA_CONGEST_LVL[0]}</h2>
+            <br />
+            <hr />
+            <br />
             <h2>{data?.AREA_CONGEST_MSG[0]}</h2>
+            <br />
+            <hr />
+            <br />
             <p>
               오늘 최고 기온은 {weather?.max_temperature}도 <br />
               최저 기온은 {weather?.min_temperature}도 이고, <br />

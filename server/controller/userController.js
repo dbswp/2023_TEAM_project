@@ -1,10 +1,15 @@
-const mongooseConnect = require("./mongooseConnect");
-const User = require("../models/user");
-const jwt = require("jsonwebtoken");
+const mongooseConnect = require('./mongooseConnect');
+const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+const { simpleNotification } = require('../config/naverApiTest');
 
-const { ACCESS_SECRET, REFRESH_SECRET, KAKAO_API_KEY, KAKAO_REDIRECT_URI } = process.env;
+const { ACCESS_SECRET, REFRESH_SECRET } = process.env;
 
 mongooseConnect();
+
+//유저 로그인시 데이터를 받기 위한 전역변수
+let isUserLogined = false;
+let userID;
 
 // 회원 가입
 // 몽구스 삽입은 create, 뒤에 {} = One, 뒤에 [] = Many
@@ -33,7 +38,11 @@ const loginUser = async (req, res) => {
     if (duplicatedUser.password !== req.body.password) {
       return res.status(400).json({ text: "비밀번호 틀림" });
     }
-    // console.log(duplicatedUser);
+
+    // 유저가 로그인 하면 true로 바꾸어줌
+    isUserLogined = true;
+    // 로그인시 유저가 req.body에 담겨서 오는  유저 이메일을 전역 변수에 저장
+    if (isUserLogined) userID = email;
 
     // accesstoken 발급
     const accessToken = jwt.sign(
@@ -80,11 +89,9 @@ const loginUser = async (req, res) => {
   }
 };
 
-let kakao_access_token;
-
 const kakaoLoginUser = async (req, res) => {
-  //프론트에서 요청과 함께 보낸 인가코드를 변수에 저장
-  const KAKAO_CODE = req.body.code;
+  //프론트에서 요청과 함께 보낸 카카오 엑세스 토큰을 변수에 저장
+  const KAKAO_CODE = req.body.kakao_access_token;
 
   try {
     // 카카오 인가토큰을 가지고 엑세스 토큰을 요청
@@ -105,15 +112,16 @@ const kakaoLoginUser = async (req, res) => {
     const userResponese = await fetch(`https://kapi.kakao.com/v2/user/me`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${data.access_token}`,
-        "Content-type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${KAKAO_CODE}`,
+        'Content-type': 'application/x-www-form-urlencoded',
       },
     });
     if (userResponese.status === 200) {
       const userKaKaoInfo = await userResponese.json();
+
       console.log(userKaKaoInfo);
 
-      // accesstoken 발급
+      //jwt accesstoken 발급
       const kakaoAccessToken = jwt.sign(
         {
           id: userKaKaoInfo.id,
@@ -130,7 +138,7 @@ const kakaoLoginUser = async (req, res) => {
         secure: false,
         httpOnly: false,
       });
-      console.log(kakaoAccessToken);
+      // console.log(kakaoAccessToken);
     }
     res.status(200).json("엑세스 토큰 받기 성공!");
   } catch (err) {
@@ -193,12 +201,31 @@ const refreshtoken = async (req, res) => {
 const loginSuccess = (req, res) => {};
 
 const logout = (req, res) => {
-  console.log("들어오나?");
+  console.log('들어오나?');
   try {
     res.cookie("accessToken", " ");
     res.status(200).json("Logout Success");
   } catch (error) {
     res.status(500).json(error);
+  }
+};
+
+const findPhoneNumber = async (req, res) => {
+  //NaverMaps.jsx 요청의 body 안에 담겨온 카카오 엑세스 토큰을 변수에 저장
+  const kakao_access_token = req.body.kakao_access_token;
+
+  try {
+    //이메일 형식의 유저 아이디를 컨트롤러 상단의 전역변수에서 받아와서 DB에서 해당 유저정보를 가져옴
+    const configuration = await User.findOne({
+      email: userID,
+    }).find();
+    // 해당 유저정보에서 핸드폰 번호만 추출
+    const phone = configuration[0]?.phone;
+
+    // 핸드폰 번호가 존재하면 알림문자전송 모듈에 인자로 전달
+    if (configuration) simpleNotification(phone, kakao_access_token);
+  } catch (err) {
+    console.error(err);
   }
 };
 
@@ -210,4 +237,5 @@ module.exports = {
   registerUser,
   kakaoLoginUser,
   logout,
+  findPhoneNumber,
 };
