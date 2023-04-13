@@ -1,0 +1,22 @@
+.headerWrap {
+  border-bottom: 1px solid #e1e1e1;
+  background-color: #fff;
+  padding-top: 16px;
+  padding-bottom: 16px;
+
+  .row {
+    display: flex;
+    align-items: center;
+    .col.let {
+      text-align: left;
+      .logo{
+        font-size: 28px;
+        font-weight: 800;
+        color: #000;
+      }
+    }
+    .col.right {
+      text-align: right;
+    }
+  }
+}
