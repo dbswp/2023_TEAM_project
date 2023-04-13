@@ -1,12 +1,14 @@
 // seoulData.js
-const xlsxFile = require('read-excel-file/node');
+const xlsxFile = require("read-excel-file/node");
 
 async function seoulData(req, res) {
   try {
-    const sheets = await xlsxFile('./seoulData.xlsx');
+    const sheets = await xlsxFile("./seoulData.xlsx");
 
     const dataIndex = [];
     const dataLink = [];
+    const dataLatitude = [];
+    const dataLongitude = [];
     const dataNmae_STZ = [];
     const dataNmae_Station = [];
     const dataNmae_Park = [];
@@ -17,6 +19,8 @@ async function seoulData(req, res) {
     for (let i = 1; i < sheets.length; i++) {
       dataIndex.push(sheets[i][1]);
       dataLink.push(sheets[i][2]);
+      dataLatitude.push(sheets[i][3]);
+      dataLongitude.push(sheets[i][4]);
     }
 
     sheets.filter((el) => {
@@ -40,6 +44,8 @@ async function seoulData(req, res) {
         id: 1,
         name: dataIndex,
         img: dataLink,
+        latitude: dataLatitude,
+        longitude: dataLongitude,
       },
       {
         id: 2,

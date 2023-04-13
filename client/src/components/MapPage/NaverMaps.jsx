@@ -8,15 +8,21 @@ import '../../styles/mp-sidebar.scss';
 
 export default function NaverMaps() {
   const navermaps = useNavermaps();
+  const point_latitude = localStorage.getItem('latitude');
+  const point_longitude = localStorage.getItem('longitude');
+  // const marker_location = localStorage.getItem("location");
+  // console.log(marker_location);
 
   return (
     <>
       {
         <NaverMap
-          defaultCenter={new navermaps.LatLng(37.3595704, 127.105399)}
+          defaultCenter={new navermaps.LatLng(point_latitude, point_longitude)}
           defaultZoom={15}
         >
-          <Marker Position={new navermaps.LatLng(37.3595704, 127.105399)} />
+          {/* {marker_location?.map((el, idx) => {
+            <Marker key={idx} Position={new navermaps.LatLng(el)} />;
+          })} */}
         </NaverMap>
       }
     </>
