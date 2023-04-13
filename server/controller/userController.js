@@ -14,11 +14,17 @@ let userID;
 // 회원 가입
 // 몽구스 삽입은 create, 뒤에 {} = One, 뒤에 [] = Many
 const registerUser = async (req, res) => {
+  const { email } = req.body;
   console.log(req.body);
   try {
-    await User.create(req.body);
-    res.status(200).json({ text: '회원가입 성공!!' });
-    console.log('회원가입 성공!');
+    const duplicatedUser = await User.findOne({ email });
+    if (duplicatedUser) {
+      res.status(409).json({ text: '중복된 이메일입니다.' });
+    } else {
+      await User.create(req.body);
+      res.status(200).json({ text: '회원가입 성공!!' });
+      console.log('회원가입 성공!');
+    }
   } catch (err) {
     console.error(err);
     res.status(500).json({ text: '회원가입 실패' });
