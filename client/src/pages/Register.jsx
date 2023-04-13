@@ -79,15 +79,12 @@ export default function Register() {
 
   // 비밀번호
   const onChangePassword = useCallback((e) => {
-    const passwordRegex =
-      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
     const passwordCurrent = e.target.value;
     setPassword(passwordCurrent);
 
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage(
-        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
-      );
+      setPasswordMessage("숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!");
       setIsPassword(false);
     } else {
       setPasswordMessage("안전한 비밀번호에요 : )");
@@ -119,32 +116,14 @@ export default function Register() {
         <form onSubmit={onSubmit}>
           {/* Email Part*/}
           <div className="mt-3 email">
-            <input
-              type="email"
-              onChange={onChangeEmail}
-              placeholder="이메일을 입력해주세요"
-              value={email}
-            />
-            {email.length > 0 && (
-              <div className={`message ${isEmail ? "success" : "error"}`}>
-                {emailMessage}
-              </div>
-            )}
+            <input type="email" onChange={onChangeEmail} placeholder="이메일을 입력해주세요" value={email} />
+            {email.length > 0 && <div className={`message ${isEmail ? "success" : "error"}`}>{emailMessage}</div>}
           </div>
 
           {/* Phone Part */}
           <div className="mt-3 phone">
-            <input
-              type="phone"
-              placeholder="핸드폰 번호를 입력해주세요"
-              value={phone}
-              onChange={onChangePhone}
-            />
-            {phone.length > 0 && (
-              <div className={`message ${isPhone ? "success" : "error"}`}>
-                {phoneMessage}
-              </div>
-            )}
+            <input type="phone" placeholder="핸드폰 번호를 입력해주세요" value={phone} onChange={onChangePhone} />
+            {phone.length > 0 && <div className={`message ${isPhone ? "success" : "error"}`}>{phoneMessage}</div>}
           </div>
 
           {/* Password Part */}
@@ -157,9 +136,7 @@ export default function Register() {
               required
             />
             {password.length > 0 && (
-              <div className={`message ${isPassword ? "success" : "error"}`}>
-                {passwordMessage}
-              </div>
+              <div className={`message ${isPassword ? "success" : "error"}`}>{passwordMessage}</div>
             )}
           </div>
           {/* PasswordConfirm Part*/}
@@ -172,20 +149,14 @@ export default function Register() {
               required
             />
             {passwordConfirm.length > 0 && (
-              <div
-                className={`message ${isPasswordConfirm ? "success" : "error"}`}
-              >
-                {passwordConfirmMessage}
-              </div>
+              <div className={`message ${isPasswordConfirm ? "success" : "error"}`}>{passwordConfirmMessage}</div>
             )}
           </div>
           <div className="d-flex justify-content-center mt-4 password">
             <button
               type="submit"
               className="btn btn-primary"
-              disabled={
-                !(isEmail && isPassword && isPasswordConfirm && isPhone)
-              }
+              disabled={!(isEmail && isPassword && isPasswordConfirm && isPhone)}
             >
               회원가입
             </button>

@@ -9,20 +9,10 @@
     left: 50%;
     transform: translateX(-55px);
   }
-
-  p {
-    width: 130px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-10rem, 9rem);
-    font-size: 1.1rem;
-    color: #111;
-  }
   form {
     input {
       width: 20rem;
-      height: 4rem;
+      height: 3rem;
       padding-left: 0.8rem;
       border: 1px solid #000;
       border-radius: 10px;
@@ -31,17 +21,30 @@
     }
     .btn-primary {
       width: 20rem;
-      height: 2rem;
+      height: 3rem;
       border-radius: 10px;
       margin-bottom: 1rem;
       background-color: #333;
       border-color: #333;
     }
   }
-  .Kakao_symbol {
+  span {
     position: absolute;
     left: 50%;
-    transform: translateX(7rem);
+    font-size: 1rem;
+  }
+  .registerFont {
+    transform: translate(-10rem, 0.5rem);
+    color: #555;
+  }
+  .loginFont {
+    transform: translateY(0.5rem);
+    color: #555;
+  }
+  .kakaoLogin {
+    position: absolute;
+    left: 50%;
+    transform: translateX(7.7rem);
     display: block;
     width: 36px;
     height: 36px;

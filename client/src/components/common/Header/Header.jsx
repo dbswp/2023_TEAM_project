@@ -49,10 +49,6 @@ export default function Header() {
               <BlackButton text="로그인" />
             </Link>
 
-            <Link to="/register">
-              <BlackButton text="회원가입" />
-            </Link>
-
             <button
               onClick={() => {
                 window.location.href = kakaoLogoutUrl;

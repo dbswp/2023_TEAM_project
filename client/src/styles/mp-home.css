@@ -21,10 +21,10 @@ main {
   position: sticky;
   z-index: 99;
   width: 50px;
-  height: 35vh;
+  height: 25vh;
 }
 
-.sidebar-toggle {
+.sidebar-information {
   font-size: 1.5rem;
   background: transparent;
   border-color: transparent;
@@ -44,47 +44,7 @@ main {
     transform: scale(1);
   }
 }
-.sidebar-location {
-  font-size: 1.5rem;
-  background: transparent;
-  border-color: transparent;
-  transition: all 0.3s linear;
-  cursor: pointer;
-  animation: bounce 2s ease-in-out infinite;
-}
-
-@keyframes bounce {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-.sidebar-weather {
-  font-size: 1.5rem;
-  background: transparent;
-  border-color: transparent;
-  transition: all 0.3s linear;
-  cursor: pointer;
-  animation: bounce 2s ease-in-out infinite;
-}
-
-@keyframes bounce {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-.sidebar-population {
+.sidebar-emergency {
   font-size: 1.5rem;
   background: transparent;
   border-color: transparent;
