@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import BlackButton from "./BlackButton";
@@ -34,7 +34,6 @@ const MyGnb = styled.div`
 const LoGo = styled.img`
   width: 100px;
 `;
-
 export default function Header() {
   return (
     <>
@@ -47,6 +46,10 @@ export default function Header() {
           <MyGnb>
             <Link to="/Login">
               <BlackButton text="로그인" />
+            </Link>
+
+            <Link to="/Logout">
+              <BlackButton text="로그아웃" />
             </Link>
 
             <button

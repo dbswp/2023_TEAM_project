@@ -13,7 +13,7 @@ root.render(
   <BrowserRouter>
     <NavermapsProvider ncpClientId={NAVER_MAP_API}>
       <AppProvider>
-      <App />
+        <App />
       </AppProvider>
     </NavermapsProvider>
   </BrowserRouter>
