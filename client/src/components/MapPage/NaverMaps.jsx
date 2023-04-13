@@ -3,9 +3,8 @@ import {
   NaverMap,
   Marker,
   useNavermaps,
-} from "react-naver-maps";
-// import { readXlsxFile } from "./excelFileRead";
-import styles from "../../styles/mp-sidebar.scss";
+} from 'react-naver-maps';
+import '../../styles/mp-sidebar.scss';
 
 export default function NaverMaps() {
   const navermaps = useNavermaps();
