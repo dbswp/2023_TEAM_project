@@ -3,7 +3,7 @@ const request = require('request');
 const sendKakaoMessage = (kakao_access_token) => {
   let testObj = {
     object_type: 'text',
-    text: '현재 인구밀도 혼잡 지역에 있습니다!',
+    text: '현재 인구밀도 혼잡 지역에 있습니다! 안전에 유의하세요!',
     link: {
       web_url: 'https://localhost:3000/login',
       mobile_web_url: 'https://localhost:3000/login',

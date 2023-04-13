@@ -46,7 +46,7 @@ const simpleNotification = async (phone, kakao_access_token) => {
           countryCode: '82',
           from: `${myPhone}`,
           content: `[북적북적] 현재 인구밀집 '혼잡' 지역에 위치해 있습니다. 안전에 유의해주세요!`,
-          messages: [{ to: `${DEFAULT_PHONE}` }],
+          messages: [{ to: `${phone}` }],
         },
       });
 

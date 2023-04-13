@@ -1,8 +1,8 @@
 const express = require('express');
-const { simpleNotification } = require('../config/naverApiTest');
+const { findPhoneNumber } = require('../controller/userController');
 
 const router = express.Router();
 
-router.get('/', simpleNotification);
+router.get('/', findPhoneNumber);
 
 module.exports = router;
