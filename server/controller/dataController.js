@@ -1,8 +1,8 @@
-const fetchData = require('./fetchData');
-const fetchWeatherData = require('./fetchWeatherData');
-const PopulationData = require('../models/populationSchema');
-const WeatherData = require('../models/weatherSchema');
-const mongooseConnect = require('./mongooseConnect');
+const fetchData = require("./fetchData");
+const fetchWeatherData = require("./fetchWeatherData");
+const PopulationData = require("../models/populationSchema");
+const WeatherData = require("../models/weatherSchema");
+const mongooseConnect = require("./mongooseConnect");
 
 mongooseConnect();
 
@@ -19,7 +19,7 @@ const datarefreshing = async (END_POINT) => {
     await WeatherData.deleteMany({});
     await WeatherData.create(weather);
 
-    console.log('데이터 갱신 완료');
+    console.log("데이터 갱신 완료");
   } catch (err) {
     console.error(err);
   }
@@ -35,7 +35,7 @@ const sendData = async (req, res) => {
     res.status(200).json({ data, weather });
   } catch (err) {
     console.error(err);
-    res.status(500).json('something went wrong...');
+    res.status(500).json("something went wrong...");
   }
 };
 
