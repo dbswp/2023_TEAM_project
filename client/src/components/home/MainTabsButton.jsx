@@ -136,6 +136,9 @@ export default function MainTabsButton() {
                     key={idx}
                     name={el}
                     img={allDataBase[toggleState]?.img[idx]}
+                    latitude={allDataBase[toggleState]?.latitude[idx]}
+                    longitude={allDataBase[toggleState]?.longitude[idx]}
+                    // location={[allLatitudeData, allLongitudeData]}
                   />
                 );
               })}
@@ -147,6 +150,9 @@ export default function MainTabsButton() {
                     key={idx}
                     name={el}
                     img={allDataBase[toggleState]?.img[idx]}
+                    latitude={allDataBase[toggleState]?.latitude[idx]}
+                    longitude={allDataBase[toggleState]?.longitude[idx]}
+                    // location={[allLatitudeData, allLongitudeData]}
                   />
                 );
               })}
@@ -158,6 +164,9 @@ export default function MainTabsButton() {
                     key={idx}
                     name={el}
                     img={allDataBase[toggleState]?.img[idx]}
+                    latitude={allDataBase[toggleState]?.latitude[idx]}
+                    longitude={allDataBase[toggleState]?.longitude[idx]}
+                    // location={[allLatitudeData, allLongitudeData]}
                   />
                 );
               })}
