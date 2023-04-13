@@ -34,3 +34,4 @@ async function fetchData(END_POINT) {
   return model;
 }
 module.exports = fetchData;
+
