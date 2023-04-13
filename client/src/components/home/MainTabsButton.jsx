@@ -14,10 +14,14 @@ export default function MainTabsButton() {
     // // 첫번째 전체 데이터
     const firstNameData = res.data.Arr[0].name;
     const firstImgData = res.data.Arr[0].img;
+    const firstLatitudeData = res.data.Arr[0].latitude;
+    const firstLogitudeData = res.data.Arr[0].longitude;
 
     setAllDataBase((cur) => allDataBase);
     setAllData((cur) => firstNameData);
     setAllImgData((cur) => firstImgData);
+    setAllLatitudeData((cur) => firstLatitudeData);
+    setAllLongitudeData((cur) => firstLogitudeData);
   };
 
   useEffect(() => {
@@ -27,6 +31,8 @@ export default function MainTabsButton() {
   const [allDataBase, setAllDataBase] = useState([]);
   const [allData, setAllData] = useState();
   const [allImgData, setAllImgData] = useState();
+  const [allLatitudeData, setAllLatitudeData] = useState();
+  const [allLongitudeData, setAllLongitudeData] = useState();
   const [toggleState, setToggleState] = useState(0);
 
   const toggleTab = (index) => {
@@ -84,7 +90,16 @@ export default function MainTabsButton() {
           <div className="tab-contents-wrap">
             <div className={toggleState === 0 ? "tab-content1" : "tab-content"}>
               {allData?.map((el, idx) => {
-                return <Card name={el} key={idx} img={allImgData[idx]} />;
+                return (
+                  <Card
+                    name={el}
+                    key={idx}
+                    img={allImgData[idx]}
+                    latitude={allLatitudeData[idx]}
+                    longitude={allLongitudeData[idx]}
+                    location={[allLatitudeData, allLongitudeData]}
+                  />
+                );
               })}
             </div>
             <div className={toggleState === 1 ? "tab-content2" : "tab-content"}>

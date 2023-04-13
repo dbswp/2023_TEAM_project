@@ -6,15 +6,17 @@ import axios from "axios";
 
 const Sidebar = () => {
   const { isSidebarOpen, closeSidebar, sidebarCategory } = useGlobalContext();
-  const { openSidebar } = useGlobalContext();
+  // const { openSidebar } = useGlobalContext();
   const [area, setArea] = useState();
   const [data, setData] = useState();
   const [weather, setWeather] = useState();
   const [END_POINT, setEND_POINT] = useState([]);
 
   const getData = async () => {
+    const point = localStorage.getItem("END_POINT");
+    console.log(point);
     const res = await axios.post("http://localhost:4000/data/getdata", {
-      END_POINT,
+      point,
     });
     res.status === 200 ? console.log(res.status) : console.log(res.json());
     const allData = res.data;

@@ -3,12 +3,16 @@ import "../../styles/card.scss";
 import axios from "axios";
 const { DATA_API_KEY } = process.env;
 
-export default function Card({ name, img }) {
+export default function Card({ name, img, latitude, longitude }) {
   const divName = async () => {
     try {
-      const res = await axios.post("http://localhost:4000/data/getdata/", {
-        END_POINT: name,
-      });
+      // const res = await axios.post("http://localhost:4000/data/getdata/", {
+      //   END_POINT: name,
+      // });
+      localStorage.setItem("END_POINT", name);
+      localStorage.setItem("latitude", latitude);
+      localStorage.setItem("longitude", longitude);
+      // localStorage.setItem("location", location);
       // 데이터 처리 로직
       window.location.href = `http://localhost:3000/blog`; // 이동할 URL 주소
     } catch (error) {
