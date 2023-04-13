@@ -3,6 +3,7 @@ import {
   NaverMap,
   Marker,
   useNavermaps,
+  RenderAfterNavermapsLoaded,
 } from "react-naver-maps";
 
 import styles from "../../styles/mp-sidebar.scss";
