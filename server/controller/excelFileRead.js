@@ -9,6 +9,12 @@ async function seoulData(req, res) {
     const dataLink = [];
     const dataLatitude = [];
     const dataLongitude = [];
+    const dataLatitude_STZ = [];
+    const dataLongitude_STZ = [];
+    const dataLatitude_Park = [];
+    const dataLongitude_Park = [];
+    const dataLatitude_Station = [];
+    const dataLongitude_Station = [];
     const dataNmae_STZ = [];
     const dataNmae_Station = [];
     const dataNmae_Park = [];
@@ -27,14 +33,20 @@ async function seoulData(req, res) {
       if (el[0] === 1) {
         dataNmae_STZ.push(el[1]);
         dataLink_STZ.push(el[2]);
+        dataLatitude_STZ.push(el[3]);
+        dataLongitude_STZ.push(el[4]);
       }
       if (el[0] === 2) {
         dataNmae_Park.push(el[1]);
         dataLink_Park.push(el[2]);
+        dataLatitude_Park.push(el[3]);
+        dataLongitude_Park.push(el[4]);
       }
       if (el[0] === 3) {
         dataNmae_Station.push(el[1]);
         dataLink_Station.push(el[2]);
+        dataLatitude_Station.push(el[3]);
+        dataLongitude_Station.push(el[4]);
       }
     });
 
@@ -51,16 +63,22 @@ async function seoulData(req, res) {
         id: 2,
         name: dataNmae_STZ,
         img: dataLink_STZ,
+        latitude: dataLatitude_STZ,
+        longitude: dataLongitude_STZ,
       },
       {
         id: 3,
         name: dataNmae_Station,
         img: dataLink_Station,
+        latitude: dataLatitude_Station,
+        longitude: dataLongitude_Station,
       },
       {
         id: 4,
         name: dataNmae_Park,
         img: dataLink_Park,
+        latitude: dataLatitude_Park,
+        longitude: dataLongitude_Park,
       },
     ];
 
