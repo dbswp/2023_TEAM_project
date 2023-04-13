@@ -52,10 +52,8 @@ const simpleNotification = async (phone, kakao_access_token) => {
 
       console.log(smsResponse.data);
     } else {
-      null;
+      sendKakaoMessage(kakao_access_token);
     }
-
-    kakao_access_token ? sendKakaoMessage(kakao_access_token) : null;
   } catch (err) {
     console.error(err);
   }

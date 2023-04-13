@@ -3,6 +3,6 @@ const { findPhoneNumber } = require('../controller/userController');
 
 const router = express.Router();
 
-router.get('/', findPhoneNumber);
+router.post('/', findPhoneNumber);
 
 module.exports = router;

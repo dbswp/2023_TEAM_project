@@ -20,10 +20,14 @@ export default function KakaoLogin() {
       }
     );
     const data = await getKakaoAccessToken.json();
+    //카카오 엑세스 토큰을 변수에 저장
     const kakao_access_token = data.access_token;
 
-    console.log('카카오 엑세스 토큰 발급 성공!!   토큰:', kakao_access_token);
+    console.log('카카오 엑세스 토큰 발급 성공!! 토큰:', kakao_access_token);
+    //카카오 엑세스 토큰을 로컬스토리지에 저장(이것은 NaverMaps.jsx에서 사용할 예정)
+    window.localStorage.setItem('kakaoAccessToken', kakao_access_token);
 
+    //유저 메일에 jwt토큰을 씌우기 위해 카카오 엑세스 토큰을 서버로 전달
     const res = await axios.post('http://localhost:4000/login/kakaologin', {
       kakao_access_token,
     });

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   Container as MapDiv,
   NaverMap,
@@ -10,8 +11,17 @@ export default function NaverMaps() {
   const navermaps = useNavermaps();
   const point_latitude = localStorage.getItem('latitude');
   const point_longitude = localStorage.getItem('longitude');
-  // const marker_location = localStorage.getItem("location");
-  // console.log(marker_location);
+
+  //인구 밀집도가 일정 레벨이상이 되면 동작시킬 함수(로직 작성 필요!)
+  const sendKakaoAccessToken = async () => {
+    //알림 메시지 기능에 사용할 카카오 엑세스 토큰을 로컬스토리지에서 가져와서 변수에 저장
+    const kakao_access_token = window.localStorage.getItem('kakaoAccessToken');
+
+    //요청을 카카오 엑세스 토큰과 함께 알림기능 라우터에 전달
+    await axios.post('http://localhost:4000/push', {
+      kakao_access_token,
+    });
+  };
 
   const positions = [
     {
