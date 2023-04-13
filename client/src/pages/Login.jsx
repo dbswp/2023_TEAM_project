@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { kakaoAuthUrl } from "../kakaoLoginData";
 import kakaoImg from "../assets/symbol_kakaotalk.png";
 import Logo from "../assets/Logo.gif";
 import style from "../styles/login.css";
+import BlackButton from "../components/common/Header/BlackButton";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -67,20 +68,19 @@ export default function Login() {
             />
           </div>
           <div className="d-flex justify-content-center mt-4 password">
-            <button
-              type="submit"
-              className="btn btn-primary"
-              onClick={sendData}
-            >
+            <button type="submit" className="btn btn-primary" onClick={sendData}>
               로그인
             </button>
           </div>
         </form>
-        <p>SNS 간편로그인</p>
+        <Link to="/register">
+          <span className="registerFont">회원가입</span>
+        </Link>
+        <span className="loginFont">카카오 로그인</span>
         <img
           src={kakaoImg}
           alt="카카오 로그인"
-          className="Kakao_symbol"
+          className="kakaoLogin"
           onClick={() => {
             window.location.href = kakaoAuthUrl;
           }}

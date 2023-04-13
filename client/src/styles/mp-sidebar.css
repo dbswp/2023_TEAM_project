@@ -53,11 +53,10 @@
   box-shadow: hsl(0, 67%, 44%);
   transition: all 0.3s linear;
   transform: translateX(-100%);
-  z-index: 0;
 }
 
 .show-sidebar {
-  transform: translate(50px);
+  transform: translateX(50px);
   width: 400px;
 }
 
@@ -71,21 +70,32 @@
   justify-content: center;
   width: 400px;
 }
-.detail-content .detail-location p {
+.detail-content .detail-information {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 500px;
+}
+.detail-content h1 {
   width: 300px;
   font-size: 3em;
   text-align: center;
 }
-.detail-content .detail-weather p {
+.detail-content h2 {
   width: 300px;
   font-size: 2em;
+  line-height: 1.7;
   text-align: center;
 }
-.detail-content .detail-population p {
+.detail-content p {
   width: 300px;
   font-size: 2em;
   line-height: 1.7;
   text-align: center;
   -moz-columns: 200px 4;
        columns: 200px 4;
+}
+
+.map-container {
+  transform: translateX(400px);
 }/*# sourceMappingURL=mp-sidebar.css.map */
