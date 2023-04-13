@@ -26,9 +26,16 @@ export default function Header() {
               </Link>
             </div>
             <div className="col right">
-              <Link to="/Login">
-                <BlackButton text="로그인" />
-              </Link>
+              {!isLogin ? (
+                <Link to="/Login">
+                  <BlackButton text="로그인" />
+                </Link>
+              ) : (
+                <span onClick={() => logout()}>
+                  <BlackButton text="로그아웃" />
+                </span>
+              )}
+
               {/* <button
                 onClick={() => {
                   window.location.href = kakaoLogoutUrl;
