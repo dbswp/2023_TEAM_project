@@ -10,7 +10,7 @@ const Sidebar = () => {
   const [area, setArea] = useState();
   const [data, setData] = useState();
   const [weather, setWeather] = useState();
-  const [END_POINT, setEND_POINT] = useState("서울역");
+  const [END_POINT, setEND_POINT] = useState([]);
 
   const getData = async () => {
     const res = await axios.post("http://localhost:4000/data/getdata", {
@@ -49,7 +49,8 @@ const Sidebar = () => {
             <p>
               오늘 최고 기온은 {weather?.max_temperature}도 <br />
               최저 기온은 {weather?.min_temperature}도 이고, <br />
-              현재 체감 온도는 {weather?.sen_temperature}입니다.
+              현재 체감 온도는 {weather?.sen_temperature}입니다. <br />
+              오늘의 날씨는 {weather?.pcp_msg}
             </p>
           </div>
         )}

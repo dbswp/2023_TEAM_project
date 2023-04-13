@@ -10,7 +10,7 @@ export default function Card({ name, img }) {
         END_POINT: name,
       });
       // 데이터 처리 로직
-      window.location.href = `http://localhost:3000/blog/${res}`; // 이동할 URL 주소
+      window.location.href = `http://localhost:3000/blog`; // 이동할 URL 주소
     } catch (error) {
       console.error(error);
     }
