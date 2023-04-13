@@ -1,7 +1,7 @@
-const mongooseConnect = require('./mongooseConnect');
-const User = require('../models/user');
-const jwt = require('jsonwebtoken');
-const { simpleNotification } = require('../config/naverApiTest');
+const mongooseConnect = require("./mongooseConnect");
+const User = require("../models/user");
+const jwt = require("jsonwebtoken");
+const { simpleNotification } = require("../config/naverApiTest");
 
 const { ACCESS_SECRET, REFRESH_SECRET } = process.env;
 
@@ -14,11 +14,17 @@ let userID;
 // 회원 가입
 // 몽구스 삽입은 create, 뒤에 {} = One, 뒤에 [] = Many
 const registerUser = async (req, res) => {
+  const { email } = req.body;
   console.log(req.body);
   try {
-    await User.create(req.body);
-    res.status(200).json({ text: "회원가입 성공!!" });
-    console.log("회원가입 성공!");
+    const duplicatedUser = await User.findOne({ email });
+    if (duplicatedUser) {
+      res.status(409).json({ text: "중복된 이메일입니다." });
+    } else {
+      await User.create(req.body);
+      res.status(200).json({ text: "회원가입 성공!!" });
+      console.log("회원가입 성공!");
+    }
   } catch (err) {
     console.error(err);
     res.status(500).json({ text: "회원가입 실패" });
@@ -94,26 +100,12 @@ const kakaoLoginUser = async (req, res) => {
   const KAKAO_CODE = req.body.kakao_access_token;
 
   try {
-    // 카카오 인가토큰을 가지고 엑세스 토큰을 요청
-    const getKakaoAccessToken = await fetch(
-      `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${KAKAO_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&code=${KAKAO_CODE}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "x-www-form-urlencoded;charset=utf-8",
-        },
-      }
-    );
-    const data = await getKakaoAccessToken.json();
-    kakao_access_token = data.access_token;
-    console.log("카카오 엑세스 토큰 발급 성공!!   토큰:", data.access_token);
-
     //카카오 엑세스 토큰을 사용하여 사용자 정보에 접근!
     const userResponese = await fetch(`https://kapi.kakao.com/v2/user/me`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${KAKAO_CODE}`,
-        'Content-type': 'application/x-www-form-urlencoded',
+        "Content-type": "application/x-www-form-urlencoded",
       },
     });
     if (userResponese.status === 200) {
@@ -201,7 +193,7 @@ const refreshtoken = async (req, res) => {
 const loginSuccess = (req, res) => {};
 
 const logout = (req, res) => {
-  console.log('들어오나?');
+  console.log("들어오나?");
   try {
     res.cookie("accessToken", " ");
     res.status(200).json("Logout Success");
