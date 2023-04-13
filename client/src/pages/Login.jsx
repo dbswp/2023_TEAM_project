@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { kakaoAuthUrl } from "../kakaoLoginData";
@@ -8,6 +8,7 @@ import style from "../styles/login.css";
 import BlackButton from "../components/common/Header/BlackButton";
 
 export default function Login() {
+  // 이메일, 비밀번호 확인
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ export default function Login() {
       console.log(result);
       if (result.status === 200) {
         navigate("/");
+        window.location.reload();
       }
     });
   };

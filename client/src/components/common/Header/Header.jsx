@@ -35,6 +35,13 @@ const LoGo = styled.img`
   width: 100px;
 `;
 export default function Header() {
+  const [isLogin, setIsLogin] = useState(Boolean(document.cookie));
+
+  const logout = () => {
+    document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    window.location.reload();
+  };
   return (
     <>
       <HeaderIntro>
@@ -44,13 +51,13 @@ export default function Header() {
           </Link>
 
           <MyGnb>
-            <Link to="/Login">
-              <BlackButton text="로그인" />
-            </Link>
-
-            <Link to="/Logout">
-              <BlackButton text="로그아웃" />
-            </Link>
+            {!isLogin ? (
+              <Link to="/Login">로그인</Link>
+            ) : (
+              <span onClick={() => logout()}>
+                <BlackButton text="로그아웃" />
+              </span>
+            )}
 
             <button
               onClick={() => {
