@@ -27,7 +27,7 @@ const datarefreshing = async (END_POINT) => {
 
 const sendData = async (req, res) => {
   try {
-    const END_POINT = req.body.END_POINT;
+    const END_POINT = req.body.point;
     await datarefreshing(END_POINT);
 
     const data = await PopulationData.find({});
