@@ -3,6 +3,7 @@ const { DATA_API_KEY } = process.env;
 
 async function fetchData(req, res) {
   //프론트에서 요청body에 담아 보낸 지역엔드포인트를 변수에 저장
+  //마커 클릭으로 받아오는 지역엔드포인트는 문자 앞에 공백이 하나 있기때문에 trim()을 통해 공백제거
   const END_POINT = req.body.point.trim();
   console.log(END_POINT);
   try {
