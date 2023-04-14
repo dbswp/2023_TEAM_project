@@ -1,0 +1,19 @@
+.loding_container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.6392156863);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loding_text {
+  font: 1rem "Noto Sans KR";
+  text-align: center;
+  margin: -30px 0 30px 0;
+}/*# sourceMappingURL=loding.css.map */
