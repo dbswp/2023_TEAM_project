@@ -9,10 +9,10 @@ window.addEventListener("scroll", () => {
 
   let scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
 
-  if (scrollLocation > 900) {
+  if (scrollLocation > 860) {
     tabListWrap.classList.add("scrollTab");
     tabListUl.classList.add("scrollTabUl");
-  } else if (scrollLocation < 900) {
+  } else if (scrollLocation < 860) {
     tabListWrap.classList.remove("scrollTab");
     tabListUl.classList.remove("scrollTabUl");
   }
