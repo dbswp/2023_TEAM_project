@@ -1,5 +1,5 @@
 import React from 'react';
-import Spinner from '../../assets/Spinner.gif';
+import Spinner from '../../assets/spinner.gif';
 import '../../styles/loding.scss';
 
 function Loding() {
