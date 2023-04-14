@@ -129,6 +129,7 @@ a {
     background: #fff;
     transition: all 0.3s linear;
     transform: translateY(100%);
+    overflow: hidden;
   }
   .show-sidebar {
     transform: translateY(30px);

@@ -228,6 +228,7 @@ $desktop-min: 1024px;
     transition: all 0.3s linear;
     transform: translateY(100%);
     // z-index: 0;
+    overflow: hidden;
   }
   .show-sidebar {
     transform: translateY(30px);
