@@ -4,7 +4,7 @@ const { DATA_API_KEY } = process.env;
 async function fetchData(req, res) {
   //프론트에서 요청body에 담아 보낸 지역엔드포인트를 변수에 저장
   const END_POINT = req.body.point.trim();
-
+  console.log(END_POINT);
   try {
     const AREA_END_POINT = `http://openapi.seoul.go.kr:8088/${DATA_API_KEY}/xml/citydata/1/5/${END_POINT}`;
 
@@ -72,7 +72,7 @@ async function fetchData(req, res) {
         };
       }
     });
-    //프론트의 요청에 대한 응답으로 데이터 전송
+
     res.status(200).json({ model, weatherModel });
   } catch (err) {
     console.error('something went wrong in fetchingData file');
