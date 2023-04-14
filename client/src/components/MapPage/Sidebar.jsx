@@ -47,7 +47,11 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <aside className={`${isSidebarOpen ? "sidebar show-sidebar" : "sidebar"} `}>
+    <aside
+      className={`${
+        isSidebarOpen ? "sidebar show-sidebar" : "sidebar none-sidebar"
+      } `}
+    >
       <div className="sidebar-header">
         <button className="close-btn" onClick={closeSidebar}>
           <FaTimes />
