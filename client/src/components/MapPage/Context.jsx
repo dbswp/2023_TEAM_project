@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
 
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sidebarCategory, setSidebarCategory] = useState();
+  const [wantMyLocation, setWantMyLocation] = useState(false);
 
   const openSidebar = (sidebarCategory) => {
     setIsSidebarOpen(true);
@@ -14,6 +15,9 @@ const AppProvider = ({ children }) => {
     setIsSidebarOpen(false);
   };
 
+  const isNeedMyLocation = () => {
+    setWantMyLocation((cur) => !cur);
+  };
   return (
     <AppContext.Provider
       value={{
@@ -21,6 +25,8 @@ const AppProvider = ({ children }) => {
         sidebarCategory,
         openSidebar,
         closeSidebar,
+        wantMyLocation,
+        isNeedMyLocation,
       }}
     >
       {children}

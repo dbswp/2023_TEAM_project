@@ -22,6 +22,21 @@
 .headerWrap .row .right {
   text-align: right;
 }
+.headerWrap .row .right span {
+  cursor: pointer;
+}
+.headerWrap .row .right .blackBtn {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1.2em;
+  padding: 0.6em 1.1em;
+  background-color: #000;
+  color: #fff;
+  border-radius: 0.7em;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
 
 .headerWrap.scrollHeader {
   box-shadow: rgba(173, 173, 173, 0.22) 0px 3px 6px;
