@@ -7,6 +7,27 @@ import { kakaoLogoutUrl } from "../../../kakaoLoginData";
 
 import "../../../styles/header.scss";
 
+window.addEventListener("scroll", () => {
+  const headerWrap = document.querySelector(".headerWrap");
+
+  let scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
+  console.log(scrollLocation);
+  if (scrollLocation < 15) {
+    headerWrap.style.boxShadow = "none";
+  } else if (scrollLocation < 830) {
+    headerWrap.style.boxShadow = "rgb(173 173 173 / 22%) 0px 3px 6px";
+    headerWrap.style.position = "fixed";
+    headerWrap.style.width = "100vw";
+    headerWrap.style.top = "0px";
+    headerWrap.style.left = "0px";
+    headerWrap.style.zIndex = "3";
+  } else if (scrollLocation > 800) {
+    headerWrap.style.position = "relative";
+    headerWrap.style.zIndex = "0";
+    headerWrap.classList.add("fade-in");
+  }
+});
+
 export default function Header() {
   const [isLogin, setIsLogin] = useState(Boolean(document.cookie));
 
