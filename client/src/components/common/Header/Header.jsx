@@ -11,20 +11,13 @@ window.addEventListener("scroll", () => {
   const headerWrap = document.querySelector(".headerWrap");
 
   let scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
-  console.log(scrollLocation);
-  if (scrollLocation < 15) {
-    headerWrap.style.boxShadow = "none";
-  } else if (scrollLocation < 830) {
-    headerWrap.style.boxShadow = "rgb(173 173 173 / 22%) 0px 3px 6px";
-    headerWrap.style.position = "fixed";
-    headerWrap.style.width = "100vw";
-    headerWrap.style.top = "0px";
-    headerWrap.style.left = "0px";
-    headerWrap.style.zIndex = "3";
-  } else if (scrollLocation > 800) {
-    headerWrap.style.position = "relative";
-    headerWrap.style.zIndex = "0";
-    headerWrap.classList.add("fade-in");
+
+  if (scrollLocation > 50 && scrollLocation < 900) {
+    headerWrap.classList.add("scrollHeader");
+  } else if (scrollLocation >= 900) {
+    headerWrap.classList.remove("scrollHeader");
+  } else {
+    headerWrap.classList.remove("scrollHeader");
   }
 });
 
@@ -41,12 +34,12 @@ export default function Header() {
       <div className="headerWrap">
         <div className="container">
           <div className="row">
-            <div className="col let">
+            <div className="col-8 left">
               <Link to="/" className="logo">
                 Balance Place
               </Link>
             </div>
-            <div className="col right">
+            <div className="col-4 right">
               {!isLogin ? (
                 <Link to="/Login">
                   <BlackButton text="로그인" />

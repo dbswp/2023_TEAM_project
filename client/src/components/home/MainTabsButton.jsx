@@ -9,24 +9,12 @@ window.addEventListener("scroll", () => {
 
   let scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
 
-  if (scrollLocation > 950) {
-    tabListWrap.style.position = "fixed";
-    tabListWrap.style.background = "white";
-    tabListWrap.style.boxShadow = "rgb(173 173 173 / 22%) 0px 3px 6px";
-    tabListWrap.style.zIndex = "2";
-    tabListWrap.style.width = "101vw";
-    tabListUl.style.width = "1200px";
-    tabListUl.style.margin = "auto";
-    tabListWrap.style.top = "0";
-    tabListWrap.style.left = "0";
-    tabListUl.style.marginTop = "15px";
-    tabListUl.style.marginBottom = "15px";
-  } else if (scrollLocation < 960) {
-    tabListWrap.style.position = "relative";
-    tabListWrap.style.boxShadow = "none";
-    tabListUl.style.backgroundColor = "none";
-    tabListWrap.style.width = "auto";
-    tabListUl.style.margin = "none";
+  if (scrollLocation > 900) {
+    tabListWrap.classList.add("scrollTab");
+    tabListUl.classList.add("scrollTabUl");
+  } else if (scrollLocation < 900) {
+    tabListWrap.classList.remove("scrollTab");
+    tabListUl.classList.remove("scrollTabUl");
   }
 });
 

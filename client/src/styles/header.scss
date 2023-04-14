@@ -11,7 +11,7 @@
   .row {
     display: flex;
     align-items: center;
-    .col.let {
+    .left{
       text-align: left;
       .logo {
         font-size: 28px;
@@ -19,8 +19,28 @@
         color: #000;
       }
     }
-    .col.right {
+    .right {
       text-align: right;
+    }
+  }
+}
+//header scroll 이벤트
+.headerWrap.scrollHeader {
+  box-shadow: rgb(173 173 173 / 22%) 0px 3px 6px;
+  position: fixed;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  width: 100vw;
+  top: 0px;
+  left: 0px !important;
+  z-index: 3;
+  animation: fadeIn .3s ease-in-out;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
     }
   }
 }
