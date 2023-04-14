@@ -106,7 +106,6 @@ export default function Login() {
             </button>
           </div>
         </form>
-        {/* disabled={!(emailValid && pwValid)} */}
         <Link to="/register">
           <span className="registerFont">회원가입</span>
         </Link>

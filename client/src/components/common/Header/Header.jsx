@@ -22,6 +22,7 @@ window.addEventListener("scroll", () => {
 export default function Header(props) {
   // JWT 확인하는 방법
   const [isLogin, setIsLogin] = useState(Boolean(document.cookie));
+  const [isKakaoLogin, setIsKakaoLogin] = useState(Boolean(document.cookie));
 
   const logout = () => {
     // 로그아웃 할 때 쿠키삭제하는 방법 (옛날에 만든 토큰이라고 지정해서 없애는 방법)
