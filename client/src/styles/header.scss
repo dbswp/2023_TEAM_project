@@ -21,6 +21,19 @@
     }
     .right {
       text-align: right;
+      span {
+        cursor: pointer;
+      }
+      .blackBtn {
+        display: inline-block;
+        text-decoration: none;
+        font-size: 1.2em;
+        padding: 0.6em 1.1em;
+        background-color: #000;
+        color: #fff;
+        border-radius: 0.7em;
+        user-select: none;
+      }
     }
   }
 }

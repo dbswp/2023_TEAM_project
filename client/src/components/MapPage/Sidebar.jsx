@@ -11,6 +11,7 @@ const Sidebar = () => {
   const [data, setData] = useState();
   const [weather, setWeather] = useState();
   const [END_POINT, setEND_POINT] = useState([]);
+  // const point = localStorage.getItem('END_POINT');
 
   const getData = async () => {
     const point = localStorage.getItem('END_POINT');

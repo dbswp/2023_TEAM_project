@@ -8,14 +8,14 @@ const { ACCESS_SECRET, REFRESH_SECRET } = process.env;
 mongooseConnect();
 
 //유저 로그인시 데이터를 받기 위한 전역변수
-let isUserLogined = false;
+let isNormalUserLogined = false;
 let userID;
 
 // 회원 가입
 // 몽구스 삽입은 create, 뒤에 {} = One, 뒤에 [] = Many
 const registerUser = async (req, res) => {
   const { email } = req.body;
-  console.log(req.body);
+
   try {
     const duplicatedUser = await User.findOne({ email });
     if (duplicatedUser) {
@@ -45,10 +45,10 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ text: '비밀번호 틀림' });
     }
 
-    // 유저가 로그인 하면 true로 바꾸어줌
-    isUserLogined = true;
-    // 로그인시 유저가 req.body에 담겨서 오는  유저 이메일을 전역 변수에 저장
-    if (isUserLogined) userID = email;
+    // 유저가 로그인 하면 true로 바꾸어줌(알림기능을 위한 전역변수)
+    isNormalUserLogined = true;
+    // 로그인시 유저가 req.body에 담겨서 오는 유저 이메일을 전역 변수에 저장(알림기능을 위한 전역변수)
+    if (isNormalUserLogined) userID = email;
 
     // accesstoken 발급
     const accessToken = jwt.sign(
@@ -111,8 +111,6 @@ const kakaoLoginUser = async (req, res) => {
     if (userResponese.status === 200) {
       const userKaKaoInfo = await userResponese.json();
 
-      console.log(userKaKaoInfo);
-
       //jwt accesstoken 발급
       const kakaoAccessToken = jwt.sign(
         {
@@ -130,7 +128,6 @@ const kakaoLoginUser = async (req, res) => {
         secure: false,
         httpOnly: false,
       });
-      // console.log(kakaoAccessToken);
     }
     res.status(200).json('엑세스 토큰 받기 성공!');
   } catch (err) {
@@ -213,7 +210,6 @@ const findPhoneNumber = async (req, res) => {
     }).find();
     // 해당 유저정보에서 핸드폰 번호만 추출
     const phone = configuration[0]?.phone;
-
     // 핸드폰 번호가 존재하면 알림문자전송 모듈에 인자로 전달
     if (configuration) simpleNotification(phone, kakao_access_token);
   } catch (err) {
