@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useGlobalContext } from "./Context";
-import { FaTimes } from "react-icons/fa";
-import styles from "../../styles/mp-sidebar.scss";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { useGlobalContext } from './Context';
+import { FaTimes } from 'react-icons/fa';
+import styles from '../../styles/mp-sidebar.scss';
+import axios from 'axios';
 
 const Sidebar = () => {
   const { isSidebarOpen, closeSidebar, sidebarCategory } = useGlobalContext();
@@ -13,38 +13,37 @@ const Sidebar = () => {
   const [END_POINT, setEND_POINT] = useState([]);
 
   const getData = async () => {
-    const point = localStorage.getItem("END_POINT");
+    const point = localStorage.getItem('END_POINT');
     console.log(point);
-    const res = await axios.post("http://localhost:4000/data/getdata", {
+    const res = await axios.post('http://localhost:4000/data/getdata', {
       point,
     });
     res.status === 200 ? console.log(res.status) : console.log(res.json());
     const allData = res.data;
     console.log(allData);
-    setArea((cur) => allData.data[0].area_name);
-    setData((cur) => allData.data[0].live_data);
-    setWeather((cur) => allData.weather[0]);
+    setArea((cur) => allData.model.area_name);
+    setData((cur) => allData.model.live_data);
+    setWeather((cur) => allData.weatherModel);
   };
 
   useEffect(() => {
-    console.log("!!!!!!!!!!!");
     getData();
     //10분마다 데이터 갱신 시키기
     const reNew = setInterval(() => {
       getData();
-      console.log("데이터 갱신 완료");
+      console.log('데이터 갱신 완료');
     }, 600000);
   }, []);
 
   return (
-    <aside className={`${isSidebarOpen ? "sidebar show-sidebar" : "sidebar"} `}>
+    <aside className={`${isSidebarOpen ? 'sidebar show-sidebar' : 'sidebar'} `}>
       <div className="sidebar-header">
         <button className="close-btn" onClick={closeSidebar}>
           <FaTimes />
         </button>
       </div>
       <div className="detail-content">
-        {sidebarCategory === "information" && (
+        {sidebarCategory === 'information' && (
           <div className="detail-information">
             <h1>{area}</h1>
             <h2>{data?.AREA_CONGEST_LVL[0]}</h2>
@@ -63,7 +62,7 @@ const Sidebar = () => {
             </p>
           </div>
         )}
-        {sidebarCategory === "emergency" && (
+        {sidebarCategory === 'emergency' && (
           <div className="detail-emergency"></div>
         )}
       </div>

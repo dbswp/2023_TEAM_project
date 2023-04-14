@@ -1,9 +1,8 @@
-const express = require("express");
-const { datarefreshing, sendData } = require("../controller/dataController");
+const express = require('express');
+const { fetchData } = require('../controller/fetchData');
 
 const router = express.Router();
 
-router.get("/", datarefreshing);
-router.post("/getdata", sendData);
+router.post('/getdata', fetchData);
 
 module.exports = router;
