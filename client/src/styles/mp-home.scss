@@ -1,3 +1,8 @@
+@import "./mp-blog.scss";
+$mobile-max: 390px;
+$tablet-max: 1023px;
+$desktop-min: 1024px;
+
 main {
   position: absolute;
   top: 0;
@@ -115,3 +120,25 @@ main {
 //     transform: scale(1);
 //   }
 // }
+
+@include mobile {
+  .wrap-container {
+    position: absolute;
+    bottom: 0;
+    z-index: 99;
+    border-right: 1px solid rgb(212, 212, 212);
+    width: $mobile-max;
+    height: 70px;
+    background-color: white;
+
+    .menubar {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      justify-content: space-around;
+      z-index: 99;
+      width: $mobile-max;
+      height: 50px;
+    }
+  }
+}
