@@ -123,25 +123,15 @@ a {
   transform: translateX(400px);
 }
 
-@media (max-width: 390px) {
+@media (max-width: 420px) {
   .sidebar {
     position: absolute;
-    top: 0;
-    right: 50px;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background: #fff;
-    border-right: 1px solid rgb(211, 211, 211);
-    display: grid;
-    grid-template-rows: 100px;
-    row-gap: 1rem;
-    box-shadow: hsl(0, 67%, 44%);
     transition: all 0.3s linear;
     transform: translateY(100%);
   }
   .show-sidebar {
     transform: translateY(30px);
-    width: 400px;
+    width: 100%;
   }
 }/*# sourceMappingURL=mp-sidebar.css.map */
