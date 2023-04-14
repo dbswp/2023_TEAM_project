@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useGlobalContext } from './Context';
-import { FaTimes } from 'react-icons/fa';
-import styles from '../../styles/mp-sidebar.scss';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useGlobalContext } from "./Context";
+import { FaTimes } from "react-icons/fa";
+import styles from "../../styles/mp-sidebar.scss";
+import axios from "axios";
 
 const Sidebar = () => {
   const { isSidebarOpen, closeSidebar, sidebarCategory } = useGlobalContext();
@@ -14,9 +14,11 @@ const Sidebar = () => {
   // const point = localStorage.getItem('END_POINT');
 
   const getData = async () => {
-    const point = localStorage.getItem('END_POINT');
+    const point = localStorage.getItem("END_POINT");
+    // const point_latitude = localStorage.getItem("latitude");
+    // const point_longitude = localStorage.getItem("longitude");
     console.log(point);
-    const res = await axios.post('http://localhost:4000/data/getdata', {
+    const res = await axios.post("http://localhost:4000/data/getdata", {
       point,
     });
     res.status === 200 ? console.log(res.status) : console.log(res.json());
@@ -32,19 +34,19 @@ const Sidebar = () => {
     //10분마다 데이터 갱신 시키기
     const reNew = setInterval(() => {
       getData();
-      console.log('데이터 갱신 완료');
+      console.log("데이터 갱신 완료");
     }, 600000);
   }, []);
 
   return (
-    <aside className={`${isSidebarOpen ? 'sidebar show-sidebar' : 'sidebar'} `}>
+    <aside className={`${isSidebarOpen ? "sidebar show-sidebar" : "sidebar"} `}>
       <div className="sidebar-header">
         <button className="close-btn" onClick={closeSidebar}>
           <FaTimes />
         </button>
       </div>
       <div className="detail-content">
-        {sidebarCategory === 'information' && (
+        {sidebarCategory === "information" && (
           <div className="detail-information">
             <h1>{area}</h1>
             <h2>{data?.AREA_CONGEST_LVL[0]}</h2>
@@ -63,7 +65,7 @@ const Sidebar = () => {
             </p>
           </div>
         )}
-        {sidebarCategory === 'emergency' && (
+        {sidebarCategory === "emergency" && (
           <div className="detail-emergency"></div>
         )}
       </div>

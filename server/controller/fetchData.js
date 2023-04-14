@@ -3,7 +3,6 @@ const { DATA_API_KEY } = process.env;
 
 async function fetchData(req, res) {
   const END_POINT = req.body.point.trim();
-  console.log(END_POINT);
   try {
     const AREA_END_POINT = `http://openapi.seoul.go.kr:8088/${DATA_API_KEY}/xml/citydata/1/5/${END_POINT}`;
 
@@ -65,7 +64,6 @@ async function fetchData(req, res) {
         };
       }
     });
-
     res.status(200).json({ model, weatherModel });
   } catch (err) {
     console.error("something went wrong in fetchingData file");

@@ -16,7 +16,9 @@ const Home = () => {
           </button> */}
           <button
             className="sidebar-information"
-            onClick={() => openSidebar("information")}
+            onClick={() => {
+              openSidebar("information");
+            }}
           >
             <BiMap />
           </button>

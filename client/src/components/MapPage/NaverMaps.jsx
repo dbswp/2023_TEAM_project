@@ -39,23 +39,11 @@ export default function NaverMaps() {
   const point_latitude = localStorage.getItem("latitude");
   const point_longitude = localStorage.getItem("longitude");
 
-  const coordinatesName = async ({ name }) => {
-    try {
-      const res = await axios.post("http://localhost:4000/data/getdata/", {
-        END_POINT: name,
-      });
-      window.location.href = `http://localhost:3000/blog`;
-      res.status(200).json("데이터 요청 성공");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     <>
       <NaverMap
         defaultCenter={new navermaps.LatLng(point_latitude, point_longitude)}
-        defaultZoom={15}
+        defaultZoom={16}
       >
         {/* 마커표시 */}
         {coordinates.map((coordinate, index) => (
@@ -67,9 +55,9 @@ export default function NaverMaps() {
             animation={navermaps.Animation.NONE}
             name={coordinate.name}
             onClick={() => {
-              window.localStorage.setItem("END_POINT", coordinate.name);
-              window.localStorage.setItem("latitude", coordinate.latitude);
-              window.localStorage.setItem("longitude", coordinate.longitude);
+              localStorage.setItem("END_POINT", coordinate.name);
+              localStorage.setItem("latitude", coordinate.latitude);
+              localStorage.setItem("longitude", coordinate.longitude);
               window.location.reload();
             }}
           />
