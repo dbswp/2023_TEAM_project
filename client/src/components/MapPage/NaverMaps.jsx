@@ -1,5 +1,5 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import {
   Container as MapDiv,
   NaverMap,
@@ -8,15 +8,15 @@ import {
   RenderAfterNavermapsLoaded,
   Polygon,
   Polyline,
-} from "react-naver-maps";
-import "../../styles/mp-sidebar.scss";
-import Papa from "papaparse";
+} from 'react-naver-maps';
+import '../../styles/mp-sidebar.scss';
+import Papa from 'papaparse';
 
 export default function NaverMaps() {
   const [coordinates, setCoordinates] = useState([]);
 
   useEffect(() => {
-    Papa.parse("/data/coordinates.csv", {
+    Papa.parse('/data/coordinates.csv', {
       download: true,
       header: true,
       complete: function (results) {
@@ -26,8 +26,8 @@ export default function NaverMaps() {
   }, []);
 
   const navermaps = useNavermaps();
-  const point_latitude = localStorage.getItem("latitude");
-  const point_longitude = localStorage.getItem("longitude");
+  const point_latitude = localStorage.getItem('latitude');
+  const point_longitude = localStorage.getItem('longitude');
 
   return (
     <>
@@ -44,7 +44,8 @@ export default function NaverMaps() {
             }
             animation={navermaps.Animation.NONE}
             onClick={() => {
-              alert(`${coordinate.name}.`);
+              window.localStorage.setItem('END_POINT', coordinate.name);
+              window.location.reload();
             }}
           />
         ))}
