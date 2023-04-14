@@ -15,6 +15,16 @@ import Papa from 'papaparse';
 export default function NaverMaps() {
   const [coordinates, setCoordinates] = useState([]);
 
+  //인구밀집도가 일정 레벨이상이 되면 sendKakaoAccessToken을 실행
+  const sendKakaoAccessToken = async () => {
+    //로컬 스토리지에 있는 카카오 엑세스 토큰을 요청body에 담아서
+    const kakao_access_token = window.localStorage.getItem('kakaoAccessToken');
+    //알림기능 미들웨어로 Post요청 전송
+    await axios.post('http://localhost:4000/push', {
+      kakao_access_token,
+    });
+  };
+
   useEffect(() => {
     Papa.parse('/data/coordinates.csv', {
       download: true,
@@ -45,6 +55,8 @@ export default function NaverMaps() {
             animation={navermaps.Animation.NONE}
             onClick={() => {
               window.localStorage.setItem('END_POINT', coordinate.name);
+              window.localStorage.setItem('latitude', coordinate.latitude);
+              window.localStorage.setItem('longitude', coordinate.longitude);
               window.location.reload();
             }}
           />
