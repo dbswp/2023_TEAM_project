@@ -4,7 +4,7 @@ import axios from "axios";
 import style from "../styles/Register.css";
 
 export default function Register() {
-  //이름, 이메일, 비밀번호, 비밀번호 확인
+  //이메일, 비밀번호, 비밀번호 확인
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
