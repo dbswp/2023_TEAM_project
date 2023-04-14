@@ -1,5 +1,4 @@
 .headerWrap {
-  // border-bottom: 1px solid #e1e1e1;
   background-color: #fff;
   padding-top: 16px;
   padding-bottom: 16px;
@@ -37,6 +36,13 @@
     }
   }
 }
+// .blogHeader{
+//   .container{
+//     max-width: 100% !important;
+//     width: 100vw !important;
+//     padding: 0 20px;
+//   }
+// }
 //header scroll 이벤트
 .headerWrap.scrollHeader {
   box-shadow: rgb(173 173 173 / 22%) 0px 3px 6px;

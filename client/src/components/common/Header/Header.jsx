@@ -10,9 +10,9 @@ window.addEventListener("scroll", () => {
 
   let scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
 
-  if (scrollLocation > 50 && scrollLocation < 900) {
+  if (scrollLocation > 50 && scrollLocation < 860) {
     headerWrap.classList.add("scrollHeader");
-  } else if (scrollLocation >= 900) {
+  } else if (scrollLocation >= 860) {
     headerWrap.classList.remove("scrollHeader");
   } else {
     headerWrap.classList.remove("scrollHeader");
@@ -31,7 +31,7 @@ export default function Header() {
   };
   return (
     <>
-      <div className="headerWrap">
+      <div className="headerWrap blogHeader">
         <div className="container">
           <div className="row">
             <div className="col-8 left">
