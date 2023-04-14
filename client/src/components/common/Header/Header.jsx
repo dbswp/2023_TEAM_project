@@ -7,6 +7,20 @@ import { kakaoLogoutUrl } from "../../../kakaoLoginData";
 
 import "../../../styles/header.scss";
 
+window.addEventListener("scroll", () => {
+  const headerWrap = document.querySelector(".headerWrap");
+
+  let scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
+
+  if (scrollLocation > 50 && scrollLocation < 900) {
+    headerWrap.classList.add("scrollHeader");
+  } else if (scrollLocation >= 900) {
+    headerWrap.classList.remove("scrollHeader");
+  } else {
+    headerWrap.classList.remove("scrollHeader");
+  }
+});
+
 export default function Header() {
   const [isLogin, setIsLogin] = useState(Boolean(document.cookie));
 
@@ -20,12 +34,12 @@ export default function Header() {
       <div className="headerWrap">
         <div className="container">
           <div className="row">
-            <div className="col let">
+            <div className="col-8 left">
               <Link to="/" className="logo">
                 Balance Place
               </Link>
             </div>
-            <div className="col right">
+            <div className="col-4 right">
               {!isLogin ? (
                 <Link to="/Login">
                   <BlackButton text="로그인" />
