@@ -1,5 +1,5 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import {
   Container as MapDiv,
   NaverMap,
@@ -8,15 +8,25 @@ import {
   RenderAfterNavermapsLoaded,
   Polygon,
   Polyline,
-} from "react-naver-maps";
-import "../../styles/mp-sidebar.scss";
-import Papa from "papaparse";
+} from 'react-naver-maps';
+import '../../styles/mp-sidebar.scss';
+import Papa from 'papaparse';
 
 export default function NaverMaps() {
   const [coordinates, setCoordinates] = useState([]);
 
+  //인구밀집도가 일정 레벨이상이 되면 sendKakaoAccessToken을 실행
+  const sendKakaoAccessToken = async () => {
+    //로컬 스토리지에 있는 카카오 엑세스 토큰을 요청body에 담아서
+    const kakao_access_token = window.localStorage.getItem('kakaoAccessToken');
+    //알림기능 미들웨어로 Post요청 전송
+    await axios.post('http://localhost:4000/push', {
+      kakao_access_token,
+    });
+  };
+
   useEffect(() => {
-    Papa.parse("/data/coordinates.csv", {
+    Papa.parse('/data/coordinates.csv', {
       download: true,
       header: true,
       complete: function (results) {
@@ -26,8 +36,8 @@ export default function NaverMaps() {
   }, []);
 
   const navermaps = useNavermaps();
-  const point_latitude = localStorage.getItem("latitude");
-  const point_longitude = localStorage.getItem("longitude");
+  const point_latitude = localStorage.getItem('latitude');
+  const point_longitude = localStorage.getItem('longitude');
 
   return (
     <>
@@ -44,7 +54,10 @@ export default function NaverMaps() {
             }
             animation={navermaps.Animation.NONE}
             onClick={() => {
-              alert(`${coordinate.name}.`);
+              window.localStorage.setItem('END_POINT', coordinate.name);
+              window.localStorage.setItem('latitude', coordinate.latitude);
+              window.localStorage.setItem('longitude', coordinate.longitude);
+              window.location.reload();
             }}
           />
         ))}
