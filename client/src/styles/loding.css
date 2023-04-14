@@ -44,19 +44,6 @@ a {
 }
 
 @media (max-width: 420px) {
-  .loding_container {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    background: rgba(255, 255, 255, 0.6392156863);
-    z-index: 999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
   .loding_container img {
     width: 15%;
   }
