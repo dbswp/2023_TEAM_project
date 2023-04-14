@@ -99,11 +99,14 @@ export default function Login() {
             {password.length > 0 && <div className={`message ${pwValid ? "success" : "error"}`}>{passwordMessage}</div>}
           </div>
           <div className="d-flex justify-content-center mt-4 password">
-            <button type="submit" className="btn btn-primary" onClick={sendData} disabled={!(emailValid && pwValid)}>
+            <button type="submit" className="btn btn-primary" onClick={sendData}>
+              {" "}
+              {/* disabled={!(emailValid && pwValid)} */}
               로그인
             </button>
           </div>
         </form>
+        {/* disabled={!(emailValid && pwValid)} */}
         <Link to="/register">
           <span className="registerFont">회원가입</span>
         </Link>

@@ -13,7 +13,6 @@ function App() {
       <header className="App-header">
         <Router />
       </header>
-      {/* <Blog /> */}
     </div>
   );
 }
