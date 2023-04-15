@@ -6,7 +6,7 @@ $desktop-min: 1024px;
 main {
   position: absolute;
   top: 0;
-  height: calc(100vh - 5%);
+  height: calc(100vh - 74px);
   // display: flex;
   // align-items: center;
 }
@@ -55,6 +55,15 @@ main {
 }
 
 .sidebar-emergency {
+  font-size: 1.5rem;
+  background: transparent;
+  border-color: transparent;
+  transition: all 0.3s linear;
+  cursor: pointer;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.my-location {
   font-size: 1.5rem;
   background: transparent;
   border-color: transparent;
