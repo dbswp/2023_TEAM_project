@@ -80,14 +80,19 @@ $desktop-min: 1024px;
 
 .detail-content {
   display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
 
   .detail-information{
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
   }
 
   .report-population{
+    display: flex;
+    flex-direction: column;;
+    justify-content: center;
+    align-items: center;
     width: 580px;
     height: 200px;
     background: #ffffff;
@@ -98,47 +103,106 @@ $desktop-min: 1024px;
     
     // 실시간 인구
     h3 {
-    text-align: left;
     font-size: 20px;
     color: #4C65A7;
     font-weight: bold;
+    margin-left: 0px;
+    margin-right: auto;
     }
 
     // 인구 혼잡도
     h2 {
       font-size: 20px;
-      
     }
 
     // 여유, 보통 등 메세지
     .report-crowded{
       font-weight: 700;
       font-size: 30px;
-      color: green;
+
+      &.green{
+      color: #3CB371; // 여유
+      }
+      &.yellow{
+        color: #ffcb5c; //보통
+      }
+      &.orange {
+        color: #FFA500; // 약간 붐빔
+      }
+      &.red {
+        color: #FF0000; // 붐빔
+      }
     }
+    // 안내 메세지
     .report-crowded-msg{
-      font-size: 20px;
-      column-count: 1;
+      display: flex;
+      justify-content: center;
+      width: 350px;
+
+      span{
+        font-size: 18px;
+        text-align: center;
+      }
     }
   }
 
-  
-  
-  p {
-    width: 580px;
-    font-size: 2em;
-    line-height: 1.7;
-    text-align: center;
-    columns: 200px;
+  // 날씨 메세지
+  .report-live-weather h3{
+    font-size: 20px;
+    color: #4C65A7;
+    font-weight: bold;
+    text-align: left;
   }
-}
 
-.report-weather{
+  .report-weather{
+    display: flex;
+    flex-direction: column;;
+    justify-content:space-around ;
     width: 580px;
+    height: 300px;
     background: #ffffff;
     border-radius: 10px;
     padding: 15px;
     border:1px solid #DBDBDB;
+    margin: 10px 0;
+
+    .today-weather-wrap {
+      .today-weather{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+      }
+      .img {
+        width: 60px;
+      }
+      p{
+      font-size: 20px;
+      line-height: 1.7;
+      text-align: center;
+    }
+  }
+
+    .today-weather-detail {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      align-items: center;
+
+     .temperature-img .img {
+      display: flex;
+      width: 60px;
+
+     }
+
+    p{
+      text-align: justify;
+      font-size: 20px;
+    }
+  }
+}
+
+  
 }
 
 .map-container {
