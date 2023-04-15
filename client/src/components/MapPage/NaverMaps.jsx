@@ -1,27 +1,23 @@
 import axios from 'axios';
 import { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Container as MapDiv,
   NaverMap,
   Marker,
   useNavermaps,
-  useListener,
   InfoWindow,
   Circle,
 } from 'react-naver-maps';
 import '../../styles/mp-sidebar.scss';
-// import Papa from 'papaparse';
 import { useGlobalContext } from './Context';
 
 export default function NaverMaps({ locationData, data }) {
-  const navigate = useNavigate();
-  const { wantMyLocation, congestLevel } = useGlobalContext();
-  // const [coordinates, setCoordinates] = useState([]);
+  const { wantMyLocation } = useGlobalContext();
   const [map, setMap] = useState(null);
   const [infowindow, setInfowindow] = useState(null);
 
   const navermaps = useNavermaps();
+
   //인구밀집도가 일정 레벨이상이 되면 밑의 sendKakaoAccessToken을 실행
   const sendKakaoAccessToken = async () => {
     //로컬 스토리지에 있는 카카오 엑세스 토큰을 요청body에 담아서
@@ -61,15 +57,15 @@ export default function NaverMaps({ locationData, data }) {
         console.log(coordinate[2]),
         (
           <>
-            {coordinate[2].trim() === localStorage.getItem('END_POINT') ? (
+            {coordinate[2].trim() === localStorage.getItem('END_POINT') ? ( //데이터의 지역명과 로컬스토리지의 지역명(사이드바 지역명)이 일치하는 곳만 범위를 보여줌
               <Circle
                 center={new navermaps.LatLng(coordinate[0], coordinate[1])}
-                radius={500}
+                radius={600}
                 strokeColor={
-                  data.AREA_CONGEST_LVL[0] === '혼잡' ? 'red' : 'green'
+                  data.AREA_CONGEST_LVL[0] === '혼잡' ? 'red' : 'green' // 데이터의 인구혼잡도에 따라 오버레이 색상을 다르게 보여줌
                 }
                 fillColor={
-                  data.AREA_CONGEST_LVL[0] === '혼잡' ? 'red' : 'green'
+                  data.AREA_CONGEST_LVL[0] === '혼잡' ? 'red' : 'green' // 데이터의 인구혼잡도에 따라 오버레이 색상을 다르게 보여줌
                 }
                 fillOpacity={0.1}
               />
@@ -80,10 +76,10 @@ export default function NaverMaps({ locationData, data }) {
               animation={navermaps.Animation.NONE}
               name={coordinate.name}
               onClick={() => {
-                localStorage.setItem('END_POINT', coordinate[2].trim());
-                localStorage.setItem('latitude', coordinate[0]);
-                localStorage.setItem('longitude', coordinate[1]);
-                window.location.reload();
+                localStorage.setItem('END_POINT', coordinate[2].trim()); //마커를 클릭하면 로컬스토리지의 'END_POINT' 값을 데이터의 지역명으로 바꿈
+                localStorage.setItem('latitude', coordinate[0]); //로컬스토리지의 'latitude' 값을 데이터의 위도 값 으로 바꿈
+                localStorage.setItem('longitude', coordinate[1]); //로컬스토리지의 'longitude' 값을 데이터의 경도 값 으로 바꿈
+                window.location.reload(); // 블로그 컴포넌트에서 바뀐 로컬스토리지 값을 바탕으로 데이터 요청을 실행 시키기 위해 reload 시킴
               }}
             />
             <InfoWindow
@@ -97,14 +93,7 @@ export default function NaverMaps({ locationData, data }) {
   };
 
   useEffect(() => {
-    // Papa.parse('/data/coordinates.csv', {
-    //   download: true,
-    //   header: true,
-    //   complete: function (results) {
-    //     setCoordinates(results.data);
-    //   },
-    // });
-
+    //GlobalContext에서 정의한 wantMyLocation 상태값에 따라 geolocation을 실행시킴
     if (wantMyLocation) {
       navigator.geolocation.getCurrentPosition(onSuccessGeolocation, null);
     }
@@ -115,7 +104,7 @@ export default function NaverMaps({ locationData, data }) {
     <>
       <NaverMap
         defaultCenter={new navermaps.LatLng(point_latitude, point_longitude)}
-        defaultZoom={16}
+        defaultZoom={15}
         ref={setMap}
       >
         <InfoWindow ref={setInfowindow} />
