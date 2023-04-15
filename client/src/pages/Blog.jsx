@@ -5,10 +5,7 @@ import Sidebar from "../components/MapPage/Sidebar";
 import Home from "../components/MapPage/Home";
 import axios from "axios";
 import "../styles/mp-blog.scss";
-<<<<<<< HEAD
 import Header from "../components/common/Header/Header";
-=======
->>>>>>> b570714 (feature#69 북마크 기능 수정 및 사이드바 페이지 이동 경로 수정)
 
 export default function Blog() {
   const [areaData, setAreaData] = useState();
