@@ -42,7 +42,7 @@ $desktop-min: 1024px;
   overflow: hidden;
   border:1px solid #DBDBDB;
 
-  h1 {
+  h1 { // 현재 실시간 위치
     justify-content: center;
     margin-top: -5px;
     font-size: 30px;
@@ -50,7 +50,7 @@ $desktop-min: 1024px;
     font-weight: bold;
   }
 
-  p{
+  p{ // 햔재 시간
     justify-content: center;
     // margin-top: 10px;
     font-size: 15px;
@@ -74,6 +74,18 @@ $desktop-min: 1024px;
   }
   .close-btn:hover {
     color: hsl(360, 71%, 66%);
+  }
+
+  .bookmark-btn{
+    position: absolute;
+    font-size: 1.6rem;
+    background: transparent;
+    border-color: transparent;
+    transition: all 0.3s linear;
+    cursor: pointer;
+    color: hsl(360, 67%, 44%);
+    top: 15px;
+    right: 80px;
   }
 
 }
