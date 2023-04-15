@@ -92,7 +92,9 @@ $desktop-min: 1024px;
 
 .detail-content {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin-bottom: 10px;
 
   .detail-information {
@@ -110,9 +112,15 @@ $desktop-min: 1024px;
     background: #ffffff;
     border-radius: 10px;
     padding: 15px;
+<<<<<<< HEAD
     border: 1px solid #dbdbdb;
     margin: 5px 0;
 
+=======
+    border:1px solid #DBDBDB;
+    margin: 10px 0;
+    
+>>>>>>> b570714 (feature#69 북마크 기능 수정 및 사이드바 페이지 이동 경로 수정)
     // 실시간 인구
     h3 {
       font-size: 20px;
@@ -145,8 +153,13 @@ $desktop-min: 1024px;
         color: #ff0000; // 붐빔
       }
     }
+<<<<<<< HEAD
     // 안내 메세지
     .report-crowded-msg {
+=======
+    // 붐빔 안내 메세지
+    .report-crowded-msg{
+>>>>>>> b570714 (feature#69 북마크 기능 수정 및 사이드바 페이지 이동 경로 수정)
       display: flex;
       justify-content: center;
       width: 350px;
@@ -175,8 +188,12 @@ $desktop-min: 1024px;
     background: #ffffff;
     border-radius: 10px;
     padding: 15px;
+<<<<<<< HEAD
     border: 1px solid #dbdbdb;
     margin: 10px 0;
+=======
+    border:1px solid #DBDBDB;
+>>>>>>> b570714 (feature#69 북마크 기능 수정 및 사이드바 페이지 이동 경로 수정)
 
     .today-weather-wrap {
       .today-weather {

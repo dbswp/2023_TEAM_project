@@ -72,6 +72,16 @@ main {
   animation: bounce 2s ease-in-out infinite;
 }
 
+.sidebar-bookmark {
+  font-size: 1.3rem;
+  background: transparent;
+  border-color: transparent;
+  transition: all 0.3s linear;
+  color: hsl(360, 67%, 44%);
+  cursor: pointer;
+  animation: bounce 2s ease-in-out infinite;
+}
+
 @keyframes bounce {
   0% {
     transform: scale(1);
