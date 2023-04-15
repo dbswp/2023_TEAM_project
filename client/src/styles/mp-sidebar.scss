@@ -233,19 +233,18 @@ $desktop-min: 1024px;
       display: flex;
       flex-direction: column;
       p {
-        position: absolute;
-        left: 30%;
-        top: 2%;
+        text-align: center;
       }
       h1 {
-        position: absolute;
-        left: 19%;
-        top: 7%;
+        text-align: center;
       }
       button {
         font-size: 2rem;
         top: -1%;
         right: 1%;
+      }
+      .bookmark-btn {
+        display: none;
       }
     }
     .detail-content {
