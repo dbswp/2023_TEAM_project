@@ -13,7 +13,7 @@
     .left {
       text-align: left;
       .logo {
-        font-size: 28px;
+        font-size: 26px;
         font-weight: 800;
         color: #000;
       }
@@ -37,16 +37,10 @@
     }
   }
 }
-// .blogHeader{
-//   .container{
-//     max-width: 100% !important;
-//     width: 100vw !important;
-//     padding: 0 20px;
-//   }
-// }
+
 //header scroll 이벤트
 .headerWrap.scrollHeader {
-  box-shadow: rgb(173 173 173 / 22%) 0px 3px 6px;
+  box-shadow: #adadad38 0px 3px 6px;
   position: fixed;
   padding-top: 12px;
   padding-bottom: 12px;

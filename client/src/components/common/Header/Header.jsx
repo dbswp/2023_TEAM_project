@@ -11,15 +11,15 @@ window.addEventListener("scroll", () => {
   let scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
 
   if (scrollLocation > 50 && scrollLocation < 860) {
-    headerWrap.classList.add("scrollHeader");
+    headerWrap?.classList.add("scrollHeader");
   } else if (scrollLocation >= 860) {
-    headerWrap.classList.remove("scrollHeader");
+    headerWrap?.classList.remove("scrollHeader");
   } else {
-    headerWrap.classList.remove("scrollHeader");
+    headerWrap?.classList.remove("scrollHeader");
   }
 });
 
-export default function Header() {
+export default function Header(props) {
   // JWT 확인하는 방법
   const [isLogin, setIsLogin] = useState(Boolean(document.cookie));
 
@@ -31,8 +31,8 @@ export default function Header() {
   };
   return (
     <>
-      <div className="headerWrap blogHeader">
-        <div className="container">
+      <div className="headerWrap" style={props.style}>
+        <div className={props.name}>
           <div className="row">
             <div className="col-8 left">
               <Link to="/" className="logo">

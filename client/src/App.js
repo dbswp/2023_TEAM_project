@@ -11,7 +11,6 @@ function App() {
     <div className="App">
       <GlobalStyle />
       <header className="App-header">
-        <Header />
         <Router />
       </header>
       {/* <Blog /> */}
