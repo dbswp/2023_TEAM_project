@@ -1,5 +1,18 @@
+const fs = require('fs');
+const path = require('path');
 const { parseString } = require('xml2js');
 const { DATA_API_KEY } = process.env;
+
+const FILE_NAME = 'coordinates.csv';
+const csvPath = path.join(__dirname, '../../client/public', 'data', FILE_NAME);
+const csv = fs.readFileSync(csvPath, 'utf-8');
+const csvData = csv.split('\r\n');
+const locationData = csvData.map((el) => el.split(','));
+let newLocation = [];
+
+for (let i = 1; i < locationData.length - 1; i += 1) {
+  newLocation.push(locationData[i]);
+}
 
 async function fetchData(req, res) {
   //프론트에서 요청body에 담아 보낸 지역엔드포인트를 변수에 저장
@@ -74,7 +87,7 @@ async function fetchData(req, res) {
       }
     });
 
-    res.status(200).json({ model, weatherModel });
+    res.status(200).json({ model, weatherModel, newLocation });
   } catch (err) {
     console.error('something went wrong in fetchingData file');
     res.status(500);
