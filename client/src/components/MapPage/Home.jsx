@@ -3,6 +3,7 @@ import { BiCurrentLocation, BiMap, BiMenu } from "react-icons/bi";
 import { useGlobalContext } from "./Context";
 import styles from "../../styles/mp-home.scss";
 import { RiAlarmWarningLine } from "react-icons/ri";
+import { FaBookmark } from "react-icons/fa";
 
 const Home = () => {
   const { openSidebar, isNeedMyLocation } = useGlobalContext();
@@ -35,12 +36,12 @@ const Home = () => {
           <button className="my-location" onClick={isNeedMyLocation}>
             <BiCurrentLocation />
           </button>
-          {/* <button
-            className="sidebar-population"
-            onClick={() => openSidebar("population")}
+          <button
+            className="sidebar-bookmark"
+            onClick={() => openSidebar("bookmark")}
           >
-            <IoIosPeople />
-          </button> */}
+            <FaBookmark />
+          </button>
         </div>
       </div>
     </main>

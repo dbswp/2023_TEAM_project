@@ -75,107 +75,112 @@ const Sidebar = ({ area, data, weather, isLoading }) => {
 
   return (
     <aside className={`${isSidebarOpen ? "sidebar show-sidebar" : "sidebar"} `}>
-      <div className="sidebar-header">
-        {/* 현재 시간 */}
-        <p>
-          현재 시간 <span>{timer}</span> 기준
-        </p>
-        {/* 현재 위치 */}
-        <h1>{area}</h1>
-        {/* 닫기 버튼 */}
-        <button className="close-btn" onClick={closeSidebar}>
-          <FaTimes />
-        </button>
-        {/* 북마크 */}
-        <button className="bookmark-btn" onClick={bookmarkClick}>
-          {bookMarkIcon ? <FaBookmark /> : <FaRegBookmark />}
-        </button>
-      </div>
       {isLoading ? (
         <Loding /> // 로딩중인 동안 렌더링되는 로딩컴포넌트
       ) : (
-        <div className="detail-content">
+        <div className="information-wrap">
           {sidebarCategory === "information" && (
-            <div className="detail-information">
-              {/* 인구밀집도 */}
-              <div className="report-population">
-                <h3>
-                  실시간 인구 <BiChevronRight />
-                </h3>
-                <h2>
-                  현재 인구 혼잡도는{" "}
-                  <span // 붐빔도 레벨로 컬러 색상 지정
-                    className={`report-crowded ${
-                      data?.AREA_CONGEST_LVL[0] === "여유"
-                        ? "green"
-                        : data?.AREA_CONGEST_LVL[0] === "보통"
-                        ? "yellow"
-                        : data?.AREA_CONGEST_LVL[0] === "약간 붐빔"
-                        ? "orange"
-                        : "red"
-                    }`}
-                  >
-                    {data?.AREA_CONGEST_LVL[0]}
-                  </span>{" "}
-                  입니다.
-                </h2>
-                <br />
-                <div className="report-crowded-msg">
-                  <span>{data?.AREA_CONGEST_MSG[0]}</span>
-                </div>
+            <div className="detail-content">
+              <div className="sidebar-header">
+                {/* 현재 시간 */}
+                <p>
+                  현재 시간 <span>{timer}</span> 기준
+                </p>
+                {/* 현재 위치 */}
+                <h1>{area}</h1>
+                {/* 닫기 버튼 */}
+                <button className="close-btn" onClick={closeSidebar}>
+                  <FaTimes />
+                </button>
+                {/* 북마크 */}
+                <button className="bookmark-btn" onClick={bookmarkClick}>
+                  {bookMarkIcon ? <FaBookmark /> : <FaRegBookmark />}
+                </button>
               </div>
-
-              {/* 날씨 데이터  */}
-              <div className="report-weather">
-                <div className="report-live-weather">
+              <div className="detail-information">
+                {/* 인구밀집도 */}
+                <div className="report-population">
                   <h3>
-                    실시간 날씨 상황 <BiChevronRight />
+                    실시간 인구 <BiChevronRight />
                   </h3>
-                </div>
-                <div className="today-weather-wrap">
-                  {weather?.pcp_msg === "눈" ? (
-                    <img src={snow} alt="snow" />
-                  ) : weather?.pcp_msg === "비" ? (
-                    <img src={rain} alt="rain" />
-                  ) : (
-                    <div className="today-weather">
-                      <img className="img" src={clear} alt="rain" />
-                      <p>오늘의 날씨는 {weather?.pcp_msg}</p>
-                    </div>
-                  )}
-                </div>
-                <div className="today-weather-detail">
-                  {/* 온도계 이미지 */}
-                  <div className="temperature-img">
-                    <img className="img" src={celsius} alt="temperature" />
+                  <h2>
+                    현재 인구 혼잡도는{" "}
+                    <span // 붐빔도 레벨로 컬러 색상 지정
+                      className={`report-crowded ${
+                        data?.AREA_CONGEST_LVL[0] === "여유"
+                          ? "green"
+                          : data?.AREA_CONGEST_LVL[0] === "보통"
+                          ? "yellow"
+                          : data?.AREA_CONGEST_LVL[0] === "약간 붐빔"
+                          ? "orange"
+                          : "red"
+                      }`}
+                    >
+                      {data?.AREA_CONGEST_LVL[0]}
+                    </span>{" "}
+                    입니다.
+                  </h2>
+                  <br />
+                  <div className="report-crowded-msg">
+                    <span>{data?.AREA_CONGEST_MSG[0]}</span>
                   </div>
+                </div>
 
-                  {/* 최고,최저 기온 메세지 */}
-                  {weather?.pcp_msg === "눈" ? (
-                    <p>
-                      오늘 최고 기온은 {weather?.max_temperature}도 <br />
-                      최저 기온은 {weather?.min_temperature}도 이고, <br />
-                      눈이 내리는 날씨에는 눈사람 만드는 건 어때요? 😊
-                    </p>
-                  ) : weather?.pcp_msg === "비" ? (
-                    <p>
-                      오늘 최고 기온은 {weather?.max_temperature}도 <br />
-                      최저 기온은 {weather?.min_temperature}도 이고, <br />
-                      우산 꼭 챙기세요! ☂️
-                    </p>
-                  ) : (
-                    <p>
-                      오늘 최고 기온은 {weather?.max_temperature}도 <br />
-                      최저 기온은 {weather?.min_temperature}도 이고, <br />
-                      맑은 하늘을 만나기 좋은 날씨네요! 😎
-                    </p>
-                  )}
+                {/* 날씨 데이터  */}
+                <div className="report-weather">
+                  <div className="report-live-weather">
+                    <h3>
+                      실시간 날씨 상황 <BiChevronRight />
+                    </h3>
+                  </div>
+                  <div className="today-weather-wrap">
+                    {weather?.pcp_msg === "눈" ? (
+                      <img src={snow} alt="snow" />
+                    ) : weather?.pcp_msg === "비" ? (
+                      <img src={rain} alt="rain" />
+                    ) : (
+                      <div className="today-weather">
+                        <img className="img" src={clear} alt="rain" />
+                        <p>오늘의 날씨는 {weather?.pcp_msg}</p>
+                      </div>
+                    )}
+                  </div>
+                  <div className="today-weather-detail">
+                    {/* 온도계 이미지 */}
+                    <div className="temperature-img">
+                      <img className="img" src={celsius} alt="temperature" />
+                    </div>
+
+                    {/* 최고,최저 기온 메세지 */}
+                    {weather?.pcp_msg === "눈" ? (
+                      <p>
+                        오늘 최고 기온은 {weather?.max_temperature}도 <br />
+                        최저 기온은 {weather?.min_temperature}도 이고, <br />
+                        눈이 내리는 날씨에는 눈사람 만드는 건 어때요? 😊
+                      </p>
+                    ) : weather?.pcp_msg === "비" ? (
+                      <p>
+                        오늘 최고 기온은 {weather?.max_temperature}도 <br />
+                        최저 기온은 {weather?.min_temperature}도 이고, <br />
+                        우산 꼭 챙기세요! ☂️
+                      </p>
+                    ) : (
+                      <p>
+                        오늘 최고 기온은 {weather?.max_temperature}도 <br />
+                        최저 기온은 {weather?.min_temperature}도 이고, <br />
+                        맑은 하늘을 만나기 좋은 날씨네요! 😎
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           )}
           {sidebarCategory === "emergency" && (
             <div className="detail-emergency"></div>
+          )}
+          {sidebarCategory === "bookmark" && (
+            <div className="detail-bookmark"></div>
           )}
         </div>
       )}
