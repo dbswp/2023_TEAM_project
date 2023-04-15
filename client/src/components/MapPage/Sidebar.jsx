@@ -5,6 +5,10 @@ import styles from "../../styles/mp-sidebar.scss";
 import axios from "axios";
 import Loding from "./Lodin";
 import { BiChevronRight } from "react-icons/bi";
+import celsius from "../../../src/assets/celsius.png";
+import snow from "../../../src/assets/snow.svg";
+import rain from "../../../src/assets/rain.svg";
+import clear from "../../../src/assets/clear.svg";
 
 const Sidebar = () => {
   const { isSidebarOpen, closeSidebar, sidebarCategory, isNeedMyLocation } =
@@ -16,6 +20,7 @@ const Sidebar = () => {
   const [END_POINT, setEND_POINT] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [timer, setTimer] = useState("00:00:00");
+  const level = data?.AREA_CONGEST_LVL[0];
 
   const getData = async () => {
     const point = localStorage.getItem("END_POINT");
@@ -82,32 +87,80 @@ const Sidebar = () => {
         <div className="detail-content">
           {sidebarCategory === "information" && (
             <div className="detail-information">
+              {/* 인구밀집도 */}
               <div className="report-population">
                 <h3>
                   실시간 인구 <BiChevronRight />
                 </h3>
                 <h2>
-                  현재 인구 혼잡도가{" "}
-                  <span className="report-crowded">
+                  현재 인구 혼잡도는{" "}
+                  <span // 붐빔도 레벨로 컬러 색상 지정
+                    className={`report-crowded ${
+                      data?.AREA_CONGEST_LVL[0] === "여유"
+                        ? "green"
+                        : data?.AREA_CONGEST_LVL[0] === "보통"
+                        ? "yellow"
+                        : data?.AREA_CONGEST_LVL[0] === "약간 붐빔"
+                        ? "orange"
+                        : "red"
+                    }`}
+                  >
                     {data?.AREA_CONGEST_LVL[0]}
                   </span>{" "}
                   입니다.
                 </h2>
                 <br />
-                <span className="report-crowded-msg">
-                  {data?.AREA_CONGEST_MSG[0]}
-                </span>
+                <div className="report-crowded-msg">
+                  <span>{data?.AREA_CONGEST_MSG[0]}</span>
+                </div>
               </div>
-              <br />
-              <br />
+
+              {/* 날씨 데이터  */}
               <div className="report-weather">
-                <p>
-                  오늘 최고 기온은 {weather?.max_temperature}도 <br />
-                  최저 기온은 {weather?.min_temperature}도 이고, <br />
-                  현재 체감 온도는 {weather?.sen_temperature}입니다. <br />
-                  <br />
-                  오늘의 날씨는 {weather?.pcp_msg}
-                </p>
+                <div className="report-live-weather">
+                  <h3>
+                    실시간 날씨 상황 <BiChevronRight />
+                  </h3>
+                </div>
+                <div className="today-weather-wrap">
+                  {weather?.pcp_msg === "눈" ? (
+                    <img src={snow} alt="snow" />
+                  ) : weather?.pcp_msg === "비" ? (
+                    <img src={rain} alt="rain" />
+                  ) : (
+                    <div className="today-weather">
+                      <img className="img" src={clear} alt="rain" />
+                      <p>오늘의 날씨는 {weather?.pcp_msg}</p>
+                    </div>
+                  )}
+                </div>
+                <div className="today-weather-detail">
+                  {/* 온도계 이미지 */}
+                  <div className="temperature-img">
+                    <img className="img" src={celsius} alt="temperature" />
+                  </div>
+
+                  {/* 최고,최저 기온 메세지 */}
+                  {weather?.pcp_msg === "눈" ? (
+                    <p>
+                      오늘 최고 기온은 {weather?.max_temperature}도 <br />
+                      최저 기온은 {weather?.min_temperature}도 이고, <br />
+                      눈이 내리는 날씨에는 눈사람 만드는 건 어때요? 😊
+                    </p>
+                  ) : weather?.pcp_msg === "비" ? (
+                    <p>
+                      오늘 최고 기온은 {weather?.max_temperature}도 <br />
+                      최저 기온은 {weather?.min_temperature}도 이고, <br />
+                      우산 꼭 챙기세요! ☂️
+                    </p>
+                  ) : (
+                    <p>
+                      오늘 최고 기온은 {weather?.max_temperature}도 <br />
+                      최저 기온은 {weather?.min_temperature}도 이고, <br />
+                      맑은 하늘을 만나기 좋은 날씨네요! 😎
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           )}
