@@ -24,7 +24,7 @@ a {
 main {
   position: absolute;
   top: 0;
-  height: calc(100vh - 5%);
+  height: calc(100vh - 74px);
 }
 
 .wrap-container {
@@ -72,6 +72,25 @@ main {
   background: transparent;
   border-color: transparent;
   transition: all 0.3s linear;
+  cursor: pointer;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.my-location {
+  font-size: 1.5rem;
+  background: transparent;
+  border-color: transparent;
+  transition: all 0.3s linear;
+  cursor: pointer;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.sidebar-bookmark {
+  font-size: 1.3rem;
+  background: transparent;
+  border-color: transparent;
+  transition: all 0.3s linear;
+  color: hsl(0, 67%, 44%);
   cursor: pointer;
   animation: bounce 2s ease-in-out infinite;
 }
