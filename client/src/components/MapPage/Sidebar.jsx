@@ -20,6 +20,7 @@ const Sidebar = ({ area, data, weather, isLoading }) => {
   const [timer, setTimer] = useState("00:00:00");
   const level = data?.AREA_CONGEST_LVL[0];
   const [bookMarkIcon, setbookMarkIcon] = useState(false);
+  const [bookmarks, setBookmarks] = useState([]);
 
   // const point = localStorage.getItem('END_POINT');
   // const getData = async () => {
@@ -65,12 +66,35 @@ const Sidebar = ({ area, data, weather, isLoading }) => {
   const startTimer = () => {
     setInterval(currentTimer, 1000);
   };
-
   startTimer();
 
   // 북마크
   const bookmarkClick = () => {
+    const newBookmark = { area, data, weather };
+    const existingBookmark = bookmarks.find(
+      (bookmark) =>
+        bookmark.area === newBookmark.area &&
+        bookmark.data === newBookmark.data &&
+        bookmark.weather === newBookmark.weather
+    );
+    // 이미 존재하는 북마크일 경우, 알림 메시지 표시
+    if (existingBookmark) {
+      alert("이미 북마크된 지역입니다.");
+      return;
+    }
     setbookMarkIcon(!bookMarkIcon);
+    setBookmarks([...bookmarks, newBookmark]);
+  };
+
+  // 북마크 삭제
+  const handleBookmarkDelete = (idx) => {
+    const newBookmarks = [...bookmarks];
+    newBookmarks.splice(idx, 1);
+    setBookmarks(newBookmarks);
+    // 삭제버튼이 눌리면 북마크 아이콘 초기화
+    if (bookMarkIcon) {
+      setbookMarkIcon(false);
+    }
   };
 
   return (
@@ -179,8 +203,50 @@ const Sidebar = ({ area, data, weather, isLoading }) => {
           {sidebarCategory === "emergency" && (
             <div className="detail-emergency"></div>
           )}
-          {sidebarCategory === "bookmark" && (
-            <div className="detail-bookmark"></div>
+          {sidebarCategory === "bookmark" && bookMarkIcon && (
+            <div className="detail-bookmark">
+              <h3>북마크된 지역</h3>
+              <ul>
+                {bookmarks.length > 0 ? (
+                  bookmarks.map((el, idx) => (
+                    <li key={idx}>
+                      <div>
+                        <div>{el?.area}</div>
+                        <div>실시간 날씨🌤️ - {el?.weather?.pcp_msg}</div>
+                        <div>
+                          실시간 인구 혼잡도 👥 -{" "}
+                          <span // 붐빔도 레벨로 컬러 색상 지정
+                            style={{ fontSize: "18px" }}
+                            className={`report-crowded ${
+                              el?.data?.AREA_CONGEST_LVL[0] === "여유"
+                                ? "green"
+                                : el?.data?.AREA_CONGEST_LVL[0] === "보통"
+                                ? "yellow"
+                                : el?.data?.AREA_CONGEST_LVL[0] === "약간 붐빔"
+                                ? "orange"
+                                : "red"
+                            }`}
+                          >
+                            {data?.AREA_CONGEST_LVL[0]}
+                          </span>{" "}
+                        </div>
+                        <button onClick={() => handleBookmarkDelete(idx)}>
+                          삭제
+                        </button>
+                      </div>
+                    </li>
+                  ))
+                ) : (
+                  <ul>
+                    <li>
+                      <p className="bookmark-text">
+                        북마크된 지역이 없습니다 😮
+                      </p>
+                    </li>
+                  </ul>
+                )}
+              </ul>
+            </div>
           )}
         </div>
       )}

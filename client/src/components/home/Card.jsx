@@ -1,8 +1,8 @@
-import React from 'react';
-import '../../styles/card.scss';
-import axios from 'axios';
-import Spinner from 'react-bootstrap/Spinner';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import "../../styles/card.scss";
+import axios from "axios";
+import Spinner from "react-bootstrap/Spinner";
+import { useNavigate } from "react-router-dom";
 
 export default function Card({ name, img, latitude, longitude }) {
   const navigate = useNavigate();
@@ -11,14 +11,14 @@ export default function Card({ name, img, latitude, longitude }) {
       // const res = await axios.post("http://localhost:4000/data/getdata/", {
       //   END_POINT: name,
       // });
-      localStorage.setItem('END_POINT', name);
-      localStorage.setItem('latitude', latitude);
-      localStorage.setItem('longitude', longitude);
+      localStorage.setItem("END_POINT", name);
+      localStorage.setItem("latitude", latitude);
+      localStorage.setItem("longitude", longitude);
       // localStorage.setItem("location", location);
       // 데이터 처리 로직
 
       // window.location.href = `http://localhost:3000/blog`; // 이동할 URL 주소
-      navigate('/blog');
+      navigate("/blog");
     } catch (error) {
       console.error(error);
     }

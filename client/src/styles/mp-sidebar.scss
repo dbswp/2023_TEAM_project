@@ -9,7 +9,7 @@ $desktop-min: 1024px;
   right: 50px;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 102%;
   background: #fafafa;
   border-right: 1px solid rgb(211, 211, 211);
   display: grid;
@@ -18,7 +18,7 @@ $desktop-min: 1024px;
   box-shadow: hsl(360, 67%, 44%);
   transition: all 0.3s linear;
   transform: translateX(-100%);
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 5px 6px rgba(0, 0, 0, 0.3);
   // z-index: 111111
 }
 .show-sidebar {
@@ -40,7 +40,7 @@ $desktop-min: 1024px;
   height: 110px;
   background: #ffffff;
   overflow: hidden;
-  border: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
 
   h1 {
     // 현재 실시간 위치
@@ -89,6 +89,56 @@ $desktop-min: 1024px;
     right: 80px;
   }
 }
+//북마크
+.detail-bookmark {
+  height: 92.5vh;
+  padding: 40px;
+  text-align: left;
+  overflow-y: scroll;
+  h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  ul {
+    padding-left: 0px;
+    li {
+      position: relative;
+      padding: 18px;
+      border-radius: 20px;
+      margin-bottom: 15px;
+      background: #fff;
+      border: 1px solid #e1e1e1;
+      box-shadow: #adadad38 0px 3px 6px;
+    }
+    div:nth-child(1) {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    div:nth-child(2) {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    div:nth-child(3) {
+      font-size: 18px;
+      font-weight: 500;
+    }
+    button {
+      position: absolute;
+      right: 30px;
+      bottom: 70px;
+      font-size: 11px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: none;
+    }
+  }
+}
+.bookmark-text {
+  font-size: 18px;
+  padding: 40px;
+}
 
 .detail-content {
   display: flex;
@@ -129,24 +179,6 @@ $desktop-min: 1024px;
       font-size: 20px;
     }
 
-    // 여유, 보통 등 메세지
-    .report-crowded {
-      font-weight: 700;
-      font-size: 30px;
-
-      &.green {
-        color: #3cb371; // 여유
-      }
-      &.yellow {
-        color: #ffcb5c; //보통
-      }
-      &.orange {
-        color: #ffa500; // 약간 붐빔
-      }
-      &.red {
-        color: #ff0000; // 붐빔
-      }
-    }
     // 안내 메세지
     .report-crowded-msg {
       display: flex;
@@ -299,5 +331,23 @@ $desktop-min: 1024px;
   }
   .sidebar.show-sidebar {
     transform: translateY(0);
+  }
+}
+// 여유, 보통 등 메세지
+.report-crowded {
+  font-weight: 700;
+  font-size: 30px;
+
+  &.green {
+    color: #3cb371; // 여유
+  }
+  &.yellow {
+    color: #ffcb5c; //보통
+  }
+  &.orange {
+    color: #ffa500; // 약간 붐빔
+  }
+  &.red {
+    color: #ff0000; // 붐빔
   }
 }
