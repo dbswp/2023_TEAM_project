@@ -20,6 +20,7 @@ const Sidebar = ({ area, data, weather, isLoading }) => {
   const [timer, setTimer] = useState("00:00:00");
   const level = data?.AREA_CONGEST_LVL[0];
   const [bookMarkIcon, setbookMarkIcon] = useState(false);
+  const [bookmarks, setBookmarks] = useState([]);
 
   // const point = localStorage.getItem('END_POINT');
   // const getData = async () => {
@@ -65,12 +66,18 @@ const Sidebar = ({ area, data, weather, isLoading }) => {
   const startTimer = () => {
     setInterval(currentTimer, 1000);
   };
-
   startTimer();
 
   // 북마크
   const bookmarkClick = () => {
     setbookMarkIcon(!bookMarkIcon);
+    setBookmarks([...bookmarks, { area, data, weather }]);
+  };
+  // 북마크 삭제
+  const handleBookmarkDelete = (idx) => {
+    const newBookmarks = [...bookmarks];
+    newBookmarks.splice(idx, 1);
+    setBookmarks(newBookmarks);
   };
 
   return (
@@ -179,8 +186,28 @@ const Sidebar = ({ area, data, weather, isLoading }) => {
           {sidebarCategory === "emergency" && (
             <div className="detail-emergency"></div>
           )}
-          {sidebarCategory === "bookmark" && (
-            <div className="detail-bookmark"></div>
+          {sidebarCategory === "bookmark" && bookMarkIcon && (
+            <div className="detail-bookmark">
+              <h3>북마크된 지역</h3>
+              {bookmarks.length > 0 ? (
+                bookmarks.map((el, idx) => (
+                  <ul key={idx}>
+                    <li>{el?.area}</li>
+                    <li>날씨: {el?.weather?.pcp_msg}</li>
+                    <li>붐빔: {el?.data?.AREA_CONGEST_LVL[0]}</li>
+                    <button onClick={() => handleBookmarkDelete(idx)}>
+                      삭제
+                    </button>
+                  </ul>
+                ))
+              ) : (
+                <ul>
+                  <li>
+                    <p className="text">북마크된 지역이 없습니다.</p>
+                  </li>
+                </ul>
+              )}
+            </div>
           )}
         </div>
       )}

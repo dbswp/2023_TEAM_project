@@ -18,7 +18,7 @@ $desktop-min: 1024px;
   box-shadow: hsl(360, 67%, 44%);
   transition: all 0.3s linear;
   transform: translateX(-100%);
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 5px 6px rgba(0, 0, 0, 0.3);
   // z-index: 111111
 }
 .show-sidebar {
@@ -40,7 +40,7 @@ $desktop-min: 1024px;
   height: 110px;
   background: #ffffff;
   overflow: hidden;
-  border: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
 
   h1 {
     // 현재 실시간 위치
@@ -87,6 +87,42 @@ $desktop-min: 1024px;
     color: hsl(360, 67%, 44%);
     top: 15px;
     right: 80px;
+  }
+}
+//북마크
+.detail-bookmark{
+  padding: 45px;
+  text-align: left;
+  h3{
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  ul{
+    position: relative;
+    padding: 18px;
+    border-radius: 20px;
+    background: #fff;
+    border: 1px solid #e1e1e1;
+    box-shadow: #adadad38 0px 3px 6px;
+    li:nth-child(1){
+      font-size: 20px;
+      font-weight: 600;
+    }
+    li:nth-child(2){
+      font-size: 18px;
+    }
+    li:nth-child(3){
+      font-size: 18px;
+    }
+    button{
+      position: absolute;
+      right: 30px;
+      bottom: 70px;
+      font-size: 11px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: none;
+    }
   }
 }
 
