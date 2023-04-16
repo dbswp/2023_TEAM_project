@@ -6,6 +6,7 @@ import Home from '../components/MapPage/Home';
 import axios from 'axios';
 import '../styles/mp-blog.scss';
 import Header from '../components/common/Header/Header';
+import { useGlobalContext } from '../components/MapPage/Context';
 
 export default function Blog() {
   const [areaData, setAreaData] = useState();
@@ -13,6 +14,7 @@ export default function Blog() {
   const [weatherData, setWeatherData] = useState();
   const [latlngData, setLatLngData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const { endPoint, openSidebar, isSidebarOpen } = useGlobalContext();
 
   const point = localStorage.getItem('END_POINT');
   const getData = async () => {
@@ -31,6 +33,11 @@ export default function Blog() {
       console.error(err);
     }
     setIsLoading(false); // 로딩 완료를 알림
+
+    // if (!isSidebarOpen)
+    //   setTimeout(() => {
+    //     openSidebar();
+    //   }, 500);
   };
 
   useEffect(() => {
@@ -41,7 +48,7 @@ export default function Blog() {
       console.log('데이터 갱신 완료');
     }, 600000);
     return () => clearInterval(reNew); // unmount 시 interval 해제
-  }, [point]);
+  }, [endPoint]);
 
   return (
     <>

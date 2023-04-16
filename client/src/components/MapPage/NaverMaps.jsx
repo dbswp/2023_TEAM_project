@@ -7,21 +7,16 @@ import {
   useNavermaps,
   InfoWindow,
   Circle,
+  Listener,
 } from 'react-naver-maps';
 import '../../styles/mp-sidebar.scss';
 import { useGlobalContext } from './Context';
 
 export default function NaverMaps({ locationData, data }) {
-  const { wantMyLocation } = useGlobalContext();
+  const { wantMyLocation, endPoint, changeEndPoint } = useGlobalContext();
   const [map, setMap] = useState(null);
   const [infowindow, setInfowindow] = useState(null);
-  const [location, setLocation] = useState();
-  navigator.geolocation.getCurrentPosition((position) => {
-    setLocation({
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude,
-    });
-  });
+  const [location, setLocation] = useState({});
 
   const navermaps = useNavermaps();
 
@@ -82,7 +77,9 @@ export default function NaverMaps({ locationData, data }) {
             localStorage.setItem('END_POINT', coordinate[2].trim()); //마커를 클릭하면 로컬스토리지의 'END_POINT' 값을 데이터의 지역명으로 바꿈
             localStorage.setItem('latitude', coordinate[0]); //로컬스토리지의 'latitude' 값을 데이터의 위도 값 으로 바꿈
             localStorage.setItem('longitude', coordinate[1]); //로컬스토리지의 'longitude' 값을 데이터의 경도 값 으로 바꿈
-            window.location.reload(); // 블로그 컴포넌트에서 바뀐 로컬스토리지 값을 바탕으로 데이터 요청을 실행 시키기 위해 reload 시킴
+            // window.location.reload(); // 블로그 컴포넌트에서 바뀐 로컬스토리지 값을 바탕으로 데이터 요청을 실행 시키기 위해 reload 시킴
+            changeEndPoint();
+            console.log(endPoint);
           }}
         />
         <InfoWindow
@@ -105,6 +102,7 @@ export default function NaverMaps({ locationData, data }) {
       location?.longitude
     );
     console.log(location);
+
     map.setCenter(naverLocation);
 
     infowindow?.setContent(
@@ -115,16 +113,22 @@ export default function NaverMaps({ locationData, data }) {
 
   useEffect(() => {
     let watcher = null;
+
     console.log(wantMyLocation);
 
     if (wantMyLocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      });
+
       watcher = navigator.geolocation.watchPosition(successCallback, null);
     }
 
     return () => {
-      if (watcher) {
-        navigator.geolocation.clearWatch(watcher);
-      }
+      navigator.geolocation.clearWatch(watcher);
     };
   }, [wantMyLocation]);
 
