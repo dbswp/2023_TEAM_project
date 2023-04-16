@@ -1,15 +1,15 @@
-import React, { Component, useEffect } from "react";
-import { BiCurrentLocation, BiMap, BiMenu } from "react-icons/bi";
-import { useGlobalContext } from "./Context";
-import styles from "../../styles/mp-home.scss";
-import { RiAlarmWarningLine } from "react-icons/ri";
-import { FaBookmark } from "react-icons/fa";
+import React, { Component, useEffect } from 'react';
+import { BiCurrentLocation, BiMap, BiMenu } from 'react-icons/bi';
+import { useGlobalContext } from './Context';
+import styles from '../../styles/mp-home.scss';
+import { RiAlarmWarningLine } from 'react-icons/ri';
+import { FaBookmark } from 'react-icons/fa';
 
 const Home = () => {
   const { openSidebar, isNeedMyLocation } = useGlobalContext();
 
   useEffect(() => {
-    openSidebar("information");
+    openSidebar('information');
   }, []);
 
   return (
@@ -22,14 +22,14 @@ const Home = () => {
           <button
             className="sidebar-information"
             onClick={() => {
-              openSidebar("information");
+              openSidebar('information');
             }}
           >
             <BiMap />
           </button>
           <button
             className="sidebar-emergency"
-            onClick={() => openSidebar("emergency")}
+            onClick={() => openSidebar('emergency')}
           >
             <RiAlarmWarningLine />
           </button>
@@ -38,7 +38,7 @@ const Home = () => {
           </button>
           <button
             className="sidebar-bookmark"
-            onClick={() => openSidebar("bookmark")}
+            onClick={() => openSidebar('bookmark')}
           >
             <FaBookmark />
           </button>

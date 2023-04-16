@@ -5,16 +5,17 @@ const { DATA_API_KEY } = process.env;
 
 const FILE_NAME = 'coordinates.csv';
 const csvPath = path.join(__dirname, '../../client/public', 'data', FILE_NAME);
-const csv = fs.readFileSync(csvPath, 'utf-8');
-const csvData = csv.split('\r\n');
-const locationData = csvData.map((el) => el.split(','));
-let newLocation = [];
-
-for (let i = 1; i < locationData.length - 1; i += 1) {
-  newLocation.push(locationData[i]);
-}
 
 async function fetchData(req, res) {
+  const csv = fs.readFileSync(csvPath, 'utf-8');
+  const csvData = csv.split('\r\n'); //맥 사용자의 경우는 \n으로 바꿀것
+  const locationData = csvData.map((el) => el.split(','));
+  let newLocation = [];
+
+  for (let i = 1; i < locationData.length - 1; i += 1) {
+    newLocation.push(locationData[i]);
+  }
+
   //프론트에서 요청body에 담아 보낸 지역엔드포인트를 변수에 저장
   //마커 클릭으로 받아오는 지역엔드포인트는 문자 앞에 공백이 하나 있기때문에 trim()을 통해 공백제거
   const END_POINT = req.body.point.trim();

@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import NaverMaps from "../components/MapPage/NaverMaps";
-import { Container as MapDiv } from "react-naver-maps";
-import Sidebar from "../components/MapPage/Sidebar";
-import Home from "../components/MapPage/Home";
-import axios from "axios";
-import "../styles/mp-blog.scss";
-import Header from "../components/common/Header/Header";
+import React, { useEffect, useState } from 'react';
+import NaverMaps from '../components/MapPage/NaverMaps';
+import { Container as MapDiv } from 'react-naver-maps';
+import Sidebar from '../components/MapPage/Sidebar';
+import Home from '../components/MapPage/Home';
+import axios from 'axios';
+import '../styles/mp-blog.scss';
+import Header from '../components/common/Header/Header';
+import { useGlobalContext } from '../components/MapPage/Context';
 
 export default function Blog() {
   const [areaData, setAreaData] = useState();
@@ -13,12 +14,13 @@ export default function Blog() {
   const [weatherData, setWeatherData] = useState();
   const [latlngData, setLatLngData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const { endPoint, openSidebar, isSidebarOpen } = useGlobalContext();
 
-  const point = localStorage.getItem("END_POINT");
+  const point = localStorage.getItem('END_POINT');
   const getData = async () => {
     setIsLoading(true); // 로딩중임을 알림
     try {
-      const res = await axios.post("http://localhost:4000/data/getdata", {
+      const res = await axios.post('http://localhost:4000/data/getdata', {
         point,
       });
       res.status === 200 ? console.log(res.status) : console.log(res.json());
@@ -31,6 +33,11 @@ export default function Blog() {
       console.error(err);
     }
     setIsLoading(false); // 로딩 완료를 알림
+
+    // if (!isSidebarOpen)
+    //   setTimeout(() => {
+    //     openSidebar();
+    //   }, 500);
   };
 
   useEffect(() => {
@@ -38,23 +45,23 @@ export default function Blog() {
     //10분마다 데이터 갱신 시키기
     const reNew = setInterval(() => {
       getData();
-      console.log("데이터 갱신 완료");
+      console.log('데이터 갱신 완료');
     }, 600000);
     return () => clearInterval(reNew); // unmount 시 interval 해제
-  }, [point]);
+  }, [endPoint]);
 
   return (
     <>
       <Header
         name="container-fluid"
         style={{
-          borderBottom: "1px solid #e1e1e1",
+          borderBottom: '1px solid #e1e1e1',
         }}
       />
       <MapDiv
         style={{
-          width: "100%",
-          height: "90vh",
+          width: '100%',
+          height: '90vh',
         }}
       >
         <Home />
