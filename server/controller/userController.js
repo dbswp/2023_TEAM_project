@@ -1,11 +1,13 @@
-const mongooseConnect = require('./mongooseConnect');
-const User = require('../models/user');
-const jwt = require('jsonwebtoken');
-const { simpleNotification } = require('../config/naverApiTest');
+const mongooseConnect = require("./mongooseConnect");
+const User = require("../models/user");
+const jwt = require("jsonwebtoken");
+const { simpleNotification } = require("../config/naverApiTest");
+const bcrypt = require("bcrypt");
 
 const { ACCESS_SECRET, REFRESH_SECRET } = process.env;
 
 mongooseConnect();
+const saltRounds = 10;
 
 //유저 로그인시 데이터를 받기 위한 전역변수
 let isNormalUserLogined = false;
@@ -14,85 +16,122 @@ let userID;
 // 회원 가입
 // 몽구스 삽입은 create, 뒤에 {} = One, 뒤에 [] = Many
 const registerUser = async (req, res) => {
-  const { email } = req.body;
-
-  try {
-    const duplicatedUser = await User.findOne({ email });
-    if (duplicatedUser) {
-      res.status(409).json({ text: '중복된 이메일입니다.' });
-    } else {
-      await User.create(req.body);
-      res.status(200).json({ text: '회원가입 성공!!' });
-      console.log('회원가입 성공!');
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ text: '회원가입 실패' });
+  let { email, phone, password, passwordCheck } = req.body;
+  // 빈값이 오면 팅겨내기
+  if (email === "" || phone === "" || password === "" || passwordCheck === "") {
+    return res.json({ registerSuccess: false, message: "정보를 입력하세요" });
   }
+
+  const sameEmailUser = await User.findOne({ email: email });
+  if (sameEmailUser !== null) {
+    return res.json({
+      registerSuccess: false,
+      message: "이미 존재하는 이메일입니다",
+    });
+  }
+
+  const sameNickNameUser = await User.findOne({ phone });
+  if (sameNickNameUser !== null) {
+    return res.json({
+      registerSuccess: false,
+      message: "이미 존재하는 닉네임입니다.",
+    });
+  }
+
+  // 솔트 생성 및 해쉬화 진행
+  bcrypt.genSalt(saltRounds, async (err, salt) => {
+    // 솔트 생성 실패시
+    if (err)
+      return res.status(500).json({
+        registerSuccess: false,
+        message: "비밀번호 해쉬화에 실패했습니다.",
+      });
+    // salt 생성에 성공시 hash 진행
+
+    bcrypt.hash(password, salt, async (err, hash) => {
+      if (err)
+        return res.status(500).json({
+          registerSuccess: false,
+          message: "비밀번호 해쉬화에 실패했습니다.",
+        });
+
+      // 비밀번호를 해쉬된 값으로 대체합니다.
+      password = hash;
+
+      const user = new User({
+        email: email,
+        phone,
+        password,
+      });
+
+      try {
+        await user.save();
+        return res.json({ registerSuccess: true });
+      } catch (err) {
+        return res.json({ registerSuccess: false, message: err.message });
+      }
+    });
+  });
 };
-
 const loginUser = async (req, res) => {
-  const { email, password, phone } = req.body;
-  try {
-    const duplicatedUser = await User.findOne({ email });
-    if (duplicatedUser) {
-      console.log('db에서 아이디 대조까지는 성공');
-    }
-    if (!duplicatedUser) {
-      return res.status(400).json({ text: '없는 이메일입니다.' });
-    }
-    if (duplicatedUser.password !== req.body.password) {
-      return res.status(400).json({ text: '비밀번호 틀림' });
+  // 해당 email이 있는지 확인
+  User.findOne({ email: req.body.email }, (error, user) => {
+    // 에러는 500
+    if (error) {
+      return res.status(500).json({ error: "오류" });
     }
 
-    // 유저가 로그인 하면 true로 바꾸어줌(알림기능을 위한 전역변수)
-    isNormalUserLogined = true;
-    // 로그인시 유저가 req.body에 담겨서 오는 유저 이메일을 전역 변수에 저장(알림기능을 위한 전역변수)
-    if (isNormalUserLogined) userID = email;
+    // 찾는 유저가 없다?
+    if (!user) {
+      return res.status(403).json({
+        loginSuccess: false,
+        message: "해당되는 이메일이 없습니다.",
+      });
+    }
 
-    // accesstoken 발급
-    const accessToken = jwt.sign(
-      {
-        email: duplicatedUser.email,
-        phone: duplicatedUser.phone,
-        password: duplicatedUser.password,
-      },
-      ACCESS_SECRET,
-      {
-        expiresIn: 1000 * 60,
-        issuer: 'About Tech',
-      }
-    );
+    // email이 맞으니 pw가 일치하는지 검증합니다.
+    if (user) {
+      const checkPW = () => {
+        bcrypt.compare(req.body.password, user.password, (error, isMatch) => {
+          if (error) {
+            return res.status(500).json({ error: "something wrong" });
+          }
+          if (isMatch) {
+            // 비밀번호가 맞으면 token을 생성해야 합니다.
+            // secret 토큰 값은 특정 유저를 감별하는데 사용합니다.
 
-    // refreshtoken 발급
-    const refreshToken = jwt.sign(
-      {
-        email: duplicatedUser.email,
-        phone: duplicatedUser.phone,
-        password: duplicatedUser.password,
-      },
-      REFRESH_SECRET,
-      {
-        expiresIn: '24h',
-        issuer: 'About Tech',
-      }
-    );
+            // 토큰 생성 7일간 유효
+            const token = jwt.sign({ userID: user._id }, ACCESS_SECRET, {
+              expiresIn: "7d",
+            });
 
-    // 쿠키에 담아서 전송
-    res.cookie('accessToken', accessToken, {
-      secure: false,
-      httpOnly: false,
-    });
-    res.cookie('refreshToken', refreshToken, {
-      secure: false,
-      httpOnly: false,
-    });
+            // 해당 유저에게 token값 할당 후 저장
+            user.token = token;
+            user.save((error, user) => {
+              if (error) {
+                return res.status(400).json({ error: "something wrong" });
+              }
 
-    res.status(200).json({ text: '로그인 성공' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ text: '로그인 오류' });
-  }
+              // DB에 token 저장한 후에는 cookie에 토큰을 저장하여 이용자를 식별합니다.
+              return res
+                .cookie("x_auth", user.token, {
+                  maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
+                  httpOnly: true,
+                })
+                .status(200)
+                .json({ loginSuccess: true, userId: user._id });
+            });
+          } else {
+            return res.status(403).json({
+              loginSuccess: false,
+              message: "비밀번호가 틀렸습니다.",
+            });
+          }
+        });
+      };
+      checkPW();
+    }
+  });
 };
 
 const kakaoLoginUser = async (req, res) => {
@@ -102,10 +141,10 @@ const kakaoLoginUser = async (req, res) => {
   try {
     //카카오 엑세스 토큰을 사용하여 사용자 정보에 접근!
     const userResponese = await fetch(`https://kapi.kakao.com/v2/user/me`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         Authorization: `Bearer ${KAKAO_CODE}`,
-        'Content-type': 'application/x-www-form-urlencoded',
+        "Content-type": "application/x-www-form-urlencoded",
       },
     });
     if (userResponese.status === 200) {
@@ -120,33 +159,29 @@ const kakaoLoginUser = async (req, res) => {
         ACCESS_SECRET,
         {
           expiresIn: 1000 * 60,
-          issuer: 'About Tech',
+          issuer: "About Tech",
         }
       );
       // 쿠키에 담아서 전송
-      res.cookie('kakaoAccessToken', kakaoAccessToken, {
+      res.cookie("kakaoAccessToken", kakaoAccessToken, {
         secure: false,
         httpOnly: false,
       });
     }
-    res.status(200).json('엑세스 토큰 받기 성공!');
+    res.status(200).json("엑세스 토큰 받기 성공!");
   } catch (err) {
     console.error(err);
   }
 };
 
 const accesstoken = async (req, res) => {
-  const { email, phone } = req.body;
-  const duplicatedUser = await User.findOne({ email, phone });
   try {
     const token = req.cookies.accessToken;
     const data = jwt.verify(token, ACCESS_SECRET);
 
-    const userData = duplicatedUser.filter((el) => {
-      return el.email === data.email;
-    });
+    const userData = await User.findOne({ email: data.email });
 
-    const { password, ...others } = userData;
+    const { password, ...others } = userData.toObject();
     res.status(200).json(others);
     console.log(userData);
   } catch (err) {
@@ -156,14 +191,11 @@ const accesstoken = async (req, res) => {
 
 const refreshtoken = async (req, res) => {
   const { email } = req.body;
-  const duplicatedUser = await User.findOne({ email });
   try {
     const token = req.cookies.accessToken;
     const data = jwt.verify(token, ACCESS_SECRET);
 
-    const userData = duplicatedUser.filter((el) => {
-      return el.email === data.email;
-    });
+    const userData = await User.findOne({ email: data.email });
 
     const accessToken = jwt.sign(
       {
@@ -171,16 +203,16 @@ const refreshtoken = async (req, res) => {
       },
       ACCESS_SECRET,
       {
-        expiresIn: '1m',
-        issuer: 'About Tech',
+        expiresIn: "1m",
+        issuer: "About Tech",
       }
     );
 
-    res.cookie('accessToken', accessToken, {
+    res.cookie("accessToken", accessToken, {
       secure: false,
       httpOnly: true,
     });
-    res.status(200).json('Access Token Recreated');
+    res.status(200).json("Access Token Recreated");
     console.log(userData);
   } catch (err) {
     res.status(500).json(err);
@@ -190,10 +222,10 @@ const refreshtoken = async (req, res) => {
 const loginSuccess = (req, res) => {};
 
 const logout = (req, res) => {
-  console.log('들어오나?');
+  console.log("들어오나?");
   try {
-    res.cookie('accessToken', ' ');
-    res.status(200).json('Logout Success');
+    res.cookie("accessToken", " ");
+    res.status(200).json("Logout Success");
   } catch (error) {
     res.status(500).json(error);
   }

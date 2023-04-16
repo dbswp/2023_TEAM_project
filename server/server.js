@@ -10,7 +10,7 @@ const app = express();
 
 const registerRouter = require("./routes/register");
 const loginRouter = require("./routes/login");
-const accessToken = require("./routes/accesstoken");
+const verifyTokenRouter = require("./routes/accesstoken");
 const refreshToken = require("./routes/refreshtoken");
 const logoutRouter = require("./routes/logout");
 const dataRouter = require("./routes/data");
@@ -33,12 +33,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
 app.use("/logout", logoutRouter);
-app.use("/accesstoken", accessToken);
+// app.use("/accesstoken", accessToken);
 app.use("/refreshtoken", refreshToken);
 app.use("/data", dataRouter);
 app.use("/nameData", seoulDataRouter);
 app.use("/push", pushAlarmRouter);
 app.use("/board", boardRputer);
+// 라우터 등록
+app.use("/verify-token", verifyTokenRouter);
 // app.get("/login/success", loginSuccess);
 
 app.get("/", (req, res) => {

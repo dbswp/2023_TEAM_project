@@ -1,24 +1,25 @@
 const express = require("express");
 const router = express.Router();
-const { User } = require("../models/user");
+const jwt = require("jsonwebtoken");
+const { ACCESS_SECRET } = process.env;
 
 const { getArticles, writeArticle } = require("../controller/boardController");
 
-const isLogin = async (req, res, next) => {
-  if (req.signedCookies.user) {
-    const user = await User.findOne({ email: req.signedCookies.user });
-    if (user) {
-      req.user = user;
-      next();
-    } else {
-      res.status(401).send("Unauthorized");
-    }
-  } else {
-    res.status(401).send("Unauthorized");
+const checkToken = (req, res, next) => {
+  const token = req.cookies.accessToken;
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+  try {
+    const decoded = jwt.verify(token, ACCESS_SECRET);
+    req.email = decoded.email;
+    next();
+  } catch (err) {
+    return res.status(403).json({ message: "Invalid token" });
   }
 };
 
-router.get("/", isLogin, getArticles);
-router.post("/write", isLogin, writeArticle);
+router.get("/", getArticles);
+router.post("/write", writeArticle);
 
 module.exports = router;
