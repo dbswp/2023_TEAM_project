@@ -14,7 +14,7 @@ export default function MainBanner() {
           <div className="row">
             <div className="col-md-7">
               <h2>
-                서울시 인구 현황과 행정기관을 <br /> Balance Place에서
+                서울시 인구 현황과 날씨를 <br /> Balance Place에서
                 <br />
                 한번에 확인하자!
               </h2>
