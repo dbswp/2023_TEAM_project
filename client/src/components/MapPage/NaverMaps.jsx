@@ -52,44 +52,52 @@ export default function NaverMaps({ locationData, data }) {
 
   ///50개 지역의 마커 표시를 해주는 함수
   const makeMarkerBoundary = () => {
-    return locationData?.map(
-      (coordinate, index) => (
-        console.log(coordinate[2]),
-        (
-          <>
-            {coordinate[2].trim() === localStorage.getItem('END_POINT') ? ( //데이터의 지역명과 로컬스토리지의 지역명(사이드바 지역명)이 일치하는 곳만 범위를 보여줌
-              <Circle
-                center={new navermaps.LatLng(coordinate[0], coordinate[1])}
-                radius={600}
-                strokeColor={
-                  data.AREA_CONGEST_LVL[0] === '혼잡' ? 'red' : 'green' // 데이터의 인구혼잡도에 따라 오버레이 색상을 다르게 보여줌
-                }
-                fillColor={
-                  data.AREA_CONGEST_LVL[0] === '혼잡' ? 'red' : 'green' // 데이터의 인구혼잡도에 따라 오버레이 색상을 다르게 보여줌
-                }
-                fillOpacity={0.1}
-              />
-            ) : null}
-            <Marker
-              key={index}
-              position={new navermaps.LatLng(coordinate[0], coordinate[1])}
-              animation={navermaps.Animation.NONE}
-              name={coordinate.name}
-              onClick={() => {
-                localStorage.setItem('END_POINT', coordinate[2].trim()); //마커를 클릭하면 로컬스토리지의 'END_POINT' 값을 데이터의 지역명으로 바꿈
-                localStorage.setItem('latitude', coordinate[0]); //로컬스토리지의 'latitude' 값을 데이터의 위도 값 으로 바꿈
-                localStorage.setItem('longitude', coordinate[1]); //로컬스토리지의 'longitude' 값을 데이터의 경도 값 으로 바꿈
-                window.location.reload(); // 블로그 컴포넌트에서 바뀐 로컬스토리지 값을 바탕으로 데이터 요청을 실행 시키기 위해 reload 시킴
-              }}
-            />
-            <InfoWindow
-              position={new navermaps.LatLng(coordinate[0], coordinate[1])}
-              content={`<div>${coordinate[2]}</div>`}
-            />
-          </>
-        )
-      )
-    );
+    let color;
+    // 데이터의 인구혼잡도에 따라 오버레이 색상을 다르게 보여줌
+    if (data?.AREA_CONGEST_LVL[0] === '혼잡') {
+      color = 'red';
+    } else if (data?.AREA_CONGEST_LVL[0] === '보통') {
+      color = 'orange';
+    } else {
+      color = 'green';
+    }
+    return locationData?.map((coordinate, index) => (
+      <>
+        <Circle
+          center={new navermaps.LatLng(coordinate[0], coordinate[1])}
+          radius={300}
+          strokeColor={
+            coordinate[2].trim() === localStorage.getItem('END_POINT')
+              ? color
+              : null
+          }
+          fillColor={
+            coordinate[2].trim() === localStorage.getItem('END_POINT')
+              ? color
+              : null
+          }
+          fillOpacity={0.1}
+        />
+
+        <Marker
+          key={index}
+          position={new navermaps.LatLng(coordinate[0], coordinate[1])}
+          animation={navermaps.Animation.NONE}
+          name={coordinate.name}
+          onClick={() => {
+            localStorage.setItem('END_POINT', coordinate[2].trim()); //마커를 클릭하면 로컬스토리지의 'END_POINT' 값을 데이터의 지역명으로 바꿈
+            localStorage.setItem('latitude', coordinate[0]); //로컬스토리지의 'latitude' 값을 데이터의 위도 값 으로 바꿈
+            localStorage.setItem('longitude', coordinate[1]); //로컬스토리지의 'longitude' 값을 데이터의 경도 값 으로 바꿈
+            window.location.reload(); // 블로그 컴포넌트에서 바뀐 로컬스토리지 값을 바탕으로 데이터 요청을 실행 시키기 위해 reload 시킴
+          }}
+        />
+        <InfoWindow
+          key={coordinate[2]}
+          position={new navermaps.LatLng(coordinate[0], coordinate[1])}
+          content={`<div>${coordinate[2]}</div>`}
+        />
+      </>
+    ));
   };
 
   useEffect(() => {
@@ -104,7 +112,7 @@ export default function NaverMaps({ locationData, data }) {
     <>
       <NaverMap
         defaultCenter={new navermaps.LatLng(point_latitude, point_longitude)}
-        defaultZoom={15}
+        defaultZoom={16}
         ref={setMap}
       >
         <InfoWindow ref={setInfowindow} />
