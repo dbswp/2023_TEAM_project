@@ -63,15 +63,22 @@ export default function NaverMaps({ locationData, data }) {
     }
     return locationData?.map((coordinate, index) => (
       <>
-        {coordinate[2].trim() === localStorage.getItem('END_POINT') ? ( //데이터의 지역명과 로컬스토리지의 지역명(사이드바 지역명)이 일치하는 곳만 범위를 보여줌
-          <Circle
-            center={new navermaps.LatLng(coordinate[0], coordinate[1])}
-            radius={600}
-            strokeColor={color}
-            fillColor={color}
-            fillOpacity={0.1}
-          />
-        ) : null}
+        <Circle
+          center={new navermaps.LatLng(coordinate[0], coordinate[1])}
+          radius={300}
+          strokeColor={
+            coordinate[2].trim() === localStorage.getItem('END_POINT')
+              ? color
+              : null
+          }
+          fillColor={
+            coordinate[2].trim() === localStorage.getItem('END_POINT')
+              ? color
+              : null
+          }
+          fillOpacity={0.1}
+        />
+
         <Marker
           key={index}
           position={new navermaps.LatLng(coordinate[0], coordinate[1])}
@@ -105,7 +112,7 @@ export default function NaverMaps({ locationData, data }) {
     <>
       <NaverMap
         defaultCenter={new navermaps.LatLng(point_latitude, point_longitude)}
-        defaultZoom={15}
+        defaultZoom={16}
         ref={setMap}
       >
         <InfoWindow ref={setInfowindow} />
