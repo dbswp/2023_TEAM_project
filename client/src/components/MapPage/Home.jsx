@@ -1,52 +1,80 @@
-import React, { Component, useEffect } from "react";
-import { BiClipboard, BiCurrentLocation, BiMap, BiMenu } from "react-icons/bi";
+import React, { Component, useEffect, useState } from "react";
+import { BiCurrentLocation } from "react-icons/bi";
 import { useGlobalContext } from "./Context";
 import styles from "../../styles/mp-home.scss";
-import { RiAlarmWarningLine } from "react-icons/ri";
-import { FaBookmark } from "react-icons/fa";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { TbMapPin, TbMapPinFilled } from "react-icons/tb";
+import { BsClipboard, BsClipboardFill } from "react-icons/bs";
 
 const Home = () => {
   const { openSidebar, isNeedMyLocation } = useGlobalContext();
+  const [activeCategory, setActiveCategory] = useState();
 
   useEffect(() => {
     openSidebar("information");
   }, []);
 
+  const isCategoryClick = (category) => {
+    setActiveCategory(category);
+    openSidebar(category);
+  };
+
+  const isCategory = (category) => {
+    switch (category) {
+      case "information":
+        return activeCategory === "information" ? (
+          <TbMapPinFilled />
+        ) : (
+          <TbMapPin />
+        );
+      case "board":
+        return activeCategory === "board" ? (
+          <BsClipboardFill />
+        ) : (
+          <BsClipboard />
+        );
+      case "bookmark":
+        return activeCategory === "bookmark" ? (
+          <FaBookmark />
+        ) : (
+          <FaRegBookmark />
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <main>
       <div className="wrap-container">
         <div className="menubar">
-          {/* <button className="sidebar-toggle" onClick={openSidebar} >
-            <BiMenu />
-          </button> */}
+          {/* 지역, 인구밀집, 날씨  */}
           <button
             className="sidebar-information"
-            onClick={() => {
-              openSidebar("information");
-            }}
+            onClick={() => isCategoryClick("information")}
           >
-            <BiMap />
+            {isCategory("information")}
           </button>
-          <button
-            className="sidebar-emergency"
-            onClick={() => openSidebar("emergency")}
-          >
-            <RiAlarmWarningLine />
-          </button>
-          <button className="my-location" onClick={isNeedMyLocation}>
-            <BiCurrentLocation />
-          </button>
-          <button
-            className="sidebar-bookmark"
-            onClick={() => openSidebar("bookmark")}
-          >
-            <FaBookmark />
-          </button>
+
+          {/* 게시판 */}
           <button
             className="sidebar-board"
-            onClick={() => openSidebar("board")}
+            onClick={() => isCategoryClick("board")}
           >
-            <BiClipboard />
+            {isCategory("board")}
+          </button>
+
+          {/* 북마크 */}
+          <button
+            className="sidebar-bookmark"
+            onClick={() => isCategoryClick("bookmark")}
+          >
+            {isCategory("bookmark")}
+          </button>
+
+          {/* 현재 위치 */}
+          <button className="my-location" onClick={isNeedMyLocation}>
+            <BiCurrentLocation />
           </button>
         </div>
       </div>

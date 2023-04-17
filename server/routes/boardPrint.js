@@ -41,6 +41,6 @@ const jwtMiddleware = (req, res, next) => {
 };
 
 router.get("/", getArticles);
-router.post("/write", jwtMiddleware, writeArticle);
+router.post("/write", writeArticle);
 
 module.exports = router;
