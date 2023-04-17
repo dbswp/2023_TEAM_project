@@ -15,9 +15,8 @@ export default function Card({ name, img, latitude, longitude }) {
       localStorage.setItem("latitude", latitude);
       localStorage.setItem("longitude", longitude);
       // localStorage.setItem("location", location);
-      // 데이터 처리 로직
 
-      // window.location.href = `http://localhost:3000/blog`; // 이동할 URL 주소
+      // 데이터 처리 로직
       navigate("/blog");
     } catch (error) {
       console.error(error);

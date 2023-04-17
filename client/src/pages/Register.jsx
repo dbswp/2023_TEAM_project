@@ -54,10 +54,10 @@ export default function Register() {
     setEmail(emailCurrent);
 
     if (!emailRegex.test(emailCurrent)) {
-      setEmailMessage("이메일 형식이 틀렸어요! 다시 확인해주세요 ㅜ ㅜ");
+      setEmailMessage("이메일 형식이 틀렸어요! 다시 확인해주세요 😢");
       setIsEmail(false);
     } else {
-      setEmailMessage("올바른 이메일 형식이에요 : )");
+      setEmailMessage("올바른 이메일 형식이에요 😊");
       setIsEmail(true);
     }
   }, []);
@@ -72,7 +72,7 @@ export default function Register() {
       setPhoneMessage(` "-" 빼고 입력해주세요`);
       setIsPhone(false);
     } else {
-      setPhoneMessage("사용 가능한 번호입니다:-)");
+      setPhoneMessage("사용 가능한 번호입니다 😊");
       setIsPhone(true);
     }
   }, []);
@@ -87,7 +87,7 @@ export default function Register() {
       setPasswordMessage("숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!");
       setIsPassword(false);
     } else {
-      setPasswordMessage("안전한 비밀번호에요 : )");
+      setPasswordMessage("안전한 비밀번호에요 😊");
       setIsPassword(true);
     }
   }, []);
@@ -99,10 +99,10 @@ export default function Register() {
       setPasswordConfirm(passwordConfirmCurrent);
 
       if (password === passwordConfirmCurrent) {
-        setPasswordConfirmMessage("비밀번호를 똑같이 입력했어요 : )");
+        setPasswordConfirmMessage("비밀번호를 똑같이 입력했어요 😊)");
         setIsPasswordConfirm(true);
       } else {
-        setPasswordConfirmMessage("비밀번호가 틀려요. 다시 확인해주세요 ㅜ ㅜ");
+        setPasswordConfirmMessage("비밀번호가 틀려요. 다시 확인해주세요 😢");
         setIsPasswordConfirm(false);
       }
     },

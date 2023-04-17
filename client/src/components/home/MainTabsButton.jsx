@@ -9,6 +9,8 @@ window.addEventListener("scroll", () => {
 
   let scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
 
+  if (!tabListUl || !tabListWrap) return;
+
   if (scrollLocation > 860) {
     tabListWrap?.classList.add("scrollTab");
     tabListUl?.classList.add("scrollTabUl");
