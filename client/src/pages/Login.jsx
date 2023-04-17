@@ -42,7 +42,9 @@ export default function Login({ isLogin, setIsLogin }) {
       /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+])(?!.*[^a-zA-z0-9$`~!@$!%*#^?&\\(\\)\-_=+]).{8,20}$/;
     const passwordCurrent = e.target.value;
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage("숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요 😢");
+      setPasswordMessage(
+        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요 😢"
+      );
       setPwValid(false);
     } else {
       setPasswordMessage("안전한 비밀번호에요 😊");
@@ -81,7 +83,11 @@ export default function Login({ isLogin, setIsLogin }) {
               placeholder="이메일을 입력하세요"
               required
             />
-            {email.length > 0 && <div className={`message ${emailValid ? "success" : "error"}`}>{emailMessage}</div>}
+            {email.length > 0 && (
+              <div className={`message ${emailValid ? "success" : "error"}`}>
+                {emailMessage}
+              </div>
+            )}
           </div>
           <div className="mt-3 password">
             <label className="mb-2" htmlFor="input-pw"></label>
@@ -93,12 +99,19 @@ export default function Login({ isLogin, setIsLogin }) {
               placeholder="비밀번호를 입력하세요"
               required
             />
-            {password.length > 0 && <div className={`message ${pwValid ? "success" : "error"}`}>{passwordMessage}</div>}
+            {password.length > 0 && (
+              <div className={`message ${pwValid ? "success" : "error"}`}>
+                {passwordMessage}
+              </div>
+            )}
           </div>
           <div className="d-flex justify-content-center mt-4 password">
-            <button type="submit" className="btn btn-primary" onClick={sendData}>
-              {" "}
-              {/* disabled={!(emailValid && pwValid)} */}
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={sendData}
+              disabled={!(emailValid && pwValid)}
+            >
               로그인
             </button>
           </div>

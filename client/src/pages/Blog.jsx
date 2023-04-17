@@ -55,7 +55,7 @@ export default function Blog() {
       {/* <Header
         name="container-fluid"
         style={{
-          borderBottom: '1px solid #e1e1e1',
+          borderBottom: "1px solid #e1e1e1",
         }}
       /> */}
       <MapDiv

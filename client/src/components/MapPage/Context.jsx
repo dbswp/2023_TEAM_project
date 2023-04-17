@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from "react";
 
 const AppContext = React.createContext();
 
@@ -6,8 +6,9 @@ const AppProvider = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sidebarCategory, setSidebarCategory] = useState();
   const [wantMyLocation, setWantMyLocation] = useState(false);
-  const [congestLevel, setCongestLevel] = useState('');
-  const [endPoint, setEndPoint] = useState('');
+  const [congestLevel, setCongestLevel] = useState("");
+  const [endPoint, setEndPoint] = useState("");
+  const [board, setBoard] = useState();
 
   const openSidebar = (sidebarCategory) => {
     setIsSidebarOpen(true);
@@ -26,7 +27,7 @@ const AppProvider = ({ children }) => {
   };
 
   const changeEndPoint = () => {
-    setEndPoint((cur) => window.localStorage.getItem('END_POINT'));
+    setEndPoint((cur) => window.localStorage.getItem("END_POINT"));
   };
   return (
     <AppContext.Provider
