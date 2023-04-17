@@ -164,6 +164,7 @@ $desktop-min: 1024px;
     padding: 15px;
     border: 1px solid #dbdbdb;
     margin: 5px 0;
+    box-shadow: #adadad38 0px 3px 6px;
 
     // 실시간 인구
     h3 {
@@ -201,6 +202,7 @@ $desktop-min: 1024px;
   }
 
   .report-weather {
+    box-shadow: #adadad38 0px 3px 6px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;

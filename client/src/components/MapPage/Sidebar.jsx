@@ -18,8 +18,14 @@ const Sidebar = ({ area, data, weather, isLoading, onInsert }) => {
   const [bookMarkIcon, setbookMarkIcon] = useState(false);
   const [bookmarks, setBookmarks] = useState([]);
 
-  // 현재 시간 출력
+  // 북마크 endPoint 불러옴
+  const endPoint = window.localStorage.getItem("END_POINT");
+  useEffect(() => {
+    // endPoint 값이 변경될 때마다 bookMarkIcon 값을 false로 초기화
+    setbookMarkIcon(false);
+  }, [endPoint]);
 
+  // 현재 시간 출력
   const currentTimer = () => {
     const date = new Date();
     const hours = String(date.getHours()).padStart(2, "0");
@@ -33,30 +39,27 @@ const Sidebar = ({ area, data, weather, isLoading, onInsert }) => {
   };
   startTimer();
 
-  // 북마크
-  const endPoint = window.localStorage.getItem("END_POINT");
-  useEffect(() => {
-    setbookMarkIcon(false); // endPoint 값이 변경될 때마다 bookMarkIcon 값을 false로 초기화
-  }, [endPoint]);
-
-  // console.log(endPoint);
+  // 북마크 클릭 이벤트
   const bookmarkClick = () => {
     const newBookmark = { area, data, weather };
-    console.log(newBookmark);
     const existingBookmark = bookmarks.find(
       (bookmark) =>
         bookmark.area === newBookmark.area &&
         bookmark.data === newBookmark.data &&
         bookmark.weather === newBookmark.weather
     );
+
     // 이미 존재하는 북마크일 경우, 알림 메시지 표시
     if (existingBookmark) {
       alert("이미 북마크된 지역입니다.");
       return;
     }
     setbookMarkIcon(false); // 다른 지역을 클릭하면 북마크 초기화
-    setbookMarkIcon(!bookMarkIcon);
+    setbookMarkIcon(!bookMarkIcon); //토글 버튼
     setBookmarks([...bookmarks, newBookmark]);
+
+    // 북마크가 완료되었다는 알림 메시지 표시
+    alert(`${endPoint}가 북마크에 저장되었습니다.`);
   };
 
   // 북마크 삭제
@@ -210,6 +213,7 @@ const Sidebar = ({ area, data, weather, isLoading, onInsert }) => {
                     </li>
                   ))
                 ) : (
+                  // 북마크 없을때 예외처리
                   <ul>
                     <li>
                       <p className="bookmark-text">
