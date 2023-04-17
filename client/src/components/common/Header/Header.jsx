@@ -9,8 +9,6 @@ import { kakaoLogoutUrl } from "../../../kakaoLoginData";
 window.addEventListener("scroll", () => {
   const headerWrap = document.querySelector(".headerWrap");
 
-  if (!headerWrap) return;
-
   let scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
 
   if (scrollLocation > 50 && scrollLocation < 860) {
@@ -74,6 +72,14 @@ export default function Header({ isLogin, setIsLogin }) {
                   <button className="blackBtn">{"로그인"}</button>
                 </Link>
               )}
+
+              <button
+                onClick={() => {
+                  window.location.href = kakaoLogoutUrl;
+                }}
+              >
+                카카오
+              </button>
             </div>
           </div>
         </div>
