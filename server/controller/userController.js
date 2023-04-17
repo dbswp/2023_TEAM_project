@@ -267,7 +267,7 @@ const logout = (req, res) => {
 const findPhoneNumber = async (req, res) => {
   //NaverMaps.jsx 요청의 body 안에 담겨온 카카오 엑세스 토큰을 변수에 저장
   const kakao_access_token = req.body.kakao_access_token;
-  if (isNormalUserLogined && userID !== undefined) {
+  if (isNormalUserLogined || userID !== undefined || kakao_access_token) {
     try {
       //이메일 형식의 유저 아이디를 컨트롤러 상단의 전역변수에서 받아와서 DB에서 해당 유저정보를 가져옴
       const configuration = await User.findOne({

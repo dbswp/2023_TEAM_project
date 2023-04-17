@@ -18,7 +18,6 @@ export default function NaverMaps({ locationData, data }) {
   const [infowindow, setInfowindow] = useState(null);
   const [location, setLocation] = useState({});
   const [circleBounds, setCircleBounds] = useState(true);
-  const polygon = [];
 
   const navermaps = useNavermaps();
 
@@ -55,25 +54,24 @@ export default function NaverMaps({ locationData, data }) {
         fillOpacity: 0.5,
         strokeColor: 'red',
       });
-      polygon.push(polygons);
+
       polygons.setMap(map);
 
-      if (
-        // !navermaps?.geometry?.polygon.containsLatLng(
-        //   polygon,
-        //   navigator.geolocation.getCurrentPosition((position) => {}, null)
-        // ) &&
-        polygon.filter((item) => {
-          if (
-            item ===
-            navigator.geolocation.getCurrentPosition((position) => {}, null)
-          ) {
-            console.log(item);
+      const myLocation = window.localStorage.getItem('__mantle_tile_meta_data');
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const myLatLng = new navermaps.LatLng(latitude, longitude);
+
+          // 현재 내 위치를 사용하여 polygon이 포함하는 지 검사
+          if (navermaps?.geometry?.polygon.containsLatLng(polygons, myLatLng)) {
+            console.log('지정 폴리곤내에 감지됨');
           }
-        })
-      ) {
-        // console.log('지정 폴리곤내에 감지됨');
-      }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   };
 
@@ -166,7 +164,6 @@ export default function NaverMaps({ locationData, data }) {
 
   useEffect(() => {
     let watcher = null;
-
     if (wantMyLocation) {
       window.alert('현재 이용자 위치 추적중입니다.');
       watcher = navigator.geolocation.watchPosition(successCallback, null);
