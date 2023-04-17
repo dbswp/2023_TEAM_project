@@ -21,6 +21,13 @@ window.addEventListener("scroll", () => {
 });
 
 export default function MainTabsButton() {
+  const [allDataBase, setAllDataBase] = useState([]);
+  const [allData, setAllData] = useState();
+  const [allImgData, setAllImgData] = useState();
+  const [allLatitudeData, setAllLatitudeData] = useState();
+  const [allLongitudeData, setAllLongitudeData] = useState();
+  const [toggleState, setToggleState] = useState(0);
+
   const getData = async () => {
     const res = await axios.get("http://localhost:4000/nameData");
     if (res.status !== 200) alert("데이터 수신 실패");
@@ -43,13 +50,6 @@ export default function MainTabsButton() {
   useEffect(() => {
     getData();
   }, []);
-
-  const [allDataBase, setAllDataBase] = useState([]);
-  const [allData, setAllData] = useState();
-  const [allImgData, setAllImgData] = useState();
-  const [allLatitudeData, setAllLatitudeData] = useState();
-  const [allLongitudeData, setAllLongitudeData] = useState();
-  const [toggleState, setToggleState] = useState(0);
 
   const toggleTab = (index) => {
     setToggleState(index);

@@ -69,7 +69,7 @@ $desktop-min: 1024px;
     border-color: transparent;
     transition: all 0.3s linear;
     cursor: pointer;
-    color: hsl(360, 67%, 44%);
+    color: #b2b2b2;
     top: 10px;
     right: 30px;
   }
@@ -84,7 +84,7 @@ $desktop-min: 1024px;
     border-color: transparent;
     transition: all 0.3s linear;
     cursor: pointer;
-    color: hsl(360, 67%, 44%);
+    color: #0675F4;
     top: 15px;
     right: 80px;
   }
@@ -164,6 +164,7 @@ $desktop-min: 1024px;
     padding: 15px;
     border: 1px solid #dbdbdb;
     margin: 5px 0;
+    box-shadow: #adadad38 0px 3px 6px;
 
     // 실시간 인구
     h3 {
@@ -201,6 +202,7 @@ $desktop-min: 1024px;
   }
 
   .report-weather {
+    box-shadow: #adadad38 0px 3px 6px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
