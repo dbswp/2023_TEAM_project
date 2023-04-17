@@ -54,7 +54,7 @@ export default function Login({ isLogin, setIsLogin }) {
   const sendData = async (e) => {
     e.preventDefault();
     axios({
-      url: "http://localhost:4000/login",
+      url: "http://192.168.0.17:4000/login",
       method: "post",
       withCredentials: true,
       data: {
