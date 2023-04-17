@@ -34,8 +34,15 @@ const Sidebar = ({ area, data, weather, isLoading, onInsert }) => {
   startTimer();
 
   // 북마크
+  const endPoint = window.localStorage.getItem("END_POINT");
+  useEffect(() => {
+    setbookMarkIcon(false); // endPoint 값이 변경될 때마다 bookMarkIcon 값을 false로 초기화
+  }, [endPoint]);
+
+  // console.log(endPoint);
   const bookmarkClick = () => {
     const newBookmark = { area, data, weather };
+    console.log(newBookmark);
     const existingBookmark = bookmarks.find(
       (bookmark) =>
         bookmark.area === newBookmark.area &&
@@ -47,6 +54,7 @@ const Sidebar = ({ area, data, weather, isLoading, onInsert }) => {
       alert("이미 북마크된 지역입니다.");
       return;
     }
+    setbookMarkIcon(false); // 다른 지역을 클릭하면 북마크 초기화
     setbookMarkIcon(!bookMarkIcon);
     setBookmarks([...bookmarks, newBookmark]);
   };
@@ -168,7 +176,7 @@ const Sidebar = ({ area, data, weather, isLoading, onInsert }) => {
           {sidebarCategory === "emergency" && (
             <div className="detail-emergency"></div>
           )}
-          {sidebarCategory === "bookmark" && bookMarkIcon && (
+          {sidebarCategory === "bookmark" && bookmarkClick && (
             <div className="detail-bookmark">
               <h3>북마크된 지역</h3>
               <ul>
