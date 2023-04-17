@@ -7,12 +7,6 @@ const AppProvider = ({ children }) => {
   const [sidebarCategory, setSidebarCategory] = useState();
   const [wantMyLocation, setWantMyLocation] = useState(false);
   const [endPoint, setEndPoint] = useState('');
-  const [board, setBoard] = useState();
-  const [isLogin, setIsLogin] = useState(false);
-
-  const checkLogin = () => {
-    setIsLogin((cur) => !cur);
-  };
 
   const openSidebar = (sidebarCategory) => {
     setIsSidebarOpen(true);
