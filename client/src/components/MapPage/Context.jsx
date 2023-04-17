@@ -9,6 +9,11 @@ const AppProvider = ({ children }) => {
   const [congestLevel, setCongestLevel] = useState("");
   const [endPoint, setEndPoint] = useState("");
   const [board, setBoard] = useState();
+  const [isLogin, setIsLogin] = useState(false);
+
+  const checkLogin = () => {
+    setIsLogin((cur) => !cur);
+  };
 
   const openSidebar = (sidebarCategory) => {
     setIsSidebarOpen(true);

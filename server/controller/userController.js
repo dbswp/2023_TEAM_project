@@ -92,16 +92,28 @@ const loginUser = async (req, res) => {
         expiresIn: "7d",
       });
 
+      const decodedToken = jwt.verify(token, ACCESS_SECRET);
+      if (decodedToken.email !== user.email) {
+        return res.status(403).json({
+          loginSuccess: false,
+          message: "인증 실패",
+        });
+      }
+
       user.token = token;
       await user.save();
 
-      return res
-        .cookie("x_auth", user.token, {
-          maxAge: 1000 * 60 * 60 * 24 * 7,
-          httpOnly: true,
-        })
-        .status(200)
-        .json({ loginSuccess: true, userId: user._id });
+      req.session.login = true;
+      req.session.user = {
+        email: user.email,
+        token: token,
+      };
+      res.cookie("user", user, {
+        maxAge: 1000 * 30,
+        httpOnly: true,
+        signed: true,
+      });
+      return res.status(200).json({ loginSuccess: true, email: user.email });
     } else {
       return res.status(403).json({
         loginSuccess: false,
@@ -198,27 +210,30 @@ const refreshtoken = async (req, res) => {
     res.status(500).json(err);
   }
 };
-// 로그인 체크 미들웨어
-const isLoggedIn = async (req, res, next) => {
+const checkLoggedIn = async (req, res, next) => {
   try {
-    // 클라이언트 쿠키에서 token을 가져옵니다.
-    const token = req.cookies.x_auth;
-    if (!token) {
-      return res.redirect("/login"); // 로그인 페이지로 리다이렉트
+    const token = req.session.user.token; // 세션에 저장된 토큰 값을 가져옴
+    const decoded = jwt.verify(token, ACCESS_SECRET); // 토큰을 디코딩해서 검증
+    const user = await User.findOne({ email: decoded.email }); // 검증된 사용자 정보를 가져옴
+
+    if (user) {
+      // 사용자 정보가 있으면 로그인 상태를 유지하고, req 객체에 사용자 정보를 담음
+      req.session.user = {
+        email: user.email,
+        token: token,
+      };
+      next(); // 다음 미들웨어 실행
+    } else {
+      // 사용자 정보가 없으면 로그인 상태를 초기화
+      req.session.destroy();
+      res.clearCookie("connect.sid");
+      res.redirect("/login");
     }
-    // token을 decode 합니다.
-    const decoded = jwt.verify(token, ACCESS_SECRET);
-    // decoded에는 jwt를 생성할 때 첫번째 인자로 전달한 객체가 있습니다.
-    // { email: user.email } 형태로 줬으므로 email을 꺼내 씁시다
-    const user = await User.findOne({ email: decoded.email });
-    if (!user) {
-      return res.redirect("/login"); // 로그인 페이지로 리다이렉트
-    }
-    req.user = user;
-    next();
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: "서버 오류 발생" });
+    // 토큰 검증에 실패한 경우 로그인 상태를 초기화
+    req.session.destroy();
+    res.clearCookie("connect.sid");
+    res.redirect("/login");
   }
 };
 
@@ -254,9 +269,9 @@ module.exports = {
   loginUser,
   accesstoken,
   refreshtoken,
-  isLoggedIn,
   registerUser,
   kakaoLoginUser,
   logout,
   findPhoneNumber,
+  checkLoggedIn,
 };

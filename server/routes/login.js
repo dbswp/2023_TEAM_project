@@ -2,7 +2,8 @@ const express = require("express");
 const {
   loginUser,
   kakaoLoginUser,
-  isLoggedIn,
+  // isLoggedIn,
+  checkLoggedIn,
 } = require("../controller/userController");
 
 const router = express.Router();

@@ -47,8 +47,8 @@ export default function Header({ isLogin, setIsLogin, className }) {
       window.location.replace("/login");
     } else {
       // 로그아웃 할 때 쿠키삭제하는 방법 (옛날에 만든 토큰이라고 지정해서 없애는 방법)
-      document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-      document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      // document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      document.cookie = "x_auth=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
 
       window.location.reload();
     }
