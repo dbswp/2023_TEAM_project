@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { kakaoAuthUrl } from "../kakaoLoginData";
@@ -6,7 +6,7 @@ import kakaoImg from "../assets/symbol_kakaotalk.png";
 import Logo from "../assets/Logo.gif";
 import style from "../styles/login.css";
 
-export default function Login() {
+export default function Login({ isLogin, setIsLogin }) {
   // 이메일, 비밀번호 확인
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,7 +35,7 @@ export default function Login() {
       setEmailValid(true);
     }
   };
-
+  // 비밀번호 컨트롤 //
   const handlePassword = (e) => {
     setPassword(e.target.value);
     const passwordRegex =
@@ -60,11 +60,8 @@ export default function Login() {
         password: password,
       },
     }).then((result) => {
-      console.log(result);
-      if (result.status === 200) {
-        navigate("/");
-        window.location.reload();
-      }
+      navigate("/");
+      setIsLogin("로그인");
     });
   };
 
@@ -106,6 +103,7 @@ export default function Login() {
             </button>
           </div>
         </form>
+
         <Link to="/register">
           <span className="registerFont">회원가입</span>
         </Link>

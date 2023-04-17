@@ -16,9 +16,14 @@ export default function Card({ name, img, latitude, longitude }) {
       localStorage.setItem("longitude", longitude);
       // localStorage.setItem("location", location);
       // 데이터 처리 로직
+<<<<<<< HEAD
 
       // window.location.href = `http://localhost:3000/blog`; // 이동할 URL 주소
       navigate("/blog");
+=======
+      navigate("/blog");
+      // window.location.href = `http://localhost:3000/blog`; // 이동할 URL 주소
+>>>>>>> 0749817 (feature#30 일반로그인, 카카오 로그인, 로그아웃 완료)
     } catch (error) {
       console.error(error);
     }
