@@ -17,7 +17,7 @@ const logoutRouter = require("./routes/logout");
 const dataRouter = require("./routes/data");
 const seoulDataRouter = require("./routes/seoulDataName");
 const pushAlarmRouter = require("./routes/webPush");
-const boardRputer = require("./routes/boardPrint");
+const boardRouter = require("./routes/boardPrint");
 
 app.use(
   cors({
@@ -49,7 +49,7 @@ app.use("/refreshtoken", refreshToken);
 app.use("/data", dataRouter);
 app.use("/nameData", seoulDataRouter);
 app.use("/push", pushAlarmRouter);
-app.use("/board", boardRputer);
+app.use("/board", boardRouter);
 // 라우터 등록
 app.use("/verify-token", verifyTokenRouter);
 // app.get("/login/success", loginSuccess);
