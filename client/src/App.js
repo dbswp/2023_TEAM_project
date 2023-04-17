@@ -8,7 +8,7 @@ import "../src/styles/media.css";
 import { useState } from "react";
 
 function App() {
-  const [isLogin, setIsLogin] = useState("로그아웃");
+  const [isLogin, setIsLogin] = useState("로그인");
   return (
     <div className="App">
       <GlobalStyle />

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Container as MapDiv,
   NaverMap,
@@ -51,7 +51,7 @@ export default function NaverMaps({ locationData, data }) {
       color = "green";
     }
     return locationData?.map((coordinate, index) => (
-      <>
+      <React.Fragment key={index}>
         <Circle
           center={new navermaps.LatLng(coordinate[0], coordinate[1])}
           radius={300}
@@ -86,7 +86,7 @@ export default function NaverMaps({ locationData, data }) {
           position={new navermaps.LatLng(coordinate[0], coordinate[1])}
           content={`<div>${coordinate[2]}</div>`}
         />
-      </>
+      </React.Fragment>
     ));
   };
 

@@ -53,18 +53,17 @@ export default function Login({ isLogin, setIsLogin }) {
   };
   const sendData = async (e) => {
     e.preventDefault();
-    axios({
-      url: "http://localhost:4000/login",
-      method: "post",
-      data: {
+    axios
+      .post("http://localhost:4000/login", {
         email: email,
         password: password,
-      },
-      withCredentials: true,
-    }).then((result) => {
-      navigate("/");
-      setIsLogin("로그인");
-    });
+      })
+      .then((result) => {
+        console.log(result);
+        window.localStorage.setItem("token", result.data.token);
+        navigate("/");
+        setIsLogin("로그인");
+      });
   };
 
   return (
