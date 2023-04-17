@@ -8,6 +8,7 @@ import celsius from "../../../src/assets/celsius.png";
 import snow from "../../../src/assets/snow.svg";
 import rain from "../../../src/assets/rain.svg";
 import clear from "../../../src/assets/clear.svg";
+import MainComment from "./MainComment";
 
 const Sidebar = ({ area, data, weather, isLoading, onInsert }) => {
   const { isSidebarOpen, closeSidebar, sidebarCategory } = useGlobalContext();
