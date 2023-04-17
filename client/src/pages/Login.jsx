@@ -56,11 +56,11 @@ export default function Login({ isLogin, setIsLogin }) {
     axios({
       url: "http://localhost:4000/login",
       method: "post",
-      withCredentials: true,
       data: {
         email: email,
         password: password,
       },
+      withCredentials: true,
     }).then((result) => {
       navigate("/");
       setIsLogin("로그인");

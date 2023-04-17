@@ -198,8 +198,29 @@ const refreshtoken = async (req, res) => {
     res.status(500).json(err);
   }
 };
-
-const loginSuccess = (req, res) => {};
+// 로그인 체크 미들웨어
+const isLoggedIn = async (req, res, next) => {
+  try {
+    // 클라이언트 쿠키에서 token을 가져옵니다.
+    const token = req.cookies.x_auth;
+    if (!token) {
+      return res.redirect("/login"); // 로그인 페이지로 리다이렉트
+    }
+    // token을 decode 합니다.
+    const decoded = jwt.verify(token, ACCESS_SECRET);
+    // decoded에는 jwt를 생성할 때 첫번째 인자로 전달한 객체가 있습니다.
+    // { email: user.email } 형태로 줬으므로 email을 꺼내 씁시다
+    const user = await User.findOne({ email: decoded.email });
+    if (!user) {
+      return res.redirect("/login"); // 로그인 페이지로 리다이렉트
+    }
+    req.user = user;
+    next();
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "서버 오류 발생" });
+  }
+};
 
 const logout = (req, res) => {
   console.log("들어오나?");
@@ -233,7 +254,7 @@ module.exports = {
   loginUser,
   accesstoken,
   refreshtoken,
-  loginSuccess,
+  isLoggedIn,
   registerUser,
   kakaoLoginUser,
   logout,

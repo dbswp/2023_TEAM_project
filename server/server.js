@@ -20,7 +20,7 @@ const boardRputer = require("./routes/boardPrint");
 
 app.use(
   cors({
-    origin: CLIENT_URL,
+    origin: true,
     methods: ["GET", "POST"],
     credentials: true,
   })
