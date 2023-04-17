@@ -19,7 +19,7 @@ window.addEventListener("scroll", () => {
     headerWrap.classList.remove("scrollHeader");
   }
 });
-export default function Header({ isLogin, setIsLogin }) {
+export default function Header({ isLogin, setIsLogin, className }) {
   const navigate = useNavigate();
 
   const logoutKakao = async () => {
@@ -41,7 +41,9 @@ export default function Header({ isLogin, setIsLogin }) {
       window.localStorage.getItem("kakaoAccessToken") &&
       JSON.parse(window.localStorage.getItem("login")) === "로그아웃"
     ) {
-      setIsLogin(window.localStorage.setItem("login", JSON.stringify("로그인")));
+      setIsLogin(
+        window.localStorage.setItem("login", JSON.stringify("로그인"))
+      );
       window.location.replace("/login");
     } else {
       // 로그아웃 할 때 쿠키삭제하는 방법 (옛날에 만든 토큰이라고 지정해서 없애는 방법)
@@ -54,8 +56,8 @@ export default function Header({ isLogin, setIsLogin }) {
 
   return (
     <>
-      <div className="headerWrap blogHeader">
-        <div className="container">
+      <div className="headerWrap">
+        <div className="container-fluid">
           <div className="row">
             <div className="col-8 left">
               <Link to="/" className="logo">
