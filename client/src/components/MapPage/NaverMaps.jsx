@@ -16,13 +16,15 @@ export default function NaverMaps({ locationData, data }) {
   const [map, setMap] = useState(null);
   const [infowindow, setInfowindow] = useState(null);
   const [location, setLocation] = useState({});
-  const circleRef = useRef();
+  const [circleRef, setCircleRef] = useState();
 
   const navermaps = useNavermaps();
 
-  const getBoundary = (e) => {
-    const boundary = e.target.current.getBounds();
-    console.log(boundary);
+  const getBoundary = () => {
+    if (circleRef.current) {
+      const boundary = circleRef?.current?.getBounds();
+      console.log(boundary);
+    }
   };
 
   //인구밀집도가 일정 레벨이상이 되면 밑의 sendKakaoAccessToken을 실행
@@ -72,7 +74,7 @@ export default function NaverMaps({ locationData, data }) {
               : null
           }
           fillOpacity={0.1}
-          ref={circleRef}
+          ref={setCircleRef}
         />
         <Marker
           key={index}
@@ -85,6 +87,7 @@ export default function NaverMaps({ locationData, data }) {
             localStorage.setItem('longitude', coordinate[1]); //로컬스토리지의 'longitude' 값을 데이터의 경도 값 으로 바꿈
             changeEndPoint(); // 블로그 컴포넌트에서 바뀐 로컬스토리지 값을 바탕으로 데이터 요청을 실행 시키기 위해 blog컴포넌트의 useEffect를 재실행 시킴
             console.log(endPoint);
+            getBoundary();
           }}
         />
         <InfoWindow
