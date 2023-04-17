@@ -14,20 +14,21 @@ window.addEventListener("scroll", () => {
   let scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
 
   if (scrollLocation > 50 && scrollLocation < 860) {
-    headerWrap?.classList.add("scrollHeader");
+    headerWrap.classList.add("scrollHeader");
   } else if (scrollLocation >= 860) {
-    headerWrap?.classList.remove("scrollHeader");
+    headerWrap.classList.remove("scrollHeader");
   } else {
-    headerWrap?.classList.remove("scrollHeader");
+    headerWrap.classList.remove("scrollHeader");
   }
 });
 export default function Header({ isLogin, setIsLogin }) {
   const navigate = useNavigate();
 
-export default function Header(props) {
-  // JWT 확인하는 방법
-  const [isLogin, setIsLogin] = useState(Boolean(document.cookie));
-  const [isKakaoLogin, setIsKakaoLogin] = useState(Boolean(document.cookie));
+  const logoutKakao = async () => {
+    const logoutUser = await axios.get("http://localhost:4000/logout");
+    console.log(logoutUser.statusText);
+    if (logoutUser.status === 200) navigate("/login");
+  };
 
   const logout = () => {
     if (
@@ -55,8 +56,8 @@ export default function Header(props) {
 
   return (
     <>
-      <div className="headerWrap" style={props.style}>
-        <div className={props.name}>
+      <div className="headerWrap blogHeader">
+        <div className="container">
           <div className="row">
             <div className="col-8 left">
               <Link to="/" className="logo">
@@ -74,13 +75,14 @@ export default function Header(props) {
                 </Link>
               )}
 
-              <button
+              {/* <button
+                display="none"
                 onClick={() => {
                   window.location.href = kakaoLogoutUrl;
                 }}
               >
-                카카오
-              </button>
+                카카오 로그아웃
+              </button> */}
             </div>
           </div>
         </div>
