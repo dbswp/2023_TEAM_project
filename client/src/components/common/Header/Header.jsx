@@ -72,14 +72,6 @@ export default function Header({ isLogin, setIsLogin }) {
                   <button className="blackBtn">{"로그인"}</button>
                 </Link>
               )}
-
-              <button
-                onClick={() => {
-                  window.location.href = kakaoLogoutUrl;
-                }}
-              >
-                카카오
-              </button>
             </div>
           </div>
         </div>
