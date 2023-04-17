@@ -16,8 +16,14 @@ export default function NaverMaps({ locationData, data }) {
   const [map, setMap] = useState(null);
   const [infowindow, setInfowindow] = useState(null);
   const [location, setLocation] = useState({});
+  const circleRef = useRef();
 
   const navermaps = useNavermaps();
+
+  const getBoundary = (e) => {
+    const boundary = e.target.current.getBounds();
+    console.log(boundary);
+  };
 
   //인구밀집도가 일정 레벨이상이 되면 밑의 sendKakaoAccessToken을 실행
   const sendKakaoAccessToken = async () => {
@@ -66,6 +72,7 @@ export default function NaverMaps({ locationData, data }) {
               : null
           }
           fillOpacity={0.1}
+          ref={circleRef}
         />
         <Marker
           key={index}
@@ -111,7 +118,6 @@ export default function NaverMaps({ locationData, data }) {
 
   useEffect(() => {
     let watcher = null;
-
     console.log(wantMyLocation);
 
     if (wantMyLocation) {
@@ -124,7 +130,6 @@ export default function NaverMaps({ locationData, data }) {
 
       watcher = navigator.geolocation.watchPosition(successCallback, null);
     }
-
     return () => {
       navigator.geolocation.clearWatch(watcher);
     };
