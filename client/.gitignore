@@ -5,7 +5,6 @@
 /server/node_modules
 /server/.env
 /client/node_modules
-/client/src/kakaoLoginData
 /.pnp
 .pnp.js
 /.vscode
@@ -37,3 +36,6 @@ yarn-error.log*
 *.css.map
 *.sass.map
 *.scss.map
+
+
+src/kakaoLoginData.js

@@ -1,9 +1,9 @@
 // seoulData.js
-const xlsxFile = require("read-excel-file/node");
+const xlsxFile = require('read-excel-file/node');
 
 async function seoulData(req, res) {
   try {
-    const sheets = await xlsxFile("./seoulData.xlsx");
+    const sheets = await xlsxFile('./seoulData.xlsx');
 
     const dataIndex = [];
     const dataLink = [];
