@@ -58,14 +58,14 @@ const registerUser = async (req, res) => {
       // 비밀번호를 해쉬된 값으로 대체합니다.
       password = hash;
 
-      const user = new User({
-        email: email,
-        phone,
-        password,
-      });
-
       try {
+        const user = new User({
+          email: email,
+          phone,
+          password,
+        });
         await user.save();
+        await User.create(user);
         return res.json({ registerSuccess: true });
       } catch (err) {
         return res.json({ registerSuccess: false, message: err.message });
@@ -73,15 +73,12 @@ const registerUser = async (req, res) => {
     });
   });
 };
-const loginUser = async (req, res) => {
-  // 해당 email이 있는지 확인
-  User.findOne({ email: req.body.email }, (error, user) => {
-    // 에러는 500
-    if (error) {
-      return res.status(500).json({ error: "오류" });
-    }
 
-    // 찾는 유저가 없다?
+//로그인 미들웨어
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(403).json({
         loginSuccess: false,
@@ -89,49 +86,32 @@ const loginUser = async (req, res) => {
       });
     }
 
-    // email이 맞으니 pw가 일치하는지 검증합니다.
-    if (user) {
-      const checkPW = () => {
-        bcrypt.compare(req.body.password, user.password, (error, isMatch) => {
-          if (error) {
-            return res.status(500).json({ error: "something wrong" });
-          }
-          if (isMatch) {
-            // 비밀번호가 맞으면 token을 생성해야 합니다.
-            // secret 토큰 값은 특정 유저를 감별하는데 사용합니다.
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (isMatch) {
+      const token = jwt.sign({ email: user.email }, ACCESS_SECRET, {
+        expiresIn: "7d",
+      });
 
-            // 토큰 생성 7일간 유효
-            const token = jwt.sign({ userID: user._id }, ACCESS_SECRET, {
-              expiresIn: "7d",
-            });
+      user.token = token;
+      await user.save();
 
-            // 해당 유저에게 token값 할당 후 저장
-            user.token = token;
-            user.save((error, user) => {
-              if (error) {
-                return res.status(400).json({ error: "something wrong" });
-              }
-
-              // DB에 token 저장한 후에는 cookie에 토큰을 저장하여 이용자를 식별합니다.
-              return res
-                .cookie("x_auth", user.token, {
-                  maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
-                  httpOnly: true,
-                })
-                .status(200)
-                .json({ loginSuccess: true, userId: user._id });
-            });
-          } else {
-            return res.status(403).json({
-              loginSuccess: false,
-              message: "비밀번호가 틀렸습니다.",
-            });
-          }
-        });
-      };
-      checkPW();
+      return res
+        .cookie("x_auth", user.token, {
+          maxAge: 1000 * 60 * 60 * 24 * 7,
+          httpOnly: true,
+        })
+        .status(200)
+        .json({ loginSuccess: true, userId: user._id });
+    } else {
+      return res.status(403).json({
+        loginSuccess: false,
+        message: "비밀번호가 틀렸습니다.",
+      });
     }
-  });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "something wrong" });
+  }
 };
 
 const kakaoLoginUser = async (req, res) => {
