@@ -2,6 +2,7 @@ const mongooseConnect = require("./mongooseConnect");
 const Board = require("../models/board");
 
 const getArticles = async (req, res) => {
+  console.log(req.userInfo.email);
   try {
     const selectArticle = await Board.find();
     res.status(200).json(selectArticle);
@@ -11,7 +12,8 @@ const getArticles = async (req, res) => {
 };
 
 const writeArticle = async (req, res) => {
-  const { email, content } = req.body.data;
+  // console.log(req.userInfo);
+  const { email, content } = req.body;
   try {
     const newComment = new Board({ email, content });
     await newComment.save();

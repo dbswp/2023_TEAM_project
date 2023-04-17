@@ -9,8 +9,16 @@ import snow from "../../../src/assets/snow.svg";
 import rain from "../../../src/assets/rain.svg";
 import clear from "../../../src/assets/clear.svg";
 import MainComment from "./MainComment";
+import { Link, useNavigate } from "react-router-dom";
 
-const Sidebar = ({ area, data, weather, isLoading, onInsert }) => {
+const Sidebar = ({
+  area,
+  data,
+  weather,
+  isLoading,
+  onInsert,
+  locationData,
+}) => {
   const { isSidebarOpen, closeSidebar, sidebarCategory } = useGlobalContext();
 
   const [timer, setTimer] = useState("00:00:00");
@@ -72,6 +80,19 @@ const Sidebar = ({ area, data, weather, isLoading, onInsert }) => {
       setbookMarkIcon(false);
     }
   };
+
+  // //로그인 여부 확인
+  // const [isLogin, setIsLogin] = useState(false);
+  // const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("token")) {
+  //     setIsLogin(true);
+  //   } else {
+  //     setIsLogin(false);
+  //     navigate("/login");
+  //   }
+  // }, [navigate]);
 
   return (
     <aside className={`${isSidebarOpen ? "sidebar show-sidebar" : "sidebar"} `}>

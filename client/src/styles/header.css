@@ -2,6 +2,7 @@
   background-color: #fff;
   padding-top: 16px;
   padding-bottom: 16px;
+  border-bottom: 1px solid #e1e1e1;
   transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s linear;
 }
 .headerWrap .fade-in {

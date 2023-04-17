@@ -1,10 +1,10 @@
-const express = require('express');
-const { logout } = require('../controller/userController');
+const express = require("express");
+const { logout } = require("../controller/userController");
 
 const router = express.Router();
 
 // router.post("/kakaologin", logout);
-router.get('/', logout);
+router.post("/", logout);
 
 module.exports = router;
 

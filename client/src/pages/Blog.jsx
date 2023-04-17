@@ -65,7 +65,13 @@ export default function Blog() {
         }}
       >
         <Home />
-        <Sidebar area={areaData} data={data} weather={weatherData} isLoading={isLoading} />
+        <Sidebar
+          area={areaData}
+          data={data}
+          weather={weatherData}
+          isLoading={isLoading}
+          locationData={latlngData}
+        />
         <NaverMaps locationData={latlngData} data={data} />
       </MapDiv>
     </>

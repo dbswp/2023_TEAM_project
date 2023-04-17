@@ -9,20 +9,20 @@ const InputComment = ({ area }) => {
   const [comments, setComments] = useState([]);
   const [renderCount, setRenderCount] = useState(0);
   const point = localStorage.getItem("END_POINT");
+  const navigator = useNavigate();
 
   const sendData = async (e) => {
     e.preventDefault();
     const res = await axios
       .post("http://localhost:4000/board/write", {
-        data: {
-          email: email,
-          content: `위치 : ${point}  댓글 : ${content}`,
-        },
+        email: email,
+        content: `위치 : ${point}  댓글 : ${content}`,
+        token: window.localStorage.getItem("token"),
       })
       .then((result) => {
-        console.log(result);
         if (result.status === 200) {
           setRenderCount((cnt) => cnt + 1);
+          console.log(result);
           // // input 창 초기화
           // setEmail((comments) => comments === "");
           // setContent((comments) => comments === "");
@@ -32,11 +32,10 @@ const InputComment = ({ area }) => {
 
   const getData = async (e) => {
     // e.preventDefault();
-    const res = await axios.get("http://localhost:4000/board", {
-      data: {
-        email: email,
-        content: content,
-      },
+    const res = await axios.post("http://localhost:4000/board", {
+      email: email,
+      content: content,
+      token: window.localStorage.getItem("token"),
     });
     if (res.status !== 200) alert("데이터 수신 실패");
     setComments(res.data);
