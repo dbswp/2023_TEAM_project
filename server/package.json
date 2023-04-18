@@ -19,7 +19,7 @@
     "xml2js": "^0.4.23"
   },
   "scripts": {
-    "dev": "nodemon ./server.js",
+    "start:dev": "nodemon ./server.js",
     "start": "node ./server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
