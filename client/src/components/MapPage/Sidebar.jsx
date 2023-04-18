@@ -1,24 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { useGlobalContext } from "./Context";
-import Loding from "./Lodin";
-import "../../styles/mp-sidebar.scss";
-import { FaBookmark, FaRegBookmark, FaTimes } from "react-icons/fa";
-import { BiChevronRight } from "react-icons/bi";
-import celsius from "../../../src/assets/celsius.png";
-import todayWeather from "../../../src/assets/todayWeather.png";
-import MainComment from "./MainComment";
+import React, { useState, useEffect } from 'react';
+import { useGlobalContext } from './Context';
+import Loding from './Lodin';
+import '../../styles/mp-sidebar.scss';
+import { FaBookmark, FaRegBookmark, FaTimes } from 'react-icons/fa';
+import { BiChevronRight } from 'react-icons/bi';
+import celsius from '../../../src/assets/celsius.png';
+import todayWeather from '../../../src/assets/todayWeather.png';
+import MainComment from './MainComment';
 
 const Sidebar = ({
   area,
   data,
   weather,
   isLoading,
+  isLogin,
+  setIsLogin,
   onInsert,
   locationData,
 }) => {
   const { isSidebarOpen, closeSidebar, sidebarCategory } = useGlobalContext();
 
-  const [timer, setTimer] = useState("00:00:00");
+  const [timer, setTimer] = useState('00:00:00');
   // const level = data?.AREA_CONGEST_LVL[0];
   const [bookMarkIcon, setbookMarkIcon] = useState(false);
   const [bookmarks, setBookmarks] = useState([]);
@@ -26,9 +28,9 @@ const Sidebar = ({
   // 현재 시간 출력
   const currentTimer = () => {
     const date = new Date();
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-    const seconds = String(date.getSeconds()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
     setTimer(`${hours}:${minutes}:${seconds}`);
   };
 
@@ -38,7 +40,7 @@ const Sidebar = ({
   startTimer();
 
   // 북마크
-  const endPoint = window.localStorage.getItem("END_POINT");
+  const endPoint = window.localStorage.getItem('END_POINT');
   useEffect(() => {
     setbookMarkIcon(false); // endPoint 값이 변경될 때마다 bookMarkIcon 값을 false로 초기화
   }, [endPoint]);
@@ -55,7 +57,7 @@ const Sidebar = ({
 
     // 이미 존재하는 북마크일 경우, 알림 메시지 표시
     if (existingBookmark) {
-      alert("이미 북마크된 지역입니다.");
+      alert('이미 북마크된 지역입니다.');
       return;
     }
     setbookMarkIcon(false); // 다른 지역을 클릭하면 북마크 초기화
@@ -78,12 +80,12 @@ const Sidebar = ({
   };
 
   return (
-    <aside className={`${isSidebarOpen ? "sidebar show-sidebar" : "sidebar"} `}>
+    <aside className={`${isSidebarOpen ? 'sidebar show-sidebar' : 'sidebar'} `}>
       {isLoading ? (
         <Loding /> // 로딩중인 동안 렌더링되는 로딩컴포넌트
       ) : (
         <div className="information-wrap">
-          {sidebarCategory === "information" && (
+          {sidebarCategory === 'information' && (
             <div className="detail-content">
               <div className="sidebar-header">
                 {/* 현재 시간 */}
@@ -108,20 +110,20 @@ const Sidebar = ({
                     실시간 인구 <BiChevronRight />
                   </h3>
                   <h2>
-                    현재 인구 혼잡도는{" "}
+                    현재 인구 혼잡도는{' '}
                     <span // 붐빔도 레벨로 컬러 색상 지정
                       className={`report-crowded ${
-                        data?.AREA_CONGEST_LVL[0] === "여유"
-                          ? "green"
-                          : data?.AREA_CONGEST_LVL[0] === "보통"
-                          ? "yellow"
-                          : data?.AREA_CONGEST_LVL[0] === "약간 붐빔"
-                          ? "orange"
-                          : "red"
+                        data?.AREA_CONGEST_LVL[0] === '여유'
+                          ? 'green'
+                          : data?.AREA_CONGEST_LVL[0] === '보통'
+                          ? 'yellow'
+                          : data?.AREA_CONGEST_LVL[0] === '약간 붐빔'
+                          ? 'orange'
+                          : 'red'
                       }`}
                     >
                       {data?.AREA_CONGEST_LVL[0]}
-                    </span>{" "}
+                    </span>{' '}
                     입니다.
                   </h2>
                   <br />
@@ -133,7 +135,7 @@ const Sidebar = ({
                 {/* 날씨 데이터  */}
                 <div className="report-weather">
                   <div className="report-live-weather">
-                    <h3 style={{ cursor: "pointer" }}>
+                    <h3 style={{ cursor: 'pointer' }}>
                       실시간 날씨 상황 <BiChevronRight />
                     </h3>
                   </div>
@@ -163,10 +165,10 @@ const Sidebar = ({
               </div>
             </div>
           )}
-          {sidebarCategory === "emergency" && (
+          {sidebarCategory === 'emergency' && (
             <div className="detail-emergency"></div>
           )}
-          {sidebarCategory === "bookmark" && bookmarkClick && (
+          {sidebarCategory === 'bookmark' && bookmarkClick && (
             <div className="detail-bookmark">
               <h3>북마크된 지역</h3>
               <button className="close-btn" onClick={closeSidebar}>
@@ -180,21 +182,21 @@ const Sidebar = ({
                         <div>{el?.area}</div>
                         <div>실시간 날씨🌤️ - {el?.weather?.pcp_msg}</div>
                         <div>
-                          실시간 인구 혼잡도 👥 -{" "}
+                          실시간 인구 혼잡도 👥 -{' '}
                           <span // 붐빔도 레벨로 컬러 색상 지정
-                            style={{ fontSize: "18px" }}
+                            style={{ fontSize: '18px' }}
                             className={`report-crowded ${
-                              el?.data?.AREA_CONGEST_LVL[0] === "여유"
-                                ? "green"
-                                : el?.data?.AREA_CONGEST_LVL[0] === "보통"
-                                ? "yellow"
-                                : el?.data?.AREA_CONGEST_LVL[0] === "약간 붐빔"
-                                ? "orange"
-                                : "red"
+                              el?.data?.AREA_CONGEST_LVL[0] === '여유'
+                                ? 'green'
+                                : el?.data?.AREA_CONGEST_LVL[0] === '보통'
+                                ? 'yellow'
+                                : el?.data?.AREA_CONGEST_LVL[0] === '약간 붐빔'
+                                ? 'orange'
+                                : 'red'
                             }`}
                           >
                             {data?.AREA_CONGEST_LVL[0]}
-                          </span>{" "}
+                          </span>{' '}
                         </div>
                         <button onClick={() => handleBookmarkDelete(idx)}>
                           삭제
@@ -215,9 +217,13 @@ const Sidebar = ({
               </ul>
             </div>
           )}
-          {sidebarCategory === "board" && (
+          {sidebarCategory === 'board' && (
             <>
-              <MainComment area={area} />
+              <MainComment
+                area={area}
+                isLogin={isLogin}
+                setIsLogin={setIsLogin}
+              />
             </>
           )}
         </div>
