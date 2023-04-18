@@ -3,12 +3,13 @@ const {
   loginUser,
   kakaoLoginUser,
   // isLoggedIn,
-  checkLoggedIn,
+  checkToken,
 } = require("../controller/userController");
 
 const router = express.Router();
 
 router.post("/kakaologin", kakaoLoginUser);
 router.post("/", loginUser);
+router.post("/checkToken", checkToken);
 
 module.exports = router;
