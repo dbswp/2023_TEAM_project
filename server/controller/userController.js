@@ -75,22 +75,22 @@ const loginUser = async (req, res) => {
 
     // 해싱 암호화한 비밀번호 대조
     const isMatch = await bcrypt.compare(password, user.password);
-    if (isMatch) {
-      // 비밀번호가 일치하면 jwt토큰 씌우기
-      const token = jwt.sign({ email: user.email }, ACCESS_SECRET, {
-        expiresIn: "7d",
-      });
-
-      user.token = token;
-      return res
-        .status(200)
-        .json({ loginSuccess: true, email: user.email, token });
-    } else {
+    if (!isMatch) {
       return res.status(403).json({
         loginSuccess: false,
         message: "비밀번호가 틀렸습니다.",
       });
     }
+
+    const token = jwt.sign({ email: user.email }, ACCESS_SECRET, {
+      expiresIn: "7d",
+    });
+    user.token = token;
+    await user.save();
+
+    return res
+      .status(200)
+      .json({ loginSuccess: true, email: user.email, token });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "something wrong" });
