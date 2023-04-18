@@ -8,6 +8,7 @@ import {
   useNavermaps,
   InfoWindow,
   Circle,
+  Polygon,
 } from 'react-naver-maps';
 import '../../styles/mp-sidebar.scss';
 import { useGlobalContext } from './Context';
@@ -17,29 +18,66 @@ export default function NaverMaps({ locationData, data }) {
   const [map, setMap] = useState(null);
   const [infowindow, setInfowindow] = useState(null);
   const [location, setLocation] = useState({});
-  const [circleBounds, setCircleBounds] = useState(true);
+  const [isChecked, setIsChecked] = useState(true);
 
   const navermaps = useNavermaps();
 
-  //각 마커 아래에 표시되어있는 원의 바운더리를 구하기 위해 그냥 중심좌표와 반지름이 똑같은 원을 새로 만들어버림..ㅋ
+  const checkMyLocationByGeofence = (path) => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        const myLatLng = new navermaps.LatLng(37.573034, 126.976904);
+
+        let count = 0;
+
+        const y = myLatLng.lat();
+
+        for (let i = 0; i < path.length; i += 1) {
+          const vertex1 = path[i];
+          const vertex2 = path[(i + 1) % path.length];
+          if (
+            (vertex1.lat() > y && vertex2.lat() > y) ||
+            (vertex1.lat() < y && vertex2.lat() < y)
+          ) {
+            continue;
+          }
+
+          // 선분과 가상의 라인이 교차하는지 검사
+          const t = (y - vertex1.lat()) / (vertex2.lat() - vertex1.lat());
+          const x = t * (vertex2.lng() - vertex1.lng()) + vertex1.lng();
+          if (x > myLatLng.lng()) {
+            count++;
+          }
+        }
+
+        // 교차 횟수가 짝수면 다각형 외부, 홀수면 내부에 위치함
+        if (count % 2 !== 0) {
+          console.log('찾았다');
+        } else {
+          console.log('그만해');
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
+  //각 마커 아래에 표시되어있는 원의 바운더리를 구하기 위해 그냥 중심좌표와 반지름이 똑같은 원을 새로 만들어버렸다.
   //왜냐하면 개같은 Circle컴포넌트는 프로퍼티로 getBounds 메서드를 제공하지 않기 때문이다
   // makeMarkerBoundary 함수 안에서 상속받은 좌표값을 파라미터로 받아서 활용
-  const getboundary = (coordinate) => {
-    //circleBounds의 상태가 true이면 실행
-    if (circleBounds) {
+  const getboundary = () => {
+    console.log('getboundary가 실행됨');
+
+    locationData?.map((item) => {
       const boundary = new navermaps.Circle({
         map: map,
         fillOpacity: 0,
         fillColor: null,
         strokeColor: null,
-        center: new navermaps.LatLng(coordinate[0], coordinate[1]),
+        center: new navermaps.LatLng(item[0], item[1]),
         radius: 400,
       }).getBounds();
-
-      //위에서 바운더리를 구하면 상태값을 false로 바꿔주어, 새 원들이 한번씩만 생성되도록 했다.
-      //지금 보고 있는 getBoundary 함수는 다른 마커를 클릭하면 호출되는 makeMarkerBoundary함수 안에 있기 때문에 마커가 클릭될때마다 계속 재실행이 된다.
-      //그렇게 된다면 네이버맵스상에 원이 계속 생성되어 누적되고 성능저하로 이어짐,,, 그래서 circleBounds의 상태값을 조건으로 걸어 계속된 Circle의 생성을 제한
-      setCircleBounds((cur) => false);
 
       const path = [
         new navermaps.LatLng(boundary._ne.y, boundary._sw.x), // 왼쪽 위
@@ -48,31 +86,9 @@ export default function NaverMaps({ locationData, data }) {
         new navermaps.LatLng(boundary._sw.y, boundary._sw.x), // 왼쪽 아래
       ];
 
-      const polygons = new navermaps.Polygon({
-        paths: path,
-        fillColor: 'red',
-        fillOpacity: 0.5,
-        strokeColor: 'red',
-      });
-
-      polygons.setMap(map);
-
-      const myLocation = window.localStorage.getItem('__mantle_tile_meta_data');
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          const myLatLng = new navermaps.LatLng(latitude, longitude);
-
-          // 현재 내 위치를 사용하여 polygon이 포함하는 지 검사
-          if (navermaps?.geometry?.polygon.containsLatLng(polygons, myLatLng)) {
-            console.log('지정 폴리곤내에 감지됨');
-          }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
+      checkMyLocationByGeofence(path);
+    });
+    // setIsChecked((cur) => false);
   };
 
   const sendKakaoAccessToken = useCallback(
@@ -136,7 +152,6 @@ export default function NaverMaps({ locationData, data }) {
           name={coordinate.name}
           onClick={() => handleClick(coordinate)}
         />
-        {getboundary(coordinate, color)}
       </React.Fragment>
     ));
   };
@@ -183,6 +198,7 @@ export default function NaverMaps({ locationData, data }) {
       >
         <InfoWindow ref={setInfowindow} />
         {makeMarkerBoundary()}
+        {getboundary()}
       </NaverMap>
     </>
   );
