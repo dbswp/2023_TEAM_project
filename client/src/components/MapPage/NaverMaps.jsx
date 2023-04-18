@@ -21,7 +21,7 @@ export default function NaverMaps({ locationData, data }) {
 
   const navermaps = useNavermaps();
 
-  //각 마커 아래에 표시되어있는 원의 바운더리를 구하기 위해 그냥 중심좌표와 반지름이 똑같은 원을 새로 만들어버림..ㅋ
+  //각 마커 아래에 표시되어있는 원의 바운더리를 구하기 위해 그냥 중심좌표와 반지름이 똑같은 원을 새로 만들어버렸다.
   //왜냐하면 개같은 Circle컴포넌트는 프로퍼티로 getBounds 메서드를 제공하지 않기 때문이다
   // makeMarkerBoundary 함수 안에서 상속받은 좌표값을 파라미터로 받아서 활용
   const getboundary = (coordinate) => {
@@ -50,14 +50,13 @@ export default function NaverMaps({ locationData, data }) {
 
       const polygons = new navermaps.Polygon({
         paths: path,
-        fillColor: 'red',
-        fillOpacity: 0.5,
-        strokeColor: 'red',
+        fillColor: 'white',
+        fillOpacity: 0.2,
+        strokeColor: 'white',
       });
 
       polygons.setMap(map);
 
-      const myLocation = window.localStorage.getItem('__mantle_tile_meta_data');
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
