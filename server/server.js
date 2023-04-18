@@ -8,6 +8,7 @@ require("dotenv").config();
 
 const port = process.env.PORT || 3000;
 const app = express();
+const path = require("path");
 
 const registerRouter = require("./routes/register");
 const loginRouter = require("./routes/login");
@@ -52,6 +53,6 @@ app.use((err, req, res, next) => {
   res.status(err.statusCode).send("Something went wrong...");
 });
 
-app.listen(PORT, () => {
-  console.log(`THE SERVER IS OPEN ON PORT ${PORT}...!!`);
+app.listen(port, () => {
+  console.log(`THE SERVER IS OPEN ON PORT ${port}...!!`);
 });
