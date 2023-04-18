@@ -39,7 +39,7 @@ app.use("/nameData", seoulDataRouter);
 app.use("/push", pushAlarmRouter);
 app.use("/board", boardRouter);
 
-app.get("/*", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
