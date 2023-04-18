@@ -38,15 +38,13 @@ app.use("/data", dataRouter);
 app.use("/nameData", seoulDataRouter);
 app.use("/push", pushAlarmRouter);
 app.use("/board", boardRouter);
-
-app.get("/", (req, res) => {
-  res.send("연결 성공");
-});
-
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "/client/build/index.html"));
 });
 
+app.get("/", (req, res) => {
+  res.send("연결 성공");
+});
 app.use((err, req, res, next) => {
   console.log(err);
   res.status(err.statusCode).send("Something went wrong...");
