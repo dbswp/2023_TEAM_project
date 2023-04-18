@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { simpleNotification } = require("../config/naverApiTest");
 const bcrypt = require("bcrypt");
 
-const { ACCESS_SECRET, REFRESH_SECRET } = process.env;
+const { ACCESS_SECRET } = process.env;
 
 mongooseConnect();
 const saltRounds = 10;
@@ -78,6 +78,7 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
+    // body에 담아서 보내준 email을 db에서 확인
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(403).json({
@@ -86,33 +87,15 @@ const loginUser = async (req, res) => {
       });
     }
 
+    // 해싱 암호화한 비밀번호 대조
     const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
+      // 비밀번호가 일치하면 jwt토큰 씌우기
       const token = jwt.sign({ email: user.email }, ACCESS_SECRET, {
         expiresIn: "7d",
       });
 
-      // const decodedToken = jwt.verify(token, ACCESS_SECRET);
-      // if (decodedToken.email !== user.email) {
-      //   return res.status(403).json({
-      //     loginSuccess: false,
-      //     message: "인증 실패",
-      //   });
-      // }
-
       user.token = token;
-      await user.save();
-
-      // req.session.login = true;
-      // req.session.user = {
-      //   email: user.email,
-      //   token: token,
-      // };
-      // res.cookie("user", user, {
-      //   maxAge: 1000 * 30,
-      //   httpOnly: true,
-      //   signed: true,
-      // });
       return res
         .status(200)
         .json({ loginSuccess: true, email: user.email, token });
@@ -168,88 +151,30 @@ const kakaoLoginUser = async (req, res) => {
   }
 };
 
-const accesstoken = async (req, res) => {
-  try {
-    const token = req.cookies.accessToken;
-    const data = jwt.verify(token, ACCESS_SECRET);
-
-    const userData = await User.findOne({ email: data.email });
-
-    const { password, ...others } = userData.toObject();
-    res.status(200).json(others);
-    console.log(userData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
-
-const refreshtoken = async (req, res) => {
-  const { email } = req.body;
-  try {
-    const token = req.cookies.accessToken;
-    const data = jwt.verify(token, ACCESS_SECRET);
-
-    const userData = await User.findOne({ email: data.email });
-
-    const accessToken = jwt.sign(
-      {
-        email: userData.email,
-      },
-      ACCESS_SECRET,
-      {
-        expiresIn: "1m",
-        issuer: "About Tech",
-      }
-    );
-
-    res.cookie("accessToken", accessToken, {
-      secure: false,
-      httpOnly: true,
-    });
-    res.status(200).json("Access Token Recreated");
-    console.log(userData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
+// 로그인 유효성 검사 미들웨어
 const checkLoggedIn = async (req, res, next) => {
-  console.log("!!");
-  // console.log(req.body);
-  // {
-  //   email: '',
-  //   content: '',
-  //   token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRic3dwOTgwNDI3QGdtYWlsLmNvbSIsImlhdCI6MTY4MTczMjk3NCwiZXhwIjoxNjgyMzM3Nzc0fQ.hzDq_ZfEtUEZBBaxO0gkIvI0UQmBw4IM_niAEVJOF2Q'
-  // }
   try {
     const token = req.body.token; // 세션에 저장된 토큰 값을 가져옴
     const decoded = jwt.verify(token, ACCESS_SECRET); // 토큰을 디코딩해서 검증
     const user = await User.findOne({ email: decoded.email }); // 검증된 사용자 정보를 가져옴
-    // console.log("user ->", user);
 
     if (user) {
-      // 사용자 정보가 있으면 로그인 상태를 유지하고, req 객체에 사용자 정보를 담음
-      // req.session.user = {
-      //   email: user.email,
-      //   token: token,
-      // };
       req.userInfo = user;
       next(); // 다음 미들웨어 실행
     } else {
       // 사용자 정보가 없으면 로그인 상태를 초기화
-      req.session.destroy();
-      res.clearCookie("connect.sid");
       res.redirect("/login");
     }
   } catch (err) {
     // 토큰 검증에 실패한 경우 로그인 상태를 초기화
-    req.session.destroy();
-    res.clearCookie("connect.sid");
     res.redirect("/login");
   }
 };
 
+// 로그아웃 미들웨어
 const logout = (req, res) => {
   try {
+    // 요청시 body에 보낸 token값을 받아 비교
     const token = req.body.token;
     if (!token) {
       return res.status(400).send("No token provided");
@@ -280,8 +205,6 @@ const findPhoneNumber = async (req, res) => {
 
 module.exports = {
   loginUser,
-  accesstoken,
-  refreshtoken,
   registerUser,
   kakaoLoginUser,
   logout,

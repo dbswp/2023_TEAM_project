@@ -61,7 +61,7 @@ export default function Login({ isLogin, setIsLogin }) {
       .then((result) => {
         console.log(result);
         window.localStorage.setItem("token", result.data.token);
-        navigate("/");
+        navigate("/blog");
         setIsLogin("로그인");
       });
   };
