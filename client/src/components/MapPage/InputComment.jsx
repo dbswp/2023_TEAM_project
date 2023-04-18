@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles/mp-board.scss";
-import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "./Context";
 import { FaTimes } from "react-icons/fa";
 
@@ -25,9 +24,6 @@ const InputComment = ({ area }) => {
         if (result.status === 200) {
           setRenderCount((cnt) => cnt + 1);
           console.log(result);
-          // // input 창 초기화
-          // setEmail((comments) => comments === "");
-          // setContent((comments) => comments === "");
         }
       });
   };
