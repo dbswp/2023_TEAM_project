@@ -327,26 +327,52 @@ a {
     font-size: 1rem;
     font-weight: 700;
   }
-  .sidebar .detail-content .detail-information .report-population .report-crowded-msg > span {
+  .sidebar
+    .detail-content
+    .detail-information
+    .report-population
+    .report-crowded-msg
+    > span {
     font-size: 1rem;
     font-weight: 700;
   }
   .sidebar .detail-content .detail-information .report-weather {
     width: inherit;
   }
-  .sidebar .detail-content .detail-information .report-weather .report-live-weather h3 {
+  .sidebar
+    .detail-content
+    .detail-information
+    .report-weather
+    .report-live-weather
+    h3 {
     font-size: 1rem;
   }
-  .sidebar .detail-content .detail-information .report-weather .today-weather-wrap .today-weather {
+  .sidebar
+    .detail-content
+    .detail-information
+    .report-weather
+    .today-weather-wrap
+    .today-weather {
     display: flex;
     align-items: center;
   }
-  .sidebar .detail-content .detail-information .report-weather .today-weather-wrap .today-weather p {
+  .sidebar
+    .detail-content
+    .detail-information
+    .report-weather
+    .today-weather-wrap
+    .today-weather
+    p {
     width: 70%;
     font-size: 1rem;
     font-weight: 700;
   }
-  .sidebar .detail-content .detail-information .report-weather .today-weather-detail p {
+  .sidebar
+    .detail-content
+    .detail-information
+    .report-weather
+    .today-weather-detail
+    p {
     width: 70%;
     font-size: 1rem;
     font-weight: 700;
@@ -389,7 +415,7 @@ a {
   justify-content: center;
 }
 .loding_wrapper .loding_container .loding_text {
-  font: 1rem "Noto Sans KR";
+  font: 1rem 'Noto Sans KR';
   text-align: center;
   margin: -30px 0 30px 0;
 }
@@ -415,4 +441,4 @@ a {
   .loding_container img {
     width: 15%;
   }
-}/*# sourceMappingURL=loding.css.map */
+} /*# sourceMappingURL=loding.css.map */

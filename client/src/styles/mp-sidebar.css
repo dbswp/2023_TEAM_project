@@ -311,26 +311,52 @@ a {
     font-size: 1rem;
     font-weight: 700;
   }
-  .sidebar .detail-content .detail-information .report-population .report-crowded-msg > span {
+  .sidebar
+    .detail-content
+    .detail-information
+    .report-population
+    .report-crowded-msg
+    > span {
     font-size: 1rem;
     font-weight: 700;
   }
   .sidebar .detail-content .detail-information .report-weather {
     width: inherit;
   }
-  .sidebar .detail-content .detail-information .report-weather .report-live-weather h3 {
+  .sidebar
+    .detail-content
+    .detail-information
+    .report-weather
+    .report-live-weather
+    h3 {
     font-size: 1rem;
   }
-  .sidebar .detail-content .detail-information .report-weather .today-weather-wrap .today-weather {
+  .sidebar
+    .detail-content
+    .detail-information
+    .report-weather
+    .today-weather-wrap
+    .today-weather {
     display: flex;
     align-items: center;
   }
-  .sidebar .detail-content .detail-information .report-weather .today-weather-wrap .today-weather p {
+  .sidebar
+    .detail-content
+    .detail-information
+    .report-weather
+    .today-weather-wrap
+    .today-weather
+    p {
     width: 70%;
     font-size: 1rem;
     font-weight: 700;
   }
-  .sidebar .detail-content .detail-information .report-weather .today-weather-detail p {
+  .sidebar
+    .detail-content
+    .detail-information
+    .report-weather
+    .today-weather-detail
+    p {
     width: 70%;
     font-size: 1rem;
     font-weight: 700;
@@ -354,4 +380,4 @@ a {
 }
 .report-crowded.red {
   color: #ff0000;
-}/*# sourceMappingURL=mp-sidebar.css.map */
+} /*# sourceMappingURL=mp-sidebar.css.map */
