@@ -6,7 +6,7 @@ const static = require();
 
 require("dotenv").config();
 
-const { PORT } = process.env;
+const port = process.env.PORT || 3000;
 const app = express();
 
 const registerRouter = require("./routes/register");
@@ -30,7 +30,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json()); // json 형태로 전달
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(express.static(__dirname, "/client/build"));
+app.use(express.static(path.join(__dirname, "/client/build")));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+});
 
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
