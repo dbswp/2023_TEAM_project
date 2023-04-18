@@ -39,6 +39,7 @@ const Home = () => {
         ) : (
           <FaRegBookmark />
         );
+
       default:
         return null;
     }
@@ -73,7 +74,13 @@ const Home = () => {
           </button>
 
           {/* 현재 위치 */}
-          <button className="my-location" onClick={isNeedMyLocation}>
+          <button
+            className="my-location"
+            onClick={() => {
+              setActiveCategory("category"); // activeCategory를 강제로 변경
+              isNeedMyLocation();
+            }}
+          >
             <BiCurrentLocation />
           </button>
         </div>
