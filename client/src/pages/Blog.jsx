@@ -7,7 +7,7 @@ import axios from 'axios';
 import '../styles/mp-blog.scss';
 import { useGlobalContext } from '../components/MapPage/Context';
 
-export default function Blog({ isLogin }) {
+export default function Blog({ isLogin, setIsLogin }) {
   const [areaData, setAreaData] = useState();
   const [data, setData] = useState();
   const [weatherData, setWeatherData] = useState();
@@ -65,6 +65,8 @@ export default function Blog({ isLogin }) {
           data={data}
           weather={weatherData}
           isLoading={isLoading}
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
           locationData={latlngData}
         />
         <NaverMaps locationData={latlngData} data={data} isLogin={isLogin} />

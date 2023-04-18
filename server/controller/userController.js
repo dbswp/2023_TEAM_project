@@ -210,27 +210,28 @@ const logout = (req, res) => {
 };
 
 const findPhoneNumber = async (req, res) => {
-  //NaverMaps.jsx 요청의 body 안에 담겨온 카카오 엑세스 토큰을 변수에 저장
-  const kakao_access_token = req.body.kakao_access_token;
+  const kakaoAccessToken = req.body.kakao_access_token;
   const area = req.body.area;
-  if (isNormalUserLogined || userID !== undefined || kakao_access_token) {
+
+  //이메일 형식의 유저 아이디를 컨트롤러 상단의 전역변수에서 받아와서 DB에서 해당 유저정보를 가져옴
+  const user = await User.findOne({ email: userID }).select('phone');
+  const phone = user?.phone;
+
+  if (isNormalUserLogined || userID !== undefined || kakaoAccessToken) {
     try {
-      //이메일 형식의 유저 아이디를 컨트롤러 상단의 전역변수에서 받아와서 DB에서 해당 유저정보를 가져옴
-      const configuration = await User.findOne({
-        email: userID,
-      }).find();
-      // 해당 유저정보에서 핸드폰 번호만 추출
-      const phone = configuration[0]?.phone;
       // 핸드폰 번호가 존재하면 알림문자전송 모듈에 인자로 전달
-      if (configuration) simpleNotification(phone, kakao_access_token, area);
+      if (phone || kakaoAccessToken) {
+        simpleNotification(phone, kakaoAccessToken, area);
+      }
     } catch (err) {
-      console.error(err.data);
+      console.error(err.message);
+      res.status(500).json('알 수 없는 오류가 발생했습니다.');
     }
   } else {
-    res.status(404).json('로그인해');
-    throw new Error(
-      '로그인 미들웨어에서 처리가 안됐거나 카카오엑세스 토큰값 확인 불가'
-    );
+    const errorMessage =
+      '로그인 미들웨어에서 처리가 안됐거나 카카오엑세스 토큰값 확인 불가';
+    console.error(errorMessage);
+    res.status(500).json(errorMessage);
   }
 };
 
