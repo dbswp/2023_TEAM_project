@@ -27,13 +27,9 @@ app.use(
 app.use(express.json());
 app.use(cookieParser("dbswp"));
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "/client/build")));
 app.use(bodyParser.json()); // json 형태로 전달
 app.use(bodyParser.urlencoded({ extended: false }));
-
-app.use(express.static(path.join(__dirname, "/client/build")));
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
 
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
@@ -45,6 +41,10 @@ app.use("/board", boardRouter);
 
 app.get("/", (req, res) => {
   res.send("연결 성공");
+});
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client/build/index.html"));
 });
 
 app.use((err, req, res, next) => {
