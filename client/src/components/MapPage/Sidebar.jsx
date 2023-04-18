@@ -169,6 +169,9 @@ const Sidebar = ({
           {sidebarCategory === "bookmark" && bookmarkClick && (
             <div className="detail-bookmark">
               <h3>북마크된 지역</h3>
+              <button className="close-btn" onClick={closeSidebar}>
+                <FaTimes />
+              </button>
               <ul>
                 {bookmarks.length > 0 ? (
                   bookmarks.map((el, idx) => (

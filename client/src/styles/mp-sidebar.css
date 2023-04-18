@@ -6,13 +6,6 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  color: black;
-  line-height: 1.5;
-  font-size: 0.875rem;
-}
-
 ul {
   list-style-type: none;
 }
@@ -82,7 +75,7 @@ a {
   border-color: transparent;
   transition: all 0.3s linear;
   cursor: pointer;
-  color: hsl(0, 67%, 44%);
+  color: #b2b2b2;
   top: 10px;
   right: 30px;
 }
@@ -96,7 +89,7 @@ a {
   border-color: transparent;
   transition: all 0.3s linear;
   cursor: pointer;
-  color: hsl(0, 67%, 44%);
+  color: #0675f4;
   top: 15px;
   right: 80px;
 }
@@ -110,6 +103,20 @@ a {
 .detail-bookmark h3 {
   font-size: 24px;
   margin-bottom: 20px;
+}
+.detail-bookmark .close-btn {
+  position: absolute;
+  font-size: 2rem;
+  background: transparent;
+  border-color: transparent;
+  transition: all 0.3s linear;
+  cursor: pointer;
+  color: #b2b2b2;
+  top: 10px;
+  right: 30px;
+}
+.detail-bookmark .close-btn:hover {
+  color: hsl(0, 71%, 66%);
 }
 .detail-bookmark ul {
   padding-left: 0px;
@@ -175,6 +182,7 @@ a {
   padding: 15px;
   border: 1px solid #dbdbdb;
   margin: 5px 0;
+  box-shadow: rgba(173, 173, 173, 0.2196078431) 0px 3px 6px;
 }
 .detail-content .report-population h3 {
   font-size: 20px;
@@ -202,6 +210,7 @@ a {
   text-align: left;
 }
 .detail-content .report-weather {
+  box-shadow: rgba(173, 173, 173, 0.2196078431) 0px 3px 6px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -220,12 +229,14 @@ a {
   align-items: center;
 }
 .detail-content .report-weather .today-weather-wrap .img {
-  width: 60px;
+  display: flex;
+  width: 65px;
 }
 .detail-content .report-weather .today-weather-wrap p {
+  width: 300px;
   font-size: 20px;
   line-height: 1.7;
-  text-align: center;
+  text-align: justify;
 }
 .detail-content .report-weather .today-weather-detail {
   display: flex;
@@ -235,11 +246,13 @@ a {
 }
 .detail-content .report-weather .today-weather-detail .temperature-img .img {
   display: flex;
-  width: 60px;
+  width: 65px;
 }
 .detail-content .report-weather .today-weather-detail p {
-  text-align: justify;
+  width: 300px;
   font-size: 20px;
+  line-height: 1.7;
+  text-align: justify;
 }
 
 .map-container {
