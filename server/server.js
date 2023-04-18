@@ -35,6 +35,7 @@ app.use("/data", dataRouter);
 app.use("/nameData", seoulDataRouter);
 app.use("/push", pushAlarmRouter);
 app.use("/board", boardRouter);
+app.use(express.static(__dirname, "/client/build"));
 
 app.get("/", (req, res) => {
   res.send("연결 성공");

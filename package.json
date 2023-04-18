@@ -1,0 +1,17 @@
+{
+  "name": "team-pjt",
+  "version": "0.1.0",
+  "description": "standalonemaster",
+  "main": "",
+  "scripts": {
+    "client-build": "cd client && npm i && npm run build && cd ../",
+    "server-build": "cd server && npm i && cd ../ ",
+    "heroku-prebuild": "npm run client-build && npm run server-build",
+    "start": "cd server && npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dbswp/2023_TEAM_siba"
+  }
+}
