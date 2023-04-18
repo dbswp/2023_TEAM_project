@@ -31,7 +31,6 @@ export default function MainTabsButton() {
   const getData = async () => {
     const res = await axios.get("http://localhost:4000/nameData");
     if (res.status !== 200) alert("데이터 수신 실패");
-
     // 전체 분류 데이터
     const allDataBase = res.data.Arr;
     // // 첫번째 전체 데이터
@@ -39,14 +38,12 @@ export default function MainTabsButton() {
     const firstImgData = res.data.Arr[0].img;
     const firstLatitudeData = res.data.Arr[0].latitude;
     const firstLogitudeData = res.data.Arr[0].longitude;
-
     setAllDataBase((cur) => allDataBase);
     setAllData((cur) => firstNameData);
     setAllImgData((cur) => firstImgData);
     setAllLatitudeData((cur) => firstLatitudeData);
     setAllLongitudeData((cur) => firstLogitudeData);
   };
-
   useEffect(() => {
     getData();
   }, []);

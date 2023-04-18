@@ -1,8 +1,8 @@
-const mongooseConnect = require('./mongooseConnect');
-const User = require('../models/user');
-const jwt = require('jsonwebtoken');
-const { simpleNotification } = require('../config/naverApiTest');
-const bcrypt = require('bcrypt');
+const mongooseConnect = require("./mongooseConnect");
+const User = require("../models/user");
+const jwt = require("jsonwebtoken");
+const { simpleNotification } = require("../config/naverApiTest");
+const bcrypt = require("bcrypt");
 
 const { ACCESS_SECRET } = process.env;
 
@@ -16,62 +16,44 @@ let userID;
 // 회원 가입
 // 몽구스 삽입은 create, 뒤에 {} = One, 뒤에 [] = Many
 const registerUser = async (req, res) => {
-  let { email, phone, password, passwordCheck } = req.body;
-  // 빈값이 오면 팅겨내기
-  if (email === '' || phone === '' || password === '' || passwordCheck === '') {
-    return res.json({ registerSuccess: false, message: '정보를 입력하세요' });
-  }
-
-  const sameEmailUser = await User.findOne({ email: email });
-  if (sameEmailUser !== null) {
-    return res.json({
-      registerSuccess: false,
-      message: '이미 존재하는 이메일입니다',
-    });
-  }
-
-  const sameNickNameUser = await User.findOne({ phone });
-  if (sameNickNameUser !== null) {
-    return res.json({
-      registerSuccess: false,
-      message: '이미 존재하는 닉네임입니다.',
-    });
-  }
-
-  // 솔트 생성 및 해쉬화 진행
-  bcrypt.genSalt(saltRounds, async (err, salt) => {
-    // 솔트 생성 실패시
-    if (err)
-      return res.status(500).json({
+  try {
+    const { email, phone, password, passwordCheck } = req.body;
+    // 빈값이 오면 팅겨내기
+    if (
+      email === "" ||
+      phone === "" ||
+      password === "" ||
+      passwordCheck === ""
+    ) {
+      return res.json({ registerSuccess: false, message: "정보를 입력하세요" });
+    }
+    const sameEmailUser = await User.findOne({ email });
+    if (sameEmailUser !== null) {
+      return res.json({
         registerSuccess: false,
-        message: '비밀번호 해쉬화에 실패했습니다.',
+        message: "이미 존재하는 이메일입니다",
       });
-    // salt 생성에 성공시 hash 진행
-
-    bcrypt.hash(password, salt, async (err, hash) => {
-      if (err)
-        return res.status(500).json({
-          registerSuccess: false,
-          message: '비밀번호 해쉬화에 실패했습니다.',
-        });
-
-      // 비밀번호를 해쉬된 값으로 대체합니다.
-      password = hash;
-
-      try {
-        const user = new User({
-          email: email,
-          phone,
-          password,
-        });
-        await user.save();
-        await User.create(user);
-        return res.json({ registerSuccess: true });
-      } catch (err) {
-        return res.json({ registerSuccess: false, message: err.message });
-      }
+    }
+    const samePhoneUser = await User.findOne({ phone });
+    if (samePhoneUser !== null) {
+      return res.json({
+        registerSuccess: false,
+        message: "이미 존재하는 번호입니다.",
+      });
+    }
+    // 솔트 생성 및 해쉬화 진행
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const user = new User({
+      email,
+      phone,
+      password: hashedPassword,
     });
-  });
+    await user.save();
+    return res.json({ registerSuccess: true });
+  } catch (error) {
+    return res.json({ registerSuccess: false, message: error.message });
+  }
 };
 
 //로그인 미들웨어
@@ -87,7 +69,7 @@ const loginUser = async (req, res) => {
     if (!user) {
       return res.status(403).json({
         loginSuccess: false,
-        message: '해당되는 이메일이 없습니다.',
+        message: "해당되는 이메일이 없습니다.",
       });
     }
 
@@ -96,7 +78,7 @@ const loginUser = async (req, res) => {
     if (isMatch) {
       // 비밀번호가 일치하면 jwt토큰 씌우기
       const token = jwt.sign({ email: user.email }, ACCESS_SECRET, {
-        expiresIn: '7d',
+        expiresIn: "7d",
       });
 
       user.token = token;
@@ -106,12 +88,12 @@ const loginUser = async (req, res) => {
     } else {
       return res.status(403).json({
         loginSuccess: false,
-        message: '비밀번호가 틀렸습니다.',
+        message: "비밀번호가 틀렸습니다.",
       });
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: 'something wrong' });
+    return res.status(500).json({ error: "something wrong" });
   }
 };
 
@@ -122,10 +104,10 @@ const kakaoLoginUser = async (req, res) => {
   try {
     //카카오 엑세스 토큰을 사용하여 사용자 정보에 접근!
     const userResponese = await fetch(`https://kapi.kakao.com/v2/user/me`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         Authorization: `Bearer ${KAKAO_CODE}`,
-        'Content-type': 'application/x-www-form-urlencoded',
+        "Content-type": "application/x-www-form-urlencoded",
       },
     });
     if (userResponese.status === 200) {
@@ -140,16 +122,16 @@ const kakaoLoginUser = async (req, res) => {
         ACCESS_SECRET,
         {
           expiresIn: 1000 * 60,
-          issuer: 'About Tech',
+          issuer: "About Tech",
         }
       );
       // 쿠키에 담아서 전송
-      res.cookie('kakaoAccessToken', kakaoAccessToken, {
+      res.cookie("kakaoAccessToken", kakaoAccessToken, {
         secure: false,
         httpOnly: false,
       });
     }
-    res.status(200).json('엑세스 토큰 받기 성공!');
+    res.status(200).json("엑세스 토큰 받기 성공!");
   } catch (err) {
     console.error(err);
   }
@@ -167,11 +149,11 @@ const checkLoggedIn = async (req, res, next) => {
       next(); // 다음 미들웨어 실행
     } else {
       // 사용자 정보가 없으면 로그인 상태를 초기화
-      res.redirect('/login');
+      res.redirect("/login");
     }
   } catch (err) {
     // 토큰 검증에 실패한 경우 로그인 상태를 초기화
-    res.redirect('/login');
+    res.redirect("/login");
   }
 };
 
@@ -181,9 +163,9 @@ const logout = (req, res) => {
     // 요청시 body에 보낸 token값을 받아 비교
     const token = req.body.token;
     if (!token) {
-      return res.status(400).send('No token provided');
+      return res.status(400).send("No token provided");
     }
-    res.status(200).json('Logout Success');
+    res.status(200).json("Logout Success");
   } catch (error) {
     res.status(500).json(error);
   }
@@ -207,9 +189,9 @@ const findPhoneNumber = async (req, res) => {
       console.error(err.data);
     }
   } else {
-    res.status(404).json('로그인해');
+    res.status(404).json("로그인해");
     throw new Error(
-      '로그인 미들웨어에서 처리가 안됐거나 카카오엑세스 토큰값 확인 불가'
+      "로그인 미들웨어에서 처리가 안됐거나 카카오엑세스 토큰값 확인 불가"
     );
   }
 };
