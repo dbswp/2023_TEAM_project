@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Logo from "../../../assets/Logo.gif";
 import "../../../styles/header.scss";
 import axios from "axios";
-// import { kakaoLogoutUrl } from "../../../kakaoLoginData";
+import { kakaoLogoutUrl } from "../../../kakaoLoginData";
 
 window.addEventListener("scroll", () => {
   const headerWrap = document.querySelector(".headerWrap");
@@ -33,6 +33,36 @@ export default function Header({ isLogin, setIsLogin, className }) {
         navigate("/login");
       });
   };
+
+  // const logoutKakao = async () => {
+  //   const logoutUser = await axios.get("http://localhost:4000/logout");
+  //   console.log(logoutUser.statusText);
+  //   if (logoutUser.status === 200) navigate("/login");
+  // };
+
+  // const logout = () => {
+  //   if (
+  //     window.localStorage.getItem("kakaoAccessToken") &&
+  //     JSON.parse(window.localStorage.getItem("login")) === "로그아웃" &&
+  //     window.localStorage.getItem("kakao")
+  //   ) {
+  //     window.location.href = kakaoLogoutUrl;
+  //     window.localStorage.removeItem("kakao");
+  //     navigate("/login");
+  //   } else if (
+  //     window.localStorage.getItem("kakaoAccessToken") &&
+  //     JSON.parse(window.localStorage.getItem("login")) === "로그아웃"
+  //   ) {
+  //     setIsLogin(
+  //       window.localStorage.setItem("login", JSON.stringify("로그인"))
+  //     );
+  //     window.location.replace("/login");
+  //   } else if (window.localStorage.getItem("token")) {
+  //     window.localStorage.removeItem("token");
+  //   } else {
+  //     window.location.reload();
+  //   }
+  // };
 
   return (
     <>

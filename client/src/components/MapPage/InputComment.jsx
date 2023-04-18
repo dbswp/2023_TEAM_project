@@ -17,7 +17,7 @@ const InputComment = ({ area }) => {
     const res = await axios
       .post("http://localhost:4000/board/write", {
         email: email,
-        content: `위치 : ${point}  댓글 : ${content}`,
+        content: `위치 : ${point}   댓글 : ${content}`,
         token: window.localStorage.getItem("token"),
       })
       .then((result) => {

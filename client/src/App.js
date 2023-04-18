@@ -5,10 +5,17 @@ import Header from "./components/common/Header/Header";
 import GlobalStyle from "./components/common/GlobalStyle";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../src/styles/media.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [isLogin, setIsLogin] = useState("로그인");
+  const [isLogin, setIsLogin] = useState("로그아웃");
+  // useEffect(() => {
+  //   const token = window.localStorage.getItem("token");
+
+  //   if (token) {
+  //     setIsLogin("로그인");
+  //   }
+  // });
   return (
     <div className="App">
       <GlobalStyle />
