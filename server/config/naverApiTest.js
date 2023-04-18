@@ -15,7 +15,7 @@ const newLine = '\n';
 const url = `https://sens.apigw.ntruss.com/sms/v2/services/${NCP_serviceID}/messages`;
 const url2 = `/sms/v2/services/${NCP_serviceID}/messages`;
 
-const simpleNotification = async (phone, kakao_access_token) => {
+const simpleNotification = async (phone, kakao_access_token, area) => {
   try {
     if (phone) {
       const hmac = CryptoJS.algo.HMAC.create(
@@ -45,14 +45,14 @@ const simpleNotification = async (phone, kakao_access_token) => {
           type: 'SMS',
           countryCode: '82',
           from: `${myPhone}`,
-          content: `[북적북적] 현재 인구밀집 '혼잡' 지역에 위치해 있습니다. 안전에 유의해주세요!`,
+          content: `[북적북적] 현재 인구밀집 '혼잡'인 ${area}지역에 위치해 있습니다. 안전에 유의해주세요!`,
           messages: [{ to: `${phone}` }],
         },
       });
 
       console.log(smsResponse.data);
     } else {
-      sendKakaoMessage(kakao_access_token);
+      sendKakaoMessage(kakao_access_token, area);
     }
   } catch (err) {
     console.error(err);
