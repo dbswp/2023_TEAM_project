@@ -91,7 +91,7 @@ main {
 .sidebar-bookmark:focus,
 .my-location:hover,
 .my-location:focus {
-  color: #0675F4;
+  color: #0675f4;
 }
 
 @keyframes bounce {

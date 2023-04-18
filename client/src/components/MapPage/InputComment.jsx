@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles/mp-board.scss";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "./Context";
+import { FaTimes } from "react-icons/fa";
 
 const InputComment = ({ area }) => {
+  const { isSidebarOpen, closeSidebar, sidebarCategory } = useGlobalContext();
   const [email, setEmail] = useState("");
   const [content, setContent] = useState("");
   const [comments, setComments] = useState([]);
   const [renderCount, setRenderCount] = useState(0);
   const point = localStorage.getItem("END_POINT");
-  const navigator = useNavigate();
 
   const sendData = async (e) => {
     e.preventDefault();
@@ -53,7 +55,10 @@ const InputComment = ({ area }) => {
     <>
       <div className="board_container">
         <div className="board_header">
-          <h1>댓글 달기</h1>
+          <h1>댓글</h1>
+          <button className="close-btn" onClick={closeSidebar}>
+            <FaTimes />
+          </button>
         </div>
         <form className="board_form">
           <div className="form_title">
@@ -61,6 +66,7 @@ const InputComment = ({ area }) => {
             <input
               type="email"
               name="title"
+              placeholder="이메일을 입력해주세요"
               required
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -72,19 +78,19 @@ const InputComment = ({ area }) => {
               id="content"
               cols="50"
               rows="2"
+              placeholder="내용을 입력해주세요"
               required
               onChange={(e) => setContent(e.target.value)}
             ></textarea>
           </div>
           <button type="submit" onClick={sendData}>
-            글 작성하기
+            댓글 달기
           </button>
         </form>
         <div className="board-print">
-          <h1>댓글 현황</h1>
           {comments.length > 0 &&
             comments.map((comment, index) => (
-              <div key={index}>
+              <div key={index} className="index_box">
                 <p>{comment.area}</p>
                 <p>{comment.email}</p>
                 <p>{comment.content}</p>
