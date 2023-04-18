@@ -157,6 +157,26 @@ const checkLoggedIn = async (req, res, next) => {
   }
 };
 
+// 로그인 유효성 검사 미들웨어
+const checkToken = async (req, res) => {
+  try {
+    const token = req.body.token; // 세션에 저장된 토큰 값을 가져옴
+    const decoded = jwt.verify(token, ACCESS_SECRET); // 토큰을 디코딩해서 검증
+    const user = await User.findOne({ email: decoded.email }); // 검증된 사용자 정보를 가져옴
+
+    if (user) {
+      res.status(200).json("token 검증 성공");
+      req.userInfo = user;
+    } else {
+      // 사용자 정보가 없으면 로그인 상태를 초기화
+      res.redirect("/login");
+    }
+  } catch (err) {
+    // 토큰 검증에 실패한 경우 로그인 상태를 초기화
+    res.redirect("/login");
+  }
+};
+
 // 로그아웃 미들웨어
 const logout = (req, res) => {
   try {
@@ -203,4 +223,5 @@ module.exports = {
   logout,
   findPhoneNumber,
   checkLoggedIn,
+  checkToken,
 };
