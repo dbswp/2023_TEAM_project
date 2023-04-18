@@ -7,7 +7,10 @@ export default function MainComment({ area }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
+    if (
+      localStorage.getItem("token") ||
+      localStorage.getItem("kakaoAccessToken")
+    ) {
       setIsLogin(true);
     } else {
       setIsLogin(false);

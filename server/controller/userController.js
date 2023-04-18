@@ -125,11 +125,7 @@ const kakaoLoginUser = async (req, res) => {
           issuer: "About Tech",
         }
       );
-      // 쿠키에 담아서 전송
-      res.cookie("kakaoAccessToken", kakaoAccessToken, {
-        secure: false,
-        httpOnly: false,
-      });
+      return res.status(200).json({ loginSuccess: true, kakaoAccessToken });
     }
     res.status(200).json("엑세스 토큰 받기 성공!");
   } catch (err) {
