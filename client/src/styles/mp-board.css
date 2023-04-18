@@ -21,13 +21,15 @@ a {
 .board_container .board_header {
   padding-top: 1rem;
   font-size: 1.5rem;
+  background-color: #fff;
   border: 1px solid #dbdbdb;
 }
 .board_container .board_header h1 {
   justify-content: center;
   margin-bottom: 3%;
-  color: #4c65a7;
-  font-weight: bold;
+  color: #000;
+  font-weight: 500;
+  font-size: 30px;
 }
 .board_container .board_header .close-btn {
   position: absolute;
@@ -36,8 +38,8 @@ a {
   border-color: transparent;
   transition: all 0.3s linear;
   cursor: pointer;
-  color: hsl(0, 67%, 44%);
-  top: -2.5%;
+  color: #b2b2b2;
+  top: -4.5%;
   right: 0;
 }
 .board_container .board_header .close-btn:hover {
@@ -47,61 +49,72 @@ a {
   display: flex;
   flex-direction: column;
   padding: 1.5rem 1.5rem;
-  margin: 10px auto;
-  width: 97%;
+  margin: 15px auto;
+  width: 90%;
   height: 30%;
-  border-radius: 10px;
+  border-radius: 20px;
   border: 1px solid #dbdbdb;
+  box-shadow: rgba(173, 173, 173, 0.2196078431) 3px 3px 6px;
+  background-color: #fff;
 }
 .board_container .board_form input {
-  width: 45%;
-  height: 36px;
-  border-radius: 5px;
-  font-size: 16px;
+  width: 100%;
+  max-width: 300px;
+  height: 42px;
+  border-radius: 10px;
+  font-size: 13px;
   padding-left: 0.5rem;
+  border: 1px solid #e1e1e1;
+  background-color: #f8f8f8;
 }
 .board_container .board_form input:focus {
   background-color: #fefefe;
 }
 .board_container .board_form textarea {
-  width: 50%;
-  height: 50px;
-  border-radius: 5px;
-  font-size: 16px;
+  width: 100%;
+  max-width: 300px;
+  height: 80px;
+  border-radius: 10px;
+  font-size: 13px;
   padding-left: 0.5rem;
+  padding-top: 0.5rem;
+  background-color: #f8f8f8;
+  border: 1px solid #e1e1e1;
 }
 .board_container .board_form textarea:focus {
   background-color: #fefefe;
 }
 .board_container .board_form h3 {
-  font-size: 24px;
-  margin-right: 30px;
-  color: #3cb371;
-  font-weight: bold;
+  font-size: 15px;
+  margin-right: 20px;
+  color: #000;
+  font-weight: 400;
 }
 .board_container .board_form .form_title {
   display: flex;
   padding: 0;
+  align-items: center;
 }
 .board_container .board_form .form_title input {
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 .board_container .board_form .form_content {
   display: flex;
 }
 .board_container .board_form .form_content textarea {
   overflow: hidden;
-  margin-left: 22px;
+  margin-left: 14px;
 }
 .board_container button {
   position: absolute;
-  top: 16%;
+  top: 14%;
   right: 10%;
   width: 98px;
-  height: 98px;
+  height: 135px;
   color: #fff;
-  font-size: 16px;
-  border-radius: 50%;
+  font-size: 14px;
+  background-color: #0675f4;
+  border-radius: 10px;
   border: none;
 }
 .board_container .board-print {
@@ -109,20 +122,50 @@ a {
   flex-direction: column;
   padding: 1rem;
   margin: 10px auto;
-  width: 97%;
+  width: 90%;
   height: 500px;
-  border-radius: 10px;
+  border-radius: 20px;
   border: 1px solid #dbdbdb;
+  box-shadow: rgba(173, 173, 173, 0.2196078431) 3px 3px 6px;
+  background-color: #fff;
   overflow: scroll;
 }
 .board_container .board-print .index_box {
-  box-shadow: 1px 1px 1px 1px #ccc;
-  border-radius: 5px;
-  margin-bottom: 5px;
+  box-shadow: rgba(173, 173, 173, 0.2196078431) 3px 3px 6px;
+  background: #fff;
+  border-radius: 15px;
+  margin-bottom: 12px;
+  border: 1px solid #ececec;
+  text-align: left;
+  padding: 8px 20px;
+}
+.board_container .board-print .index_box .email {
+  color: #777;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+.board_container .board-print .index_box .content {
+  color: #333;
+  font-size: 14px;
 }
 
 @media (max-width: 420px) {
   .board-print {
     width: 200px;
   }
-}/*# sourceMappingURL=mp-board.css.map */
+  .board_container .board_form h3 {
+    display: none;
+  }
+  .board_container .board_form .form_content textarea {
+    margin-left: 0px;
+  }
+  .board_container .board_form .form_title input {
+    max-width: 210px;
+  }
+  .board_container .board_form .form_content textarea {
+    max-width: 210px;
+  }
+  .board_container button {
+    top: 13.5%;
+  }
+} /*# sourceMappingURL=mp-board.css.map */

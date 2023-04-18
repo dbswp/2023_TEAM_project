@@ -13,8 +13,8 @@ import {
 import '../../styles/mp-sidebar.scss';
 import { useGlobalContext } from './Context';
 
-export default function NaverMaps({ locationData, data }) {
-  const { wantMyLocation, endPoint, changeEndPoint } = useGlobalContext();
+export default function NaverMaps({ locationData, data, isLogin }) {
+  const { wantMyLocation, changeEndPoint } = useGlobalContext();
   const [map, setMap] = useState(null);
   const [infowindow, setInfowindow] = useState(null);
   const [location, setLocation] = useState({});
@@ -22,53 +22,39 @@ export default function NaverMaps({ locationData, data }) {
 
   const navermaps = useNavermaps();
 
-  const checkMyLocationByGeofence = (path) => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        const myLatLng = new navermaps.LatLng(37.573034, 126.976904);
+  const checkMyLocationByGeofence = (path, area) => {
+    if (isChecked) {
+      setIsChecked(false);
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
 
-        let count = 0;
+          const testX = 126.93689331765; //longitude
+          const testY = 37.5578078217728; //latitude
 
-        const y = myLatLng.lat();
-
-        for (let i = 0; i < path.length; i += 1) {
-          const vertex1 = path[i];
-          const vertex2 = path[(i + 1) % path.length];
           if (
-            (vertex1.lat() > y && vertex2.lat() > y) ||
-            (vertex1.lat() < y && vertex2.lat() < y)
+            testX > path[0].x &&
+            testX < path[1].x &&
+            testY < path[1].y &&
+            testY > path[2].y
           ) {
-            continue;
+            console.log('찾았다', area);
+            isLogin === '로그인'
+              ? sendKakaoAccessToken(area)
+              : console.log('로그인이 필요합니다');
           }
-
-          // 선분과 가상의 라인이 교차하는지 검사
-          const t = (y - vertex1.lat()) / (vertex2.lat() - vertex1.lat());
-          const x = t * (vertex2.lng() - vertex1.lng()) + vertex1.lng();
-          if (x > myLatLng.lng()) {
-            count++;
-          }
+        },
+        (error) => {
+          console.log(error);
         }
-
-        // 교차 횟수가 짝수면 다각형 외부, 홀수면 내부에 위치함
-        if (count % 2 !== 0) {
-          console.log('찾았다');
-        } else {
-          console.log('그만해');
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      );
+    }
   };
 
   //각 마커 아래에 표시되어있는 원의 바운더리를 구하기 위해 그냥 중심좌표와 반지름이 똑같은 원을 새로 만들어버렸다.
-  //왜냐하면 개같은 Circle컴포넌트는 프로퍼티로 getBounds 메서드를 제공하지 않기 때문이다
+  //왜냐하면 네이버맵스 Circle컴포넌트는 프로퍼티로 getBounds 메서드를 제공하지 않기 때문이다
   // makeMarkerBoundary 함수 안에서 상속받은 좌표값을 파라미터로 받아서 활용
   const getboundary = () => {
-    console.log('getboundary가 실행됨');
-
     locationData?.map((item) => {
       const boundary = new navermaps.Circle({
         map: map,
@@ -86,20 +72,20 @@ export default function NaverMaps({ locationData, data }) {
         new navermaps.LatLng(boundary._sw.y, boundary._sw.x), // 왼쪽 아래
       ];
 
-      checkMyLocationByGeofence(path);
+      checkMyLocationByGeofence(path, item[2]);
     });
-    // setIsChecked((cur) => false);
   };
 
   const sendKakaoAccessToken = useCallback(
     //인구밀집도가 일정 레벨이상이 되면 밑의 sendKakaoAccessToken을 실행
-    async () => {
+    async (area) => {
       //로컬 스토리지에 있는 카카오 엑세스 토큰을 요청body에 담아서
       const kakao_access_token =
         window.localStorage.getItem('kakaoAccessToken');
       //알림기능 미들웨어로 Post요청 전송
       await axios.post('http://localhost:4000/push', {
         kakao_access_token,
+        area,
       });
     }
   );

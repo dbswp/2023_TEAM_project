@@ -192,6 +192,7 @@ const logout = (req, res) => {
 const findPhoneNumber = async (req, res) => {
   //NaverMaps.jsx 요청의 body 안에 담겨온 카카오 엑세스 토큰을 변수에 저장
   const kakao_access_token = req.body.kakao_access_token;
+  const area = req.body.area;
   if (isNormalUserLogined || userID !== undefined || kakao_access_token) {
     try {
       //이메일 형식의 유저 아이디를 컨트롤러 상단의 전역변수에서 받아와서 DB에서 해당 유저정보를 가져옴
@@ -201,7 +202,7 @@ const findPhoneNumber = async (req, res) => {
       // 해당 유저정보에서 핸드폰 번호만 추출
       const phone = configuration[0]?.phone;
       // 핸드폰 번호가 존재하면 알림문자전송 모듈에 인자로 전달
-      if (configuration) simpleNotification(phone, kakao_access_token);
+      if (configuration) simpleNotification(phone, kakao_access_token, area);
     } catch (err) {
       console.error(err.data);
     }

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import NaverMaps from "../components/MapPage/NaverMaps";
-import { Container as MapDiv } from "react-naver-maps";
-import Sidebar from "../components/MapPage/Sidebar";
-import Home from "../components/MapPage/Home";
-import axios from "axios";
-import "../styles/mp-blog.scss";
-import { useGlobalContext } from "../components/MapPage/Context";
+import React, { useEffect, useState } from 'react';
+import NaverMaps from '../components/MapPage/NaverMaps';
+import { Container as MapDiv } from 'react-naver-maps';
+import Sidebar from '../components/MapPage/Sidebar';
+import Home from '../components/MapPage/Home';
+import axios from 'axios';
+import '../styles/mp-blog.scss';
+import { useGlobalContext } from '../components/MapPage/Context';
 
-export default function Blog() {
+export default function Blog({ isLogin }) {
   const [areaData, setAreaData] = useState();
   const [data, setData] = useState();
   const [weatherData, setWeatherData] = useState();
@@ -15,12 +15,12 @@ export default function Blog() {
   const [isLoading, setIsLoading] = useState(true);
   const { endPoint } = useGlobalContext();
 
-  const point = localStorage.getItem("END_POINT");
+  const point = localStorage.getItem('END_POINT');
 
   const getData = async () => {
     setIsLoading(true); // 로딩중임을 알림
     try {
-      const res = await axios.post("http://localhost:4000/data/getdata", {
+      const res = await axios.post('http://localhost:4000/data/getdata', {
         point,
       });
 
@@ -40,7 +40,7 @@ export default function Blog() {
     //10분마다 데이터 갱신 시키기
     const reNew = setInterval(() => {
       getData();
-      console.log("데이터 갱신 완료");
+      console.log('데이터 갱신 완료');
     }, 600000);
     return () => clearInterval(reNew); // unmount 시 interval 해제
   }, [endPoint]);
@@ -55,8 +55,8 @@ export default function Blog() {
       /> */}
       <MapDiv
         style={{
-          width: "100%",
-          height: "90vh",
+          width: '100%',
+          height: '90vh',
         }}
       >
         <Home />
@@ -67,7 +67,7 @@ export default function Blog() {
           isLoading={isLoading}
           locationData={latlngData}
         />
-        <NaverMaps locationData={latlngData} data={data} />
+        <NaverMaps locationData={latlngData} data={data} isLogin={isLogin} />
       </MapDiv>
     </>
   );
