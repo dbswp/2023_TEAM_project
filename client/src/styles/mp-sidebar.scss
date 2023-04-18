@@ -164,6 +164,7 @@ $desktop-min: 1024px;
   .detail-information {
     display: flex;
     flex-direction: column;
+    width: 540px;
   }
 
   .report-population {
@@ -171,13 +172,13 @@ $desktop-min: 1024px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 580px;
+    width: 100%;
     height: 200px;
     background: #ffffff;
-    border-radius: 10px;
+    border-radius: 20px;
     padding: 15px;
     border: 1px solid #dbdbdb;
-    margin: 5px 0;
+    margin: 15px 0;
     box-shadow: #adadad38 0px 3px 6px;
 
     // 실시간 인구
@@ -220,13 +221,13 @@ $desktop-min: 1024px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    width: 580px;
+    width: 100%;
     height: 300px;
     background: #ffffff;
-    border-radius: 10px;
+    border-radius: 20px;
     padding: 15px;
     border: 1px solid #dbdbdb;
-    margin: 10px 0;
+    margin: 5px 0;
 
     .today-weather-wrap {
       .today-weather {
@@ -311,9 +312,11 @@ $desktop-min: 1024px;
     .detail-content {
       width: 100vw;
       .detail-information {
-        width: inherit;
+        width: 100%;
+        max-width: 370px;
         .report-population {
           width: inherit;
+          height: 180px;
           padding: 6px 15px 15px 15px;
           h3 {
             font-size: 1rem;
@@ -329,6 +332,7 @@ $desktop-min: 1024px;
         }
         .report-weather {
           width: inherit;
+          margin-top: 0px;
           .report-live-weather {
             h3 {
               font-size: 1rem;
@@ -342,6 +346,7 @@ $desktop-min: 1024px;
                 width: 70%;
                 font-size: 1rem;
                 font-weight: 700;
+                text-align: left;
               }
             }
           }
@@ -350,6 +355,7 @@ $desktop-min: 1024px;
               width: 70%;
               font-size: 1rem;
               font-weight: 700;
+              text-align: left;
             }
           }
         }

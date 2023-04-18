@@ -28,7 +28,6 @@ export default function Card({ name, img, latitude, longitude }) {
         <img className="img" src={img}></img>
         <div className="seoul_end_point">
           <span className="left">{name}</span>
-          <span className="right">붐빔</span>
         </div>
         <span>Seoul</span>
       </div>
