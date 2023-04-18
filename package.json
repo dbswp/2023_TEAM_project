@@ -3,15 +3,15 @@
   "version": "0.1.0",
   "description": "standalonemaster",
   "engines": {
-    "npm": "9.6.4",
-    "node": "v18.14.0",
-    "nodemon": "2.0.21"
+    "npm": "^9.6.4",
+    "node": "^18.14.0",
+    "nodemon": "^2.0.22"
   },
   "scripts": {
     "client-build": "cd client && npm i && npm run build && cd ../",
     "server-build": "cd server && npm i && cd ../ ",
     "heroku-prebuild": "npm run client-build && npm run server-build",
-    "start": "cd server && nodemon ./server.js",
+    "start": "cd server && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
