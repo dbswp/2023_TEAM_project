@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const static = require();
 
 require("dotenv").config();
 
@@ -28,6 +29,9 @@ app.use(cookieParser("dbswp"));
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json()); // json 형태로 전달
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(express.static(__dirname, "/client/build"));
+
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
 app.use("/logout", logoutRouter);
@@ -35,7 +39,6 @@ app.use("/data", dataRouter);
 app.use("/nameData", seoulDataRouter);
 app.use("/push", pushAlarmRouter);
 app.use("/board", boardRouter);
-app.use(express.static(__dirname, "/client/build"));
 
 app.get("/", (req, res) => {
   res.send("연결 성공");
