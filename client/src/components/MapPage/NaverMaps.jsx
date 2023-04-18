@@ -54,7 +54,7 @@ export default function NaverMaps({ locationData, data }) {
         if (count % 2 !== 0) {
           console.log('찾았다');
         } else {
-          console.log('그만해');
+          console.log('그만해 ');
         }
       },
       (error) => {
