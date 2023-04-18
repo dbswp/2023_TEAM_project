@@ -4,6 +4,7 @@ const {
   kakaoLoginUser,
   // isLoggedIn,
   checkToken,
+  checkkakaoToken,
 } = require("../controller/userController");
 
 const router = express.Router();

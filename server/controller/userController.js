@@ -157,12 +157,13 @@ const checkLoggedIn = async (req, res, next) => {
 const checkToken = async (req, res) => {
   try {
     const token = req.body.token; // 세션에 저장된 토큰 값을 가져옴
+    const kakaoToken = req.body.kakaoToken;
     const decoded = jwt.verify(token, ACCESS_SECRET); // 토큰을 디코딩해서 검증
     const user = await User.findOne({ email: decoded.email }); // 검증된 사용자 정보를 가져옴
 
-    if (user) {
+    if (user || kakaoToken) {
       res.status(200).json("token 검증 성공");
-      req.userInfo = user;
+      req.userInfo = { user, kakaoToken };
     } else {
       // 사용자 정보가 없으면 로그인 상태를 초기화
       res.redirect("/login");

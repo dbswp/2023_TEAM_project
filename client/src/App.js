@@ -12,10 +12,14 @@ function App() {
   const [isLogin, setIsLogin] = useState("로그아웃");
   useEffect(() => {
     const token = window.localStorage.getItem("token");
+    const kakaoToken = window.localStorage.getItem("kakaoAccessToken");
 
     if (token) {
       try {
-        axios.post("http://localhost:4000/login/checkToken", { token });
+        axios.post("http://localhost:4000/login/checkToken", {
+          token,
+          kakaoToken,
+        });
         setIsLogin("로그인");
       } catch (error) {
         console.log(error);
