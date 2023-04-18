@@ -1,6 +1,6 @@
-import React from 'react';
-import axios from 'axios';
-import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
+import React from "react";
+import axios from "axios";
+import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import {
   Container as MapDiv,
   NaverMap,
@@ -9,9 +9,9 @@ import {
   InfoWindow,
   Circle,
   Polygon,
-} from 'react-naver-maps';
-import '../../styles/mp-sidebar.scss';
-import { useGlobalContext } from './Context';
+} from "react-naver-maps";
+import "../../styles/mp-sidebar.scss";
+import { useGlobalContext } from "./Context";
 
 export default function NaverMaps({ locationData, data, isLogin }) {
   const { wantMyLocation, changeEndPoint } = useGlobalContext();
@@ -38,10 +38,10 @@ export default function NaverMaps({ locationData, data, isLogin }) {
             testY < path[1].y &&
             testY > path[2].y
           ) {
-            console.log('찾았다', area);
-            isLogin === '로그인'
+            console.log("찾았다", area);
+            isLogin === "로그인"
               ? sendKakaoAccessToken(area)
-              : console.log('로그인이 필요합니다');
+              : console.log("로그인이 필요합니다");
           }
         },
         (error) => {
@@ -81,9 +81,9 @@ export default function NaverMaps({ locationData, data, isLogin }) {
     async (area) => {
       //로컬 스토리지에 있는 카카오 엑세스 토큰을 요청body에 담아서
       const kakao_access_token =
-        window.localStorage.getItem('kakaoAccessToken');
+        window.localStorage.getItem("kakaoAccessToken");
       //알림기능 미들웨어로 Post요청 전송
-      await axios.post('http://localhost:4000/push', {
+      await axios.post("http://localhost:4000/push", {
         kakao_access_token,
         area,
       });
@@ -91,13 +91,13 @@ export default function NaverMaps({ locationData, data, isLogin }) {
   );
 
   //50개 지역의 마커 표시를 위한 위도, 경도 값을 로컬스토리지에서 가져와서 변수에 저장
-  const point_latitude = localStorage.getItem('latitude');
-  const point_longitude = localStorage.getItem('longitude');
+  const point_latitude = localStorage.getItem("latitude");
+  const point_longitude = localStorage.getItem("longitude");
 
   const handleClick = (coordinate) => {
-    localStorage.setItem('END_POINT', coordinate[2].trim()); //마커를 클릭하면 로컬스토리지의 'END_POINT' 값을 데이터의 지역명으로 바꿈
-    localStorage.setItem('latitude', coordinate[0]); //로컬스토리지의 'latitude' 값을 데이터의 위도 값 으로 바꿈
-    localStorage.setItem('longitude', coordinate[1]); //로컬스토리지의 'longitude' 값을 데이터의 경도 값 으로 바꿈
+    localStorage.setItem("END_POINT", coordinate[2].trim()); //마커를 클릭하면 로컬스토리지의 'END_POINT' 값을 데이터의 지역명으로 바꿈
+    localStorage.setItem("latitude", coordinate[0]); //로컬스토리지의 'latitude' 값을 데이터의 위도 값 으로 바꿈
+    localStorage.setItem("longitude", coordinate[1]); //로컬스토리지의 'longitude' 값을 데이터의 경도 값 으로 바꿈
     changeEndPoint(); // 블로그 컴포넌트에서 바뀐 로컬스토리지 값을 바탕으로 데이터 요청을 실행 시키기 위해 blog컴포넌트의 useEffect를 재실행 시킴
   };
 
@@ -106,12 +106,12 @@ export default function NaverMaps({ locationData, data, isLogin }) {
     const msg = data?.AREA_CONGEST_LVL[0];
     let color;
     // 데이터의 인구혼잡도에 따라 오버레이 색상을 다르게 보여줌
-    if (msg === '혼잡' || msg === '붐빔') {
-      color = 'red';
-    } else if (msg === '보통' || msg === '약간 붐빔') {
-      color = 'orange';
+    if (msg === "혼잡" || msg === "붐빔") {
+      color = "red";
+    } else if (msg === "보통" || msg === "약간 붐빔") {
+      color = "orange";
     } else {
-      color = 'green';
+      color = "green";
     }
     return locationData?.map((coordinate, index) => (
       <React.Fragment key={index}>
@@ -120,12 +120,12 @@ export default function NaverMaps({ locationData, data, isLogin }) {
           center={new navermaps.LatLng(coordinate[0], coordinate[1])}
           radius={400}
           fillColor={
-            coordinate[2].trim() === localStorage.getItem('END_POINT')
+            coordinate[2].trim() === localStorage.getItem("END_POINT")
               ? color
               : null
           }
           strokeColor={
-            coordinate[2].trim() === localStorage.getItem('END_POINT')
+            coordinate[2].trim() === localStorage.getItem("END_POINT")
               ? color
               : null
           }
@@ -158,7 +158,7 @@ export default function NaverMaps({ locationData, data, isLogin }) {
     map?.setCenter(naverLocation);
 
     infowindow?.setContent(
-      '<div style="padding:25px;">' + '내 위치' + '</div>'
+      '<div style="padding:25px;">' + "내 위치" + "</div>"
     );
     infowindow?.open(map, naverLocation);
   };
@@ -166,7 +166,7 @@ export default function NaverMaps({ locationData, data, isLogin }) {
   useEffect(() => {
     let watcher = null;
     if (wantMyLocation) {
-      window.alert('현재 이용자 위치 추적중입니다.');
+      window.alert("현재 이용자 위치 추적중입니다.");
       watcher = navigator.geolocation.watchPosition(successCallback, null);
     }
     return () => {
