@@ -88,8 +88,8 @@ const InputComment = ({ area }) => {
             comments.map((comment, index) => (
               <div key={index} className="index_box">
                 <p>{comment.area}</p>
-                <p>{comment.email}</p>
-                <p>{comment.content}</p>
+                <p className="email">{comment.email}</p>
+                <p className="content">{comment.content}</p>
               </div>
             ))}
         </div>
