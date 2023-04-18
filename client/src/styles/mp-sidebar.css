@@ -272,7 +272,14 @@ a {
     right: 1%;
   }
   .sidebar .sidebar-header .bookmark-btn {
-    display: none;
+    position: absolute;
+    right: 40px;
+  }
+  .sidebar .detail-bookmark button {
+    position: absolute;
+    top: 5%;
+    width: 60px;
+    height: 40px;
   }
   .sidebar .detail-content {
     width: 100vw;

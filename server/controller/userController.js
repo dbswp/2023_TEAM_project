@@ -1,10 +1,10 @@
-const mongooseConnect = require('./mongooseConnect');
-const User = require('../models/user');
-const jwt = require('jsonwebtoken');
-const { simpleNotification } = require('../config/naverApiTest');
-const bcrypt = require('bcrypt');
+const mongooseConnect = require("./mongooseConnect");
+const User = require("../models/user");
+const jwt = require("jsonwebtoken");
+const { simpleNotification } = require("../config/naverApiTest");
+const bcrypt = require("bcrypt");
 
-const { ACCESS_SECRET, REFRESH_SECRET } = process.env;
+const { ACCESS_SECRET } = process.env;
 
 mongooseConnect();
 const saltRounds = 10;
@@ -18,15 +18,15 @@ let userID;
 const registerUser = async (req, res) => {
   let { email, phone, password, passwordCheck } = req.body;
   // 빈값이 오면 팅겨내기
-  if (email === '' || phone === '' || password === '' || passwordCheck === '') {
-    return res.json({ registerSuccess: false, message: '정보를 입력하세요' });
+  if (email === "" || phone === "" || password === "" || passwordCheck === "") {
+    return res.json({ registerSuccess: false, message: "정보를 입력하세요" });
   }
 
   const sameEmailUser = await User.findOne({ email: email });
   if (sameEmailUser !== null) {
     return res.json({
       registerSuccess: false,
-      message: '이미 존재하는 이메일입니다',
+      message: "이미 존재하는 이메일입니다",
     });
   }
 
@@ -34,7 +34,7 @@ const registerUser = async (req, res) => {
   if (sameNickNameUser !== null) {
     return res.json({
       registerSuccess: false,
-      message: '이미 존재하는 닉네임입니다.',
+      message: "이미 존재하는 닉네임입니다.",
     });
   }
 
@@ -44,7 +44,7 @@ const registerUser = async (req, res) => {
     if (err)
       return res.status(500).json({
         registerSuccess: false,
-        message: '비밀번호 해쉬화에 실패했습니다.',
+        message: "비밀번호 해쉬화에 실패했습니다.",
       });
     // salt 생성에 성공시 hash 진행
 
@@ -52,7 +52,7 @@ const registerUser = async (req, res) => {
       if (err)
         return res.status(500).json({
           registerSuccess: false,
-          message: '비밀번호 해쉬화에 실패했습니다.',
+          message: "비밀번호 해쉬화에 실패했습니다.",
         });
 
       // 비밀번호를 해쉬된 값으로 대체합니다.
@@ -82,53 +82,36 @@ const loginUser = async (req, res) => {
   userID = email;
   isNormalUserLogined = true;
   try {
+    // body에 담아서 보내준 email을 db에서 확인
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(403).json({
         loginSuccess: false,
-        message: '해당되는 이메일이 없습니다.',
+        message: "해당되는 이메일이 없습니다.",
       });
     }
 
+    // 해싱 암호화한 비밀번호 대조
     const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
+      // 비밀번호가 일치하면 jwt토큰 씌우기
       const token = jwt.sign({ email: user.email }, ACCESS_SECRET, {
-        expiresIn: '7d',
+        expiresIn: "7d",
       });
 
-      // const decodedToken = jwt.verify(token, ACCESS_SECRET);
-      // if (decodedToken.email !== user.email) {
-      //   return res.status(403).json({
-      //     loginSuccess: false,
-      //     message: "인증 실패",
-      //   });
-      // }
-
       user.token = token;
-      await user.save();
-
-      // req.session.login = true;
-      // req.session.user = {
-      //   email: user.email,
-      //   token: token,
-      // };
-      // res.cookie("user", user, {
-      //   maxAge: 1000 * 30,
-      //   httpOnly: true,
-      //   signed: true,
-      // });
       return res
         .status(200)
         .json({ loginSuccess: true, email: user.email, token });
     } else {
       return res.status(403).json({
         loginSuccess: false,
-        message: '비밀번호가 틀렸습니다.',
+        message: "비밀번호가 틀렸습니다.",
       });
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: 'something wrong' });
+    return res.status(500).json({ error: "something wrong" });
   }
 };
 
@@ -139,10 +122,10 @@ const kakaoLoginUser = async (req, res) => {
   try {
     //카카오 엑세스 토큰을 사용하여 사용자 정보에 접근!
     const userResponese = await fetch(`https://kapi.kakao.com/v2/user/me`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         Authorization: `Bearer ${KAKAO_CODE}`,
-        'Content-type': 'application/x-www-form-urlencoded',
+        "Content-type": "application/x-www-form-urlencoded",
       },
     });
     if (userResponese.status === 200) {
@@ -157,108 +140,50 @@ const kakaoLoginUser = async (req, res) => {
         ACCESS_SECRET,
         {
           expiresIn: 1000 * 60,
-          issuer: 'About Tech',
+          issuer: "About Tech",
         }
       );
       // 쿠키에 담아서 전송
-      res.cookie('kakaoAccessToken', kakaoAccessToken, {
+      res.cookie("kakaoAccessToken", kakaoAccessToken, {
         secure: false,
         httpOnly: false,
       });
     }
-    res.status(200).json('엑세스 토큰 받기 성공!');
+    res.status(200).json("엑세스 토큰 받기 성공!");
   } catch (err) {
     console.error(err);
   }
 };
 
-const accesstoken = async (req, res) => {
-  try {
-    const token = req.cookies.accessToken;
-    const data = jwt.verify(token, ACCESS_SECRET);
-
-    const userData = await User.findOne({ email: data.email });
-
-    const { password, ...others } = userData.toObject();
-    res.status(200).json(others);
-    console.log(userData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
-
-const refreshtoken = async (req, res) => {
-  const { email } = req.body;
-  try {
-    const token = req.cookies.accessToken;
-    const data = jwt.verify(token, ACCESS_SECRET);
-
-    const userData = await User.findOne({ email: data.email });
-
-    const accessToken = jwt.sign(
-      {
-        email: userData.email,
-      },
-      ACCESS_SECRET,
-      {
-        expiresIn: '1m',
-        issuer: 'About Tech',
-      }
-    );
-
-    res.cookie('accessToken', accessToken, {
-      secure: false,
-      httpOnly: true,
-    });
-    res.status(200).json('Access Token Recreated');
-    console.log(userData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
+// 로그인 유효성 검사 미들웨어
 const checkLoggedIn = async (req, res, next) => {
-  console.log('!!');
-  // console.log(req.body);
-  // {
-  //   email: '',
-  //   content: '',
-  //   token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRic3dwOTgwNDI3QGdtYWlsLmNvbSIsImlhdCI6MTY4MTczMjk3NCwiZXhwIjoxNjgyMzM3Nzc0fQ.hzDq_ZfEtUEZBBaxO0gkIvI0UQmBw4IM_niAEVJOF2Q'
-  // }
   try {
     const token = req.body.token; // 세션에 저장된 토큰 값을 가져옴
     const decoded = jwt.verify(token, ACCESS_SECRET); // 토큰을 디코딩해서 검증
     const user = await User.findOne({ email: decoded.email }); // 검증된 사용자 정보를 가져옴
-    // console.log("user ->", user);
 
     if (user) {
-      // 사용자 정보가 있으면 로그인 상태를 유지하고, req 객체에 사용자 정보를 담음
-      // req.session.user = {
-      //   email: user.email,
-      //   token: token,
-      // };
       req.userInfo = user;
       next(); // 다음 미들웨어 실행
     } else {
       // 사용자 정보가 없으면 로그인 상태를 초기화
-      req.session.destroy();
-      res.clearCookie('connect.sid');
-      res.redirect('/login');
+      res.redirect("/login");
     }
   } catch (err) {
     // 토큰 검증에 실패한 경우 로그인 상태를 초기화
-    req.session.destroy();
-    res.clearCookie('connect.sid');
-    res.redirect('/login');
+    res.redirect("/login");
   }
 };
 
+// 로그아웃 미들웨어
 const logout = (req, res) => {
   try {
+    // 요청시 body에 보낸 token값을 받아 비교
     const token = req.body.token;
     if (!token) {
-      return res.status(400).send('No token provided');
+      return res.status(400).send("No token provided");
     }
-    res.status(200).json('Logout Success');
+    res.status(200).json("Logout Success");
   } catch (error) {
     res.status(500).json(error);
   }
@@ -281,14 +206,12 @@ const findPhoneNumber = async (req, res) => {
       console.error(err);
     }
   } else {
-    res.status(404).json('로그인해');
+    res.status(404).json("로그인해");
   }
 };
 
 module.exports = {
   loginUser,
-  accesstoken,
-  refreshtoken,
   registerUser,
   kakaoLoginUser,
   logout,

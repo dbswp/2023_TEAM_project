@@ -1,10 +1,11 @@
 // seoulData.js
-const xlsxFile = require('read-excel-file/node');
+const xlsxFile = require("read-excel-file/node");
 
 async function seoulData(req, res) {
   try {
-    const sheets = await xlsxFile('./seoulData.xlsx');
+    const sheets = await xlsxFile("./seoulData.xlsx");
 
+    // 프론트에서 요청한 데이터 가공
     const dataIndex = [];
     const dataLink = [];
     const dataLatitude = [];
@@ -22,13 +23,14 @@ async function seoulData(req, res) {
     const dataLink_Park = [];
     const dataLink_Station = [];
 
+    // 전체 데이터 이름, img, 위도, 경도 정리
     for (let i = 1; i < sheets.length; i++) {
       dataIndex.push(sheets[i][1]);
       dataLink.push(sheets[i][2]);
       dataLatitude.push(sheets[i][3]);
       dataLongitude.push(sheets[i][4]);
     }
-
+    // 특구, 공원 ,역 데이터 정리
     sheets.filter((el) => {
       if (el[0] === 1) {
         dataNmae_STZ.push(el[1]);
@@ -52,7 +54,7 @@ async function seoulData(req, res) {
 
     const Arr = [
       {
-        // 특구 관련 데이터
+        // 전체 데이터
         id: 1,
         name: dataIndex,
         img: dataLink,
@@ -60,6 +62,7 @@ async function seoulData(req, res) {
         longitude: dataLongitude,
       },
       {
+        // 특구 데이터
         id: 2,
         name: dataNmae_STZ,
         img: dataLink_STZ,
@@ -67,6 +70,7 @@ async function seoulData(req, res) {
         longitude: dataLongitude_STZ,
       },
       {
+        // 역 데이터
         id: 3,
         name: dataNmae_Station,
         img: dataLink_Station,
@@ -74,6 +78,7 @@ async function seoulData(req, res) {
         longitude: dataLongitude_Station,
       },
       {
+        // 공원 데이터
         id: 4,
         name: dataNmae_Park,
         img: dataLink_Park,

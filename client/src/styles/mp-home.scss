@@ -1,4 +1,4 @@
-@import './mp-blog.scss';
+@import "./mp-blog.scss";
 $mobile-max: 420px;
 $tablet-max: 1023px;
 $desktop-min: 1024px;
@@ -76,10 +76,9 @@ main {
 .sidebar-bookmark:hover,
 .sidebar-bookmark:focus,
 .my-location:hover,
-.my-location:focus{
-  color: #0675F4;
+.my-location:focus {
+  color: #0675f4;
 }
-
 
 @keyframes bounce {
   0% {
@@ -92,7 +91,6 @@ main {
     transform: scale(1);
   }
 }
-
 
 @include mobile {
   main {

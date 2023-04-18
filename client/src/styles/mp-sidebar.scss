@@ -280,8 +280,15 @@ $desktop-min: 1024px;
         right: 1%;
       }
       .bookmark-btn {
-        display: none;
+        position: absolute;
+        right: 40px;
       }
+    }
+    .detail-bookmark button {
+      position: absolute;
+      top: 5%;
+      width: 60px;
+      height: 40px;
     }
     .detail-content {
       width: 100vw;
