@@ -5,7 +5,8 @@
   "main": "",
   "engines": {
     "npm": "9.3.1",
-    "node": "2.0.21"
+    "node": "v18.14.0",
+    "nodemon": "2.0.21"
   },
   "scripts": {
     "client-build": "cd client && npm i && npm run build && cd ../",
