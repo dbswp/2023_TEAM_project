@@ -222,12 +222,15 @@ $desktop-min: 1024px;
         align-items: center;
       }
       .img {
-        width: 60px;
+        display: flex;
+        width: 65px;
+        
       }
       p {
+        width: 300px;
         font-size: 20px;
         line-height: 1.7;
-        text-align: center;
+        text-align: justify;
       }
     }
 
@@ -239,12 +242,14 @@ $desktop-min: 1024px;
 
       .temperature-img .img {
         display: flex;
-        width: 60px;
+        width: 65px;
       }
 
       p {
-        text-align: justify;
+        width: 300px;
         font-size: 20px;
+        line-height: 1.7;
+        text-align: justify;
       }
     }
   }

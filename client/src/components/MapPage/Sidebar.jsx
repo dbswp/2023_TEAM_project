@@ -5,9 +5,7 @@ import "../../styles/mp-sidebar.scss";
 import { FaBookmark, FaRegBookmark, FaTimes } from "react-icons/fa";
 import { BiChevronRight } from "react-icons/bi";
 import celsius from "../../../src/assets/celsius.png";
-import snow from "../../../src/assets/snow.svg";
-import rain from "../../../src/assets/rain.svg";
-import clear from "../../../src/assets/clear.svg";
+import todayWeather from "../../../src/assets/todayWeather.png";
 import MainComment from "./MainComment";
 
 const Sidebar = ({
@@ -140,16 +138,14 @@ const Sidebar = ({
                     </h3>
                   </div>
                   <div className="today-weather-wrap">
-                    {weather?.pcp_msg === "눈" ? (
-                      <img src={snow} alt="snow" />
-                    ) : weather?.pcp_msg === "비" ? (
-                      <img src={rain} alt="rain" />
-                    ) : (
-                      <div className="today-weather">
-                        <img className="img" src={clear} alt="rain" />
-                        <p>오늘의 날씨는 {weather?.pcp_msg}</p>
-                      </div>
-                    )}
+                    <div className="today-weather">
+                      <img
+                        className="img"
+                        src={todayWeather}
+                        alt="todayWeather"
+                      />
+                      <p>오늘의 날씨는 {weather?.pcp_msg}</p>
+                    </div>
                   </div>
                   <div className="today-weather-detail">
                     {/* 온도계 이미지 */}
@@ -158,25 +154,10 @@ const Sidebar = ({
                     </div>
 
                     {/* 최고,최저 기온 메세지 */}
-                    {weather?.pcp_msg === "눈" ? (
-                      <p>
-                        오늘 최고 기온은 {weather?.max_temperature}도 <br />
-                        최저 기온은 {weather?.min_temperature}도 이고, <br />
-                        눈이 내리는 날씨에는 눈사람 만드는 건 어때요? 😊
-                      </p>
-                    ) : weather?.pcp_msg === "비" ? (
-                      <p>
-                        오늘 최고 기온은 {weather?.max_temperature}도 <br />
-                        최저 기온은 {weather?.min_temperature}도 이고, <br />
-                        우산 꼭 챙기세요! ☂️
-                      </p>
-                    ) : (
-                      <p>
-                        오늘 최고 기온은 {weather?.max_temperature}도 <br />
-                        최저 기온은 {weather?.min_temperature}도 이고, <br />
-                        맑은 하늘을 만나기 좋은 날씨네요! 😎
-                      </p>
-                    )}
+                    <p>
+                      오늘 최고 기온은 {weather?.max_temperature}도 <br />
+                      최저 기온은 {weather?.min_temperature}도 입니다. <br />
+                    </p>
                   </div>
                 </div>
               </div>
