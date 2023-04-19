@@ -7,9 +7,10 @@ const FILE_NAME = 'coordinates.csv';
 const csvPath = path.join(__dirname, '../../client/public', 'data', FILE_NAME);
 
 async function fetchData(req, res) {
-  const csv = fs.readFileSync(csvPath, 'utf-8');
-  const csvData = csv.split('\r\n'); //맥 유저의 경우 \n으로 사용
-  const locationData = csvData.map((el) => el.split(','));
+  const csv = fs.readFileSync(csvPath, "utf-8");
+  const csvData = csv.split("\n"); //맥 사용자의 경우는 \n으로 바꿀것
+  const locationData = csvData.map((el) => el.split(","));
+  let newLocation = [];
 
   const newLocation = locationData.slice(1, -1);
 
