@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import InputComment from './InputComment';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import InputComment from "./InputComment";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function MainComment({ area, isLogin, setIsLogin }) {
   const navigate = useNavigate();
 
   useEffect(() => {
     if (
-      localStorage.getItem('token') ||
-      localStorage.getItem('kakaoAccessToken')
+      localStorage.getItem("token") ||
     ) {
       setIsLogin(true);
     } else {
       setIsLogin(false);
-      navigate('/login');
+      navigate("/login");
     }
   }, [isLogin]);
 
