@@ -8,7 +8,6 @@ export default function MainComment({ area, isLogin, setIsLogin }) {
   useEffect(() => {
     if (
       localStorage.getItem("token") ||
-      localStorage.getItem("kakaoAccessToken")
     ) {
       setIsLogin(true);
     } else {
