@@ -11,4 +11,4 @@ https://user-images.githubusercontent.com/106540601/233579437-58c0b57d-7f74-4c16
 front-end - react.js, sass
 
 
-back-end - node.js, mongoDB, express
+back-end - node.js, mongoDB, express, mongoose
