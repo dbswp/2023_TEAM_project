@@ -8,7 +8,7 @@ https://user-images.githubusercontent.com/106540601/233579437-58c0b57d-7f74-4c16
 
 2. 사용한 기술
 
-front-end - react.js, sass
+front-end - react.js, sass, styled-component
 
 
 back-end - node.js, mongoDB, express, mongoose
